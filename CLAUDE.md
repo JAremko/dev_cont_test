@@ -94,12 +94,14 @@ make ci                 # Full CI pipeline
 
 ## 4-Variant Architecture
 
-| Variant | Resolution | Timestamp | Navball Skin | Crosshair |
-|---------|-----------|-----------|--------------|-----------|
-| live_day | 1920x1080 | Hidden | 5thHorseman_brown | Vertical (+) |
-| live_thermal | 900x720 | Hidden | 5thHorseman_v2 | Vertical (+) |
+| Variant | Resolution | Timestamp | Navball | Crosshair |
+|---------|-----------|-----------|---------|-----------|
+| live_day | 1920x1080 | Hidden | Disabled | Vertical (+) |
+| live_thermal | 900x720 | Hidden | Disabled | Diagonal (X) |
 | recording_day | 1920x1080 | Visible | 5thHorseman_brown | Vertical (+) |
-| recording_thermal | 900x720 | Visible | 5thHorseman_v2 | Vertical (+) |
+| recording_thermal | 900x720 | Visible | 5thHorseman_v2 | Diagonal (X) |
+
+**Live variant optimization**: Live variants disable navball and celestial indicators for minimal rendering cost (crosshair + variant_info only).
 
 **Compile-time defines**:
 - `-DOSD_MODE_LIVE` or `-DOSD_MODE_RECORDING`

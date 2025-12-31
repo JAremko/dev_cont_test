@@ -49,7 +49,7 @@
     "font": "liberation_sans_bold"
   },
   "navball": {
-    "enabled": true,
+    "enabled": false,
     "position_x": 810,
     "position_y": 730,
     "size": 300,
@@ -62,7 +62,7 @@
     }
   },
   "celestial_indicators": {
-    "enabled": true,
+    "enabled": false,
     "show_sun": true,
     "show_moon": true,
     "scale": 1.0,
