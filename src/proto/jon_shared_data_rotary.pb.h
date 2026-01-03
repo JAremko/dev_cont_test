@@ -52,24 +52,14 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataRotary_init_default                                    \
-  {                                                                          \
-    0, 0, 0, 0, 0, 0, 0, 0, _ser_JonGuiDataRotaryMode_MIN, 0, 0, 0, 0, 0, 0, \
-      0, false, ser_ScanNode_init_default                                    \
-  }
-#define ser_ScanNode_init_default \
-  {                               \
-    0, 0, 0, 0, 0, 0, 0           \
-  }
-#define ser_JonGuiDataRotary_init_zero                                       \
-  {                                                                          \
-    0, 0, 0, 0, 0, 0, 0, 0, _ser_JonGuiDataRotaryMode_MIN, 0, 0, 0, 0, 0, 0, \
-      0, false, ser_ScanNode_init_zero                                       \
-  }
-#define ser_ScanNode_init_zero \
-  {                            \
-    0, 0, 0, 0, 0, 0, 0        \
-  }
+#define ser_JonGuiDataRotary_init_default                      \
+  { 0, 0, 0, 0, 0, 0, 0, 0,     _ser_JonGuiDataRotaryMode_MIN, \
+    0, 0, 0, 0, 0, 0, 0, false, ser_ScanNode_init_default }
+#define ser_ScanNode_init_default { 0, 0, 0, 0, 0, 0, 0 }
+#define ser_JonGuiDataRotary_init_zero                         \
+  { 0, 0, 0, 0, 0, 0, 0, 0,     _ser_JonGuiDataRotaryMode_MIN, \
+    0, 0, 0, 0, 0, 0, 0, false, ser_ScanNode_init_zero }
+#define ser_ScanNode_init_zero { 0, 0, 0, 0, 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_ScanNode_index_tag 1

@@ -66,14 +66,14 @@ typedef char gchar;   /* Character type (alias for char) */
  * Note: Unlike real GLib, these do NOT abort on allocation failure.
  * Caller must check return values for NULL.
  */
-#define g_malloc malloc                    /* Basic malloc */
-#define g_malloc0(size) calloc(1, size)    /* Zero-initialized malloc */
-#define g_free free                        /* Free memory */
+#define g_malloc malloc                 /* Basic malloc */
+#define g_malloc0(size) calloc(1, size) /* Zero-initialized malloc */
+#define g_free free                     /* Free memory */
 #define g_new(type, count) \
   ((type *)malloc(sizeof(type) * (count))) /* Type-safe malloc */
 #define g_new0(type, count) \
-  ((type *)calloc((count), sizeof(type)))  /* Type-safe zero malloc */
+  ((type *)calloc((count), sizeof(type))) /* Type-safe zero malloc */
 
-#endif                                     /* EMSCRIPTEN */
+#endif /* EMSCRIPTEN */
 
-#endif                                     /* GLIB_STUBS_H */
+#endif /* GLIB_STUBS_H */

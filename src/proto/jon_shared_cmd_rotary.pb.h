@@ -330,70 +330,32 @@ extern "C"
     }                                        \
   }
 #define cmd_RotaryPlatform_Axis_init_default               \
-  {                                                        \
-    false, cmd_RotaryPlatform_Azimuth_init_default, false, \
-      cmd_RotaryPlatform_Elevation_init_default            \
-  }
+  { false, cmd_RotaryPlatform_Azimuth_init_default, false, \
+    cmd_RotaryPlatform_Elevation_init_default }
 #define cmd_RotaryPlatform_SetMode_init_default \
-  {                                             \
-    _ser_JonGuiDataRotaryMode_MIN               \
-  }
+  { _ser_JonGuiDataRotaryMode_MIN }
 #define cmd_RotaryPlatform_SetAzimuthValue_init_default \
-  {                                                     \
-    0, _ser_JonGuiDataRotaryDirection_MIN               \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuthTo_init_default \
-  {                                                     \
-    0, 0, _ser_JonGuiDataRotaryDirection_MIN            \
-  }
+  { 0, 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuth_init_default \
-  {                                                   \
-    0, _ser_JonGuiDataRotaryDirection_MIN             \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateElevation_init_default \
-  {                                                     \
-    0, _ser_JonGuiDataRotaryDirection_MIN               \
-  }
-#define cmd_RotaryPlatform_SetElevationValue_init_default \
-  {                                                       \
-    0                                                     \
-  }
-#define cmd_RotaryPlatform_RotateElevationTo_init_default \
-  {                                                       \
-    0, 0                                                  \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
+#define cmd_RotaryPlatform_SetElevationValue_init_default { 0 }
+#define cmd_RotaryPlatform_RotateElevationTo_init_default { 0, 0 }
 #define cmd_RotaryPlatform_RotateElevationRelative_init_default \
-  {                                                             \
-    0, 0, _ser_JonGuiDataRotaryDirection_MIN                    \
-  }
+  { 0, 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateElevationRelativeSet_init_default \
-  {                                                                \
-    0, _ser_JonGuiDataRotaryDirection_MIN                          \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuthRelative_init_default \
-  {                                                           \
-    0, 0, _ser_JonGuiDataRotaryDirection_MIN                  \
-  }
+  { 0, 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuthRelativeSet_init_default \
-  {                                                              \
-    0, _ser_JonGuiDataRotaryDirection_MIN                        \
-  }
-#define cmd_RotaryPlatform_SetPlatformAzimuth_init_default \
-  {                                                        \
-    0                                                      \
-  }
-#define cmd_RotaryPlatform_SetPlatformElevation_init_default \
-  {                                                          \
-    0                                                        \
-  }
-#define cmd_RotaryPlatform_SetPlatformBank_init_default \
-  {                                                     \
-    0                                                   \
-  }
-#define cmd_RotaryPlatform_GetMeteo_init_default \
-  {                                              \
-    0                                            \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
+#define cmd_RotaryPlatform_SetPlatformAzimuth_init_default { 0 }
+#define cmd_RotaryPlatform_SetPlatformElevation_init_default { 0 }
+#define cmd_RotaryPlatform_SetPlatformBank_init_default { 0 }
+#define cmd_RotaryPlatform_GetMeteo_init_default { 0 }
 #define cmd_RotaryPlatform_Azimuth_init_default       \
   {                                                   \
     0,                                                \
@@ -401,70 +363,22 @@ extern "C"
       cmd_RotaryPlatform_SetAzimuthValue_init_default \
     }                                                 \
   }
-#define cmd_RotaryPlatform_Start_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_RotaryPlatform_Stop_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_RotaryPlatform_Halt_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_RotaryPlatform_ScanStart_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_RotaryPlatform_ScanStop_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_RotaryPlatform_ScanPause_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_RotaryPlatform_ScanUnpause_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_RotaryPlatform_HaltAzimuth_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_RotaryPlatform_HaltElevation_init_default \
-  {                                                   \
-    0                                                 \
-  }
-#define cmd_RotaryPlatform_ScanPrev_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_RotaryPlatform_ScanNext_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_RotaryPlatform_ScanRefreshNodeList_init_default \
-  {                                                         \
-    0                                                       \
-  }
-#define cmd_RotaryPlatform_ScanSelectNode_init_default \
-  {                                                    \
-    0                                                  \
-  }
-#define cmd_RotaryPlatform_ScanDeleteNode_init_default \
-  {                                                    \
-    0                                                  \
-  }
-#define cmd_RotaryPlatform_ScanUpdateNode_init_default \
-  {                                                    \
-    0, 0, 0, 0, 0, 0, 0                                \
-  }
-#define cmd_RotaryPlatform_ScanAddNode_init_default \
-  {                                                 \
-    0, 0, 0, 0, 0, 0, 0                             \
-  }
+#define cmd_RotaryPlatform_Start_init_default { 0 }
+#define cmd_RotaryPlatform_Stop_init_default { 0 }
+#define cmd_RotaryPlatform_Halt_init_default { 0 }
+#define cmd_RotaryPlatform_ScanStart_init_default { 0 }
+#define cmd_RotaryPlatform_ScanStop_init_default { 0 }
+#define cmd_RotaryPlatform_ScanPause_init_default { 0 }
+#define cmd_RotaryPlatform_ScanUnpause_init_default { 0 }
+#define cmd_RotaryPlatform_HaltAzimuth_init_default { 0 }
+#define cmd_RotaryPlatform_HaltElevation_init_default { 0 }
+#define cmd_RotaryPlatform_ScanPrev_init_default { 0 }
+#define cmd_RotaryPlatform_ScanNext_init_default { 0 }
+#define cmd_RotaryPlatform_ScanRefreshNodeList_init_default { 0 }
+#define cmd_RotaryPlatform_ScanSelectNode_init_default { 0 }
+#define cmd_RotaryPlatform_ScanDeleteNode_init_default { 0 }
+#define cmd_RotaryPlatform_ScanUpdateNode_init_default { 0, 0, 0, 0, 0, 0, 0 }
+#define cmd_RotaryPlatform_ScanAddNode_init_default { 0, 0, 0, 0, 0, 0, 0 }
 #define cmd_RotaryPlatform_Elevation_init_default       \
   {                                                     \
     0,                                                  \
@@ -472,30 +386,14 @@ extern "C"
       cmd_RotaryPlatform_SetElevationValue_init_default \
     }                                                   \
   }
-#define cmd_RotaryPlatform_setUseRotaryAsCompass_init_default \
-  {                                                           \
-    0                                                         \
-  }
-#define cmd_RotaryPlatform_RotateToGPS_init_default \
-  {                                                 \
-    0, 0, 0                                         \
-  }
-#define cmd_RotaryPlatform_SetOriginGPS_init_default \
-  {                                                  \
-    0, 0, 0                                          \
-  }
+#define cmd_RotaryPlatform_setUseRotaryAsCompass_init_default { 0 }
+#define cmd_RotaryPlatform_RotateToGPS_init_default { 0, 0, 0 }
+#define cmd_RotaryPlatform_SetOriginGPS_init_default { 0, 0, 0 }
 #define cmd_RotaryPlatform_RotateToNDC_init_default \
-  {                                                 \
-    _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0     \
-  }
+  { _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 }
 #define cmd_RotaryPlatform_HaltWithNDC_init_default \
-  {                                                 \
-    _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0     \
-  }
-#define cmd_RotaryPlatform_SetSpiritLevel_init_default \
-  {                                                    \
-    0, 0, 0, 0                                         \
-  }
+  { _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 }
+#define cmd_RotaryPlatform_SetSpiritLevel_init_default { 0, 0, 0, 0 }
 #define cmd_RotaryPlatform_Root_init_zero \
   {                                       \
     0,                                    \
@@ -504,70 +402,31 @@ extern "C"
     }                                     \
   }
 #define cmd_RotaryPlatform_Axis_init_zero               \
-  {                                                     \
-    false, cmd_RotaryPlatform_Azimuth_init_zero, false, \
-      cmd_RotaryPlatform_Elevation_init_zero            \
-  }
-#define cmd_RotaryPlatform_SetMode_init_zero \
-  {                                          \
-    _ser_JonGuiDataRotaryMode_MIN            \
-  }
+  { false, cmd_RotaryPlatform_Azimuth_init_zero, false, \
+    cmd_RotaryPlatform_Elevation_init_zero }
+#define cmd_RotaryPlatform_SetMode_init_zero { _ser_JonGuiDataRotaryMode_MIN }
 #define cmd_RotaryPlatform_SetAzimuthValue_init_zero \
-  {                                                  \
-    0, _ser_JonGuiDataRotaryDirection_MIN            \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuthTo_init_zero \
-  {                                                  \
-    0, 0, _ser_JonGuiDataRotaryDirection_MIN         \
-  }
+  { 0, 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuth_init_zero \
-  {                                                \
-    0, _ser_JonGuiDataRotaryDirection_MIN          \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateElevation_init_zero \
-  {                                                  \
-    0, _ser_JonGuiDataRotaryDirection_MIN            \
-  }
-#define cmd_RotaryPlatform_SetElevationValue_init_zero \
-  {                                                    \
-    0                                                  \
-  }
-#define cmd_RotaryPlatform_RotateElevationTo_init_zero \
-  {                                                    \
-    0, 0                                               \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
+#define cmd_RotaryPlatform_SetElevationValue_init_zero { 0 }
+#define cmd_RotaryPlatform_RotateElevationTo_init_zero { 0, 0 }
 #define cmd_RotaryPlatform_RotateElevationRelative_init_zero \
-  {                                                          \
-    0, 0, _ser_JonGuiDataRotaryDirection_MIN                 \
-  }
+  { 0, 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateElevationRelativeSet_init_zero \
-  {                                                             \
-    0, _ser_JonGuiDataRotaryDirection_MIN                       \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuthRelative_init_zero \
-  {                                                        \
-    0, 0, _ser_JonGuiDataRotaryDirection_MIN               \
-  }
+  { 0, 0, _ser_JonGuiDataRotaryDirection_MIN }
 #define cmd_RotaryPlatform_RotateAzimuthRelativeSet_init_zero \
-  {                                                           \
-    0, _ser_JonGuiDataRotaryDirection_MIN                     \
-  }
-#define cmd_RotaryPlatform_SetPlatformAzimuth_init_zero \
-  {                                                     \
-    0                                                   \
-  }
-#define cmd_RotaryPlatform_SetPlatformElevation_init_zero \
-  {                                                       \
-    0                                                     \
-  }
-#define cmd_RotaryPlatform_SetPlatformBank_init_zero \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_RotaryPlatform_GetMeteo_init_zero \
-  {                                           \
-    0                                         \
-  }
+  { 0, _ser_JonGuiDataRotaryDirection_MIN }
+#define cmd_RotaryPlatform_SetPlatformAzimuth_init_zero { 0 }
+#define cmd_RotaryPlatform_SetPlatformElevation_init_zero { 0 }
+#define cmd_RotaryPlatform_SetPlatformBank_init_zero { 0 }
+#define cmd_RotaryPlatform_GetMeteo_init_zero { 0 }
 #define cmd_RotaryPlatform_Azimuth_init_zero       \
   {                                                \
     0,                                             \
@@ -575,70 +434,22 @@ extern "C"
       cmd_RotaryPlatform_SetAzimuthValue_init_zero \
     }                                              \
   }
-#define cmd_RotaryPlatform_Start_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_RotaryPlatform_Stop_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_RotaryPlatform_Halt_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_RotaryPlatform_ScanStart_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_RotaryPlatform_ScanStop_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_RotaryPlatform_ScanPause_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_RotaryPlatform_ScanUnpause_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_RotaryPlatform_HaltAzimuth_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_RotaryPlatform_HaltElevation_init_zero \
-  {                                                \
-    0                                              \
-  }
-#define cmd_RotaryPlatform_ScanPrev_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_RotaryPlatform_ScanNext_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_RotaryPlatform_ScanRefreshNodeList_init_zero \
-  {                                                      \
-    0                                                    \
-  }
-#define cmd_RotaryPlatform_ScanSelectNode_init_zero \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_RotaryPlatform_ScanDeleteNode_init_zero \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_RotaryPlatform_ScanUpdateNode_init_zero \
-  {                                                 \
-    0, 0, 0, 0, 0, 0, 0                             \
-  }
-#define cmd_RotaryPlatform_ScanAddNode_init_zero \
-  {                                              \
-    0, 0, 0, 0, 0, 0, 0                          \
-  }
+#define cmd_RotaryPlatform_Start_init_zero { 0 }
+#define cmd_RotaryPlatform_Stop_init_zero { 0 }
+#define cmd_RotaryPlatform_Halt_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanStart_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanStop_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanPause_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanUnpause_init_zero { 0 }
+#define cmd_RotaryPlatform_HaltAzimuth_init_zero { 0 }
+#define cmd_RotaryPlatform_HaltElevation_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanPrev_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanNext_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanRefreshNodeList_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanSelectNode_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanDeleteNode_init_zero { 0 }
+#define cmd_RotaryPlatform_ScanUpdateNode_init_zero { 0, 0, 0, 0, 0, 0, 0 }
+#define cmd_RotaryPlatform_ScanAddNode_init_zero { 0, 0, 0, 0, 0, 0, 0 }
 #define cmd_RotaryPlatform_Elevation_init_zero       \
   {                                                  \
     0,                                               \
@@ -646,30 +457,14 @@ extern "C"
       cmd_RotaryPlatform_SetElevationValue_init_zero \
     }                                                \
   }
-#define cmd_RotaryPlatform_setUseRotaryAsCompass_init_zero \
-  {                                                        \
-    0                                                      \
-  }
-#define cmd_RotaryPlatform_RotateToGPS_init_zero \
-  {                                              \
-    0, 0, 0                                      \
-  }
-#define cmd_RotaryPlatform_SetOriginGPS_init_zero \
-  {                                               \
-    0, 0, 0                                       \
-  }
+#define cmd_RotaryPlatform_setUseRotaryAsCompass_init_zero { 0 }
+#define cmd_RotaryPlatform_RotateToGPS_init_zero { 0, 0, 0 }
+#define cmd_RotaryPlatform_SetOriginGPS_init_zero { 0, 0, 0 }
 #define cmd_RotaryPlatform_RotateToNDC_init_zero \
-  {                                              \
-    _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0  \
-  }
+  { _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 }
 #define cmd_RotaryPlatform_HaltWithNDC_init_zero \
-  {                                              \
-    _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0  \
-  }
-#define cmd_RotaryPlatform_SetSpiritLevel_init_zero \
-  {                                                 \
-    0, 0, 0, 0                                      \
-  }
+  { _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 }
+#define cmd_RotaryPlatform_SetSpiritLevel_init_zero { 0, 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_RotaryPlatform_SetMode_mode_tag 1

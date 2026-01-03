@@ -363,14 +363,8 @@ extern "C"
 
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataMeteo_init_default \
-  {                                      \
-    0, 0, 0                              \
-  }
-#define ser_JonGuiDataMeteo_init_zero \
-  {                                   \
-    0, 0, 0                           \
-  }
+#define ser_JonGuiDataMeteo_init_default { 0, 0, 0 }
+#define ser_JonGuiDataMeteo_init_zero { 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGuiDataMeteo_temperature_tag 1

@@ -102,9 +102,9 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   // Buffer for text rendering
   char buffer[256];
 
-  // Render variant name header with redraw warning
+  // Render variant name header
   const char *variant_name = get_variant_name();
-  snprintf(buffer, sizeof(buffer), "Variant: %s [FORCES REDRAW]", variant_name);
+  snprintf(buffer, sizeof(buffer), "Variant: %s", variant_name);
   text_render_with_outline(&fb, &ctx->font_variant_info, buffer, x, y, color,
                            0xFF000000, // Black outline
                            font_size,  //
@@ -180,6 +180,13 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
 
       y += line_height;
     }
+
+  // Render redraw warning at bottom
+  text_render_with_outline(&fb, &ctx->font_variant_info, "[FORCES REPAINTS]", x,
+                           y, color,
+                           0xFF000000, // Black outline
+                           font_size,  //
+                           VARIANT_INFO_OUTLINE_THICKNESS);
 
   return true;
 }

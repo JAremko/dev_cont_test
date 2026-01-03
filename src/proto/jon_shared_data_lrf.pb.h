@@ -66,34 +66,74 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataLrf_init_default                  \
-  {                                                     \
-    0, 0, 0, false, ser_JonGuiDataTarget_init_default,  \
-      _ser_JonGuiDatatLrfLaserPointerModes_MIN, 0, 0, 0 \
-  }
-#define ser_JonGuiDataTarget_init_default                                    \
-  {                                                                          \
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _ser_JonGuiDataGpsFixType_MIN, 0, 0, \
-      false, ser_RgbColor_init_default, 0, 0, 0, 0, 0                        \
-  }
-#define ser_RgbColor_init_default \
-  {                               \
-    0, 0, 0                       \
-  }
-#define ser_JonGuiDataLrf_init_zero                     \
-  {                                                     \
-    0, 0, 0, false, ser_JonGuiDataTarget_init_zero,     \
-      _ser_JonGuiDatatLrfLaserPointerModes_MIN, 0, 0, 0 \
-  }
-#define ser_JonGuiDataTarget_init_zero                                       \
-  {                                                                          \
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _ser_JonGuiDataGpsFixType_MIN, 0, 0, \
-      false, ser_RgbColor_init_zero, 0, 0, 0, 0, 0                           \
-  }
-#define ser_RgbColor_init_zero \
-  {                            \
-    0, 0, 0                    \
-  }
+#define ser_JonGuiDataLrf_init_default        \
+  { 0,                                        \
+    0,                                        \
+    0,                                        \
+    false,                                    \
+    ser_JonGuiDataTarget_init_default,        \
+    _ser_JonGuiDatatLrfLaserPointerModes_MIN, \
+    0,                                        \
+    0,                                        \
+    0 }
+#define ser_JonGuiDataTarget_init_default \
+  { 0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    _ser_JonGuiDataGpsFixType_MIN,        \
+    0,                                    \
+    0,                                    \
+    false,                                \
+    ser_RgbColor_init_default,            \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0,                                    \
+    0 }
+#define ser_RgbColor_init_default { 0, 0, 0 }
+#define ser_JonGuiDataLrf_init_zero           \
+  { 0,                                        \
+    0,                                        \
+    0,                                        \
+    false,                                    \
+    ser_JonGuiDataTarget_init_zero,           \
+    _ser_JonGuiDatatLrfLaserPointerModes_MIN, \
+    0,                                        \
+    0,                                        \
+    0 }
+#define ser_JonGuiDataTarget_init_zero \
+  { 0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    _ser_JonGuiDataGpsFixType_MIN,     \
+    0,                                 \
+    0,                                 \
+    false,                             \
+    ser_RgbColor_init_zero,            \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0,                                 \
+    0 }
+#define ser_RgbColor_init_zero { 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_RgbColor_red_tag 1

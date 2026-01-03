@@ -267,26 +267,11 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define cmd_DayCamera_SetValue_init_default \
-  {                                         \
-    0                                       \
-  }
-#define cmd_DayCamera_Move_init_default \
-  {                                     \
-    0, 0                                \
-  }
-#define cmd_DayCamera_Offset_init_default \
-  {                                       \
-    0                                     \
-  }
-#define cmd_DayCamera_SetClaheLevel_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_DayCamera_ShiftClaheLevel_init_default \
-  {                                                \
-    0                                              \
-  }
+#define cmd_DayCamera_SetValue_init_default { 0 }
+#define cmd_DayCamera_Move_init_default { 0, 0 }
+#define cmd_DayCamera_Offset_init_default { 0 }
+#define cmd_DayCamera_SetClaheLevel_init_default { 0 }
+#define cmd_DayCamera_ShiftClaheLevel_init_default { 0 }
 #define cmd_DayCamera_Root_init_default \
   {                                     \
     0,                                  \
@@ -294,34 +279,13 @@ extern "C"
       cmd_DayCamera_Focus_init_default  \
     }                                   \
   }
-#define cmd_DayCamera_GetPos_init_default \
-  {                                       \
-    0                                     \
-  }
-#define cmd_DayCamera_NextFxMode_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_DayCamera_PrevFxMode_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_DayCamera_RefreshFxMode_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_DayCamera_HaltAll_init_default \
-  {                                        \
-    0                                      \
-  }
-#define cmd_DayCamera_SetFxMode_init_default \
-  {                                          \
-    _ser_JonGuiDataFxModeDay_MIN             \
-  }
-#define cmd_DayCamera_SetDigitalZoomLevel_init_default \
-  {                                                    \
-    0                                                  \
-  }
+#define cmd_DayCamera_GetPos_init_default { 0 }
+#define cmd_DayCamera_NextFxMode_init_default { 0 }
+#define cmd_DayCamera_PrevFxMode_init_default { 0 }
+#define cmd_DayCamera_RefreshFxMode_init_default { 0 }
+#define cmd_DayCamera_HaltAll_init_default { 0 }
+#define cmd_DayCamera_SetFxMode_init_default { _ser_JonGuiDataFxModeDay_MIN }
+#define cmd_DayCamera_SetDigitalZoomLevel_init_default { 0 }
 #define cmd_DayCamera_Focus_init_default  \
   {                                       \
     0,                                    \
@@ -336,102 +300,30 @@ extern "C"
       cmd_DayCamera_SetValue_init_default \
     }                                     \
   }
-#define cmd_DayCamera_NextZoomTablePos_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_DayCamera_PrevZoomTablePos_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_DayCamera_SetIris_init_default \
-  {                                        \
-    0                                      \
-  }
-#define cmd_DayCamera_SetInfraRedFilter_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_DayCamera_SetAutoIris_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_DayCamera_SetZoomTableValue_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_DayCamera_Stop_init_default \
-  {                                     \
-    0                                   \
-  }
-#define cmd_DayCamera_Start_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_DayCamera_Photo_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_DayCamera_Halt_init_default \
-  {                                     \
-    0                                   \
-  }
-#define cmd_DayCamera_GetMeteo_init_default \
-  {                                         \
-    0                                       \
-  }
-#define cmd_DayCamera_ResetZoom_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_DayCamera_ResetFocus_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_DayCamera_SaveToTable_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_DayCamera_SaveToTableFocus_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_DayCamera_FocusROI_init_default \
-  {                                         \
-    0, 0, 0, 0, 0, 0                        \
-  }
-#define cmd_DayCamera_TrackROI_init_default \
-  {                                         \
-    0, 0, 0, 0, 0, 0                        \
-  }
-#define cmd_DayCamera_ZoomROI_init_default \
-  {                                        \
-    0, 0, 0, 0, 0, 0                       \
-  }
-#define cmd_DayCamera_FxROI_init_default \
-  {                                      \
-    0, 0, 0, 0, 0, 0                     \
-  }
-#define cmd_DayCamera_SetValue_init_zero \
-  {                                      \
-    0                                    \
-  }
-#define cmd_DayCamera_Move_init_zero \
-  {                                  \
-    0, 0                             \
-  }
-#define cmd_DayCamera_Offset_init_zero \
-  {                                    \
-    0                                  \
-  }
-#define cmd_DayCamera_SetClaheLevel_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_DayCamera_ShiftClaheLevel_init_zero \
-  {                                             \
-    0                                           \
-  }
+#define cmd_DayCamera_NextZoomTablePos_init_default { 0 }
+#define cmd_DayCamera_PrevZoomTablePos_init_default { 0 }
+#define cmd_DayCamera_SetIris_init_default { 0 }
+#define cmd_DayCamera_SetInfraRedFilter_init_default { 0 }
+#define cmd_DayCamera_SetAutoIris_init_default { 0 }
+#define cmd_DayCamera_SetZoomTableValue_init_default { 0 }
+#define cmd_DayCamera_Stop_init_default { 0 }
+#define cmd_DayCamera_Start_init_default { 0 }
+#define cmd_DayCamera_Photo_init_default { 0 }
+#define cmd_DayCamera_Halt_init_default { 0 }
+#define cmd_DayCamera_GetMeteo_init_default { 0 }
+#define cmd_DayCamera_ResetZoom_init_default { 0 }
+#define cmd_DayCamera_ResetFocus_init_default { 0 }
+#define cmd_DayCamera_SaveToTable_init_default { 0 }
+#define cmd_DayCamera_SaveToTableFocus_init_default { 0 }
+#define cmd_DayCamera_FocusROI_init_default { 0, 0, 0, 0, 0, 0 }
+#define cmd_DayCamera_TrackROI_init_default { 0, 0, 0, 0, 0, 0 }
+#define cmd_DayCamera_ZoomROI_init_default { 0, 0, 0, 0, 0, 0 }
+#define cmd_DayCamera_FxROI_init_default { 0, 0, 0, 0, 0, 0 }
+#define cmd_DayCamera_SetValue_init_zero { 0 }
+#define cmd_DayCamera_Move_init_zero { 0, 0 }
+#define cmd_DayCamera_Offset_init_zero { 0 }
+#define cmd_DayCamera_SetClaheLevel_init_zero { 0 }
+#define cmd_DayCamera_ShiftClaheLevel_init_zero { 0 }
 #define cmd_DayCamera_Root_init_zero \
   {                                  \
     0,                               \
@@ -439,34 +331,13 @@ extern "C"
       cmd_DayCamera_Focus_init_zero  \
     }                                \
   }
-#define cmd_DayCamera_GetPos_init_zero \
-  {                                    \
-    0                                  \
-  }
-#define cmd_DayCamera_NextFxMode_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_DayCamera_PrevFxMode_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_DayCamera_RefreshFxMode_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_DayCamera_HaltAll_init_zero \
-  {                                     \
-    0                                   \
-  }
-#define cmd_DayCamera_SetFxMode_init_zero \
-  {                                       \
-    _ser_JonGuiDataFxModeDay_MIN          \
-  }
-#define cmd_DayCamera_SetDigitalZoomLevel_init_zero \
-  {                                                 \
-    0                                               \
-  }
+#define cmd_DayCamera_GetPos_init_zero { 0 }
+#define cmd_DayCamera_NextFxMode_init_zero { 0 }
+#define cmd_DayCamera_PrevFxMode_init_zero { 0 }
+#define cmd_DayCamera_RefreshFxMode_init_zero { 0 }
+#define cmd_DayCamera_HaltAll_init_zero { 0 }
+#define cmd_DayCamera_SetFxMode_init_zero { _ser_JonGuiDataFxModeDay_MIN }
+#define cmd_DayCamera_SetDigitalZoomLevel_init_zero { 0 }
 #define cmd_DayCamera_Focus_init_zero  \
   {                                    \
     0,                                 \
@@ -481,82 +352,25 @@ extern "C"
       cmd_DayCamera_SetValue_init_zero \
     }                                  \
   }
-#define cmd_DayCamera_NextZoomTablePos_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_DayCamera_PrevZoomTablePos_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_DayCamera_SetIris_init_zero \
-  {                                     \
-    0                                   \
-  }
-#define cmd_DayCamera_SetInfraRedFilter_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_DayCamera_SetAutoIris_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_DayCamera_SetZoomTableValue_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_DayCamera_Stop_init_zero \
-  {                                  \
-    0                                \
-  }
-#define cmd_DayCamera_Start_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_DayCamera_Photo_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_DayCamera_Halt_init_zero \
-  {                                  \
-    0                                \
-  }
-#define cmd_DayCamera_GetMeteo_init_zero \
-  {                                      \
-    0                                    \
-  }
-#define cmd_DayCamera_ResetZoom_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_DayCamera_ResetFocus_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_DayCamera_SaveToTable_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_DayCamera_SaveToTableFocus_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_DayCamera_FocusROI_init_zero \
-  {                                      \
-    0, 0, 0, 0, 0, 0                     \
-  }
-#define cmd_DayCamera_TrackROI_init_zero \
-  {                                      \
-    0, 0, 0, 0, 0, 0                     \
-  }
-#define cmd_DayCamera_ZoomROI_init_zero \
-  {                                     \
-    0, 0, 0, 0, 0, 0                    \
-  }
-#define cmd_DayCamera_FxROI_init_zero \
-  {                                   \
-    0, 0, 0, 0, 0, 0                  \
-  }
+#define cmd_DayCamera_NextZoomTablePos_init_zero { 0 }
+#define cmd_DayCamera_PrevZoomTablePos_init_zero { 0 }
+#define cmd_DayCamera_SetIris_init_zero { 0 }
+#define cmd_DayCamera_SetInfraRedFilter_init_zero { 0 }
+#define cmd_DayCamera_SetAutoIris_init_zero { 0 }
+#define cmd_DayCamera_SetZoomTableValue_init_zero { 0 }
+#define cmd_DayCamera_Stop_init_zero { 0 }
+#define cmd_DayCamera_Start_init_zero { 0 }
+#define cmd_DayCamera_Photo_init_zero { 0 }
+#define cmd_DayCamera_Halt_init_zero { 0 }
+#define cmd_DayCamera_GetMeteo_init_zero { 0 }
+#define cmd_DayCamera_ResetZoom_init_zero { 0 }
+#define cmd_DayCamera_ResetFocus_init_zero { 0 }
+#define cmd_DayCamera_SaveToTable_init_zero { 0 }
+#define cmd_DayCamera_SaveToTableFocus_init_zero { 0 }
+#define cmd_DayCamera_FocusROI_init_zero { 0, 0, 0, 0, 0, 0 }
+#define cmd_DayCamera_TrackROI_init_zero { 0, 0, 0, 0, 0, 0 }
+#define cmd_DayCamera_ZoomROI_init_zero { 0, 0, 0, 0, 0, 0 }
+#define cmd_DayCamera_FxROI_init_zero { 0, 0, 0, 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_DayCamera_SetValue_value_tag 1

@@ -19,7 +19,7 @@
 #define SPEED_RADIUS_HORIZONTAL \
   110 // Distance from center for Az speed (left/right)
 #define SPEED_RADIUS_VERTICAL \
-  90  // Distance from center for El speed (top/bottom)
+  90 // Distance from center for El speed (top/bottom)
 
 // Speed indicator text clearing dimensions
 #define SPEED_INDICATOR_CLEAR_WIDTH 100 // Estimated max text width for clearing
@@ -29,7 +29,7 @@
 #define SPEED_INDICATOR_TEXT_WIDTH_HALF \
   50 // Half of estimated text width for bbox
 #define SPEED_INDICATOR_TEXT_HEIGHT_PADDING \
-  5  // Extra padding for text height in bbox
+  5 // Extra padding for text height in bbox
 
 // ════════════════════════════════════════════════════════════
 // CROSSHAIR ELEMENT RENDERING

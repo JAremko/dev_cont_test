@@ -178,7 +178,7 @@ celestial_cleanup(void)
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-#define DEG_TO_RAD(deg) ((deg)*M_PI / 180.0)
+#define DEG_TO_RAD(deg) ((deg) * M_PI / 180.0)
 
 /**
  * @brief 3D vector structure
@@ -268,8 +268,8 @@ create_rotation_matrix(double azimuth, double elevation, double bank)
   versor q;                         // cglm versor is float[4]
   mat3 cglm_mat3;                   // cglm mat3 is float[9]
 
-  glm_euler_yxz_quat(angles, q);    // Convert YXZ euler angles to quaternion
-  glm_quat_mat3(q, cglm_mat3);      // Convert quaternion to 3×3 matrix
+  glm_euler_yxz_quat(angles, q); // Convert YXZ euler angles to quaternion
+  glm_quat_mat3(q, cglm_mat3);   // Convert quaternion to 3×3 matrix
 
   /* Copy cglm mat3 to our local mat3_t struct, converting float to double */
   mat3_t m;

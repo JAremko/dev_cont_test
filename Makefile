@@ -14,6 +14,7 @@
         recording_day recording_thermal live_day live_thermal \
         recording_day_dev recording_thermal_dev live_day_dev live_thermal_dev all-dev \
         package package-all package-dev package-all-dev \
+        deploy deploy-prod deploy-frontend deploy-frontend-prod deploy-gallery deploy-gallery-prod \
         harness video-harness png-harness png png-all video video-all \
         proto ci all-modes png-all-modes
 
@@ -162,6 +163,48 @@ package-all-dev: all-dev
 	@ls -lh $(DIST_DIR)/*-dev.tar 2>/dev/null || true
 
 #==============================================================================
+# Deploy Targets
+#==============================================================================
+
+# Load environment variables from .env if it exists
+-include .env
+export
+
+# Deploy paths (can be overridden via environment or .env)
+FRONTEND_DEPLOY_PATH ?= /home/jare/git/cc/jettison_frontend/frontend/static/osd
+GALLERY_DEPLOY_PATH ?= /home/jare/git/cc/gallery_demo_basic/web/public/osd
+
+# Deploy dev builds (live variants to frontend, recording_day to gallery)
+deploy: package-all-dev
+	@echo "=== Deploying dev packages ==="
+	@./tools/deploy.sh dev 2>&1 | tee $(LOGS_DIR)/deploy_dev.log
+	@echo "=== Deploy complete ==="
+
+# Deploy production builds
+deploy-prod: package-all
+	@echo "=== Deploying production packages ==="
+	@./tools/deploy.sh production 2>&1 | tee $(LOGS_DIR)/deploy_prod.log
+	@echo "=== Deploy complete ==="
+
+# Deploy only to frontend (live variants)
+deploy-frontend: package-all-dev
+	@echo "=== Deploying to frontend (dev) ==="
+	@./tools/deploy.sh dev frontend 2>&1 | tee $(LOGS_DIR)/deploy_frontend.log
+
+deploy-frontend-prod: package-all
+	@echo "=== Deploying to frontend (production) ==="
+	@./tools/deploy.sh production frontend 2>&1 | tee $(LOGS_DIR)/deploy_frontend_prod.log
+
+# Deploy only to gallery (recording_day)
+deploy-gallery: package-dev
+	@echo "=== Deploying to gallery (dev) ==="
+	@./tools/deploy.sh dev gallery 2>&1 | tee $(LOGS_DIR)/deploy_gallery.log
+
+deploy-gallery-prod: package
+	@echo "=== Deploying to gallery (production) ==="
+	@./tools/deploy.sh production gallery 2>&1 | tee $(LOGS_DIR)/deploy_gallery_prod.log
+
+#==============================================================================
 # Test Harness Targets
 #==============================================================================
 
@@ -306,6 +349,12 @@ help:
 	@echo "  make package      Build + package recording_day"
 	@echo "  make package-all  Build + package all variants"
 	@echo "  make clean        Remove all artifacts"
+	@echo ""
+	@echo "Deploy Targets:"
+	@echo "  make deploy            Dev build + deploy (frontend + gallery)"
+	@echo "  make deploy-prod       Prod build + deploy (frontend + gallery)"
+	@echo "  make deploy-frontend   Dev build + deploy live variants only"
+	@echo "  make deploy-gallery    Dev build + deploy recording_day only"
 	@echo ""
 	@echo "CI/Full Pipeline:"
 	@echo "  make ci           Full CI build (8 WASM + PNGs + videos)"

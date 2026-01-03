@@ -8,8 +8,7 @@ build/
 # Video test harness
 test/video_harness/video_harness
 
-# Docker
-.env
+# Docker (local overrides only - .env is committed)
 .env.local
 
 # Node.js

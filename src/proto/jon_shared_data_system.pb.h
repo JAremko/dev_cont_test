@@ -47,16 +47,16 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataSystem_init_default                                     \
-  {                                                                           \
-    0, 0, 0, 0, 0, _ser_JonGuiDataSystemLocalizations_MIN, 0, 0, 0, 0, 0, 0,  \
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _ser_JonGuiDataAccumulatorStateIdx_MIN \
-  }
-#define ser_JonGuiDataSystem_init_zero                                        \
-  {                                                                           \
-    0, 0, 0, 0, 0, _ser_JonGuiDataSystemLocalizations_MIN, 0, 0, 0, 0, 0, 0,  \
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _ser_JonGuiDataAccumulatorStateIdx_MIN \
-  }
+#define ser_JonGuiDataSystem_init_default                  \
+  { 0, 0, 0, 0, 0, _ser_JonGuiDataSystemLocalizations_MIN, \
+    0, 0, 0, 0, 0, 0,                                      \
+    0, 0, 0, 0, 0, 0,                                      \
+    0, 0, 0, 0, 0, _ser_JonGuiDataAccumulatorStateIdx_MIN }
+#define ser_JonGuiDataSystem_init_zero                     \
+  { 0, 0, 0, 0, 0, _ser_JonGuiDataSystemLocalizations_MIN, \
+    0, 0, 0, 0, 0, 0,                                      \
+    0, 0, 0, 0, 0, 0,                                      \
+    0, 0, 0, 0, 0, _ser_JonGuiDataAccumulatorStateIdx_MIN }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGuiDataSystem_cpu_temperature_tag 1

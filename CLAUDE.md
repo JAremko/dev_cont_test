@@ -315,46 +315,66 @@ logs/        # Build logs
 snapshot/    # PNG harness output (gitignored)
 ```
 
-## Integration with mp4_sei_extract/prototype_basic
+## Deployment
 
-The `prototype_basic` video player project uses OSD packages from this repository for real-time overlay rendering.
+Packages deploy directly to sych.local where nginx serves them. No local paths - rsync over SSH.
 
-### Quick Deploy Workflow
+### Configuration (.env)
 
 ```bash
-# 1. Build dev package (in this directory)
-./tools/devcontainer-build.sh package-dev
-
-# 2. Copy to prototype_basic
-cp dist/jettison-osd-recording_day-1.0.0-dev.tar \
-   /path/to/mp4_sei_extract/prototype_basic/web/public/osd/default.tar
-
-# 3. Build and deploy prototype_basic
-cd /path/to/mp4_sei_extract/prototype_basic
-make deploy       # Dev build
-# OR
-make deploy-prod  # Production build
+# Remote deployment (SSH to sych.local)
+DEPLOY_HOST=sych.local
+DEPLOY_USER=archer
 ```
 
-### Package Location in prototype_basic
+### Deploy Targets
 
-```
-prototype_basic/
-└── web/
-    └── public/
-        └── osd/
-            └── default.tar   # ← Copy package here
+| Target | Command | Description |
+|--------|---------|-------------|
+| `make deploy` | Dev build | Package + deploy all to sych.local |
+| `make deploy-prod` | Production build | Package + deploy all (optimized) |
+| `make deploy-frontend` | Dev build | Deploy live_day + live_thermal only |
+| `make deploy-gallery` | Dev build | Deploy recording_day only |
+
+Or via devcontainer wrapper:
+```bash
+./tools/devcontainer-build.sh deploy       # Dev builds
+./tools/devcontainer-build.sh deploy-prod  # Production builds
 ```
 
-The player bootstraps from this `default.tar` file on first load, storing it in IndexedDB for subsequent sessions.
+### What Gets Deployed
+
+**To sych.local:/home/archer/web/www/osd/packages/ (frontend):**
+```
+live_day.tar              # For jettison_frontend live streams
+live_thermal.tar
+```
+
+**To sych.local:/home/archer/web/www/mp4-sei/osd/ (gallery):**
+```
+default.tar               # Gallery loads this on startup (recording_day)
+```
+
+### Hot-Reload
+
+The frontend loads OSD from signed packages (`/osd/packages/*.tar`) and polls for changes via HEAD requests. When a package changes:
+1. Worker detects ETag/Last-Modified change
+2. Worker sends `packageChanged` event
+3. OSDManager terminates and recreates worker with new package
+4. SharedArrayBuffer survives - seamless transition
+
+**Testing hot-reload:**
+1. Make a change to OSD source
+2. Run `make deploy` (builds + deploys to sych.local)
+3. Frontend automatically detects and reloads within 1 second
 
 ### Notes
 
-- **Only `recording_day` variant** is supported for video playback
-- Dev packages (~1.7MB) include debug symbols; production (~960KB) is optimized
-- After updating the package, users may need to clear browser storage to see changes
+- Dev packages (~1.4MB) include debug symbols; production (~960KB) is optimized
+- Gallery only uses `recording_day` variant
+- Frontend uses `live_day` + `live_thermal` for live streams
 
 ---
 
 **Build System**: Make + bash scripts
-**Last Updated**: 2025-12-29
+**Last Updated**: 2025-01-03

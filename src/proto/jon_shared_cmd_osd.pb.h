@@ -80,38 +80,14 @@ extern "C"
       cmd_OSD_ShowDefaultScreen_init_default \
     }                                        \
   }
-#define cmd_OSD_ShowDefaultScreen_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_OSD_ShowLRFMeasureScreen_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_OSD_ShowLRFResultScreen_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_OSD_ShowLRFResultSimplifiedScreen_init_default \
-  {                                                        \
-    0                                                      \
-  }
-#define cmd_OSD_EnableHeatOSD_init_default \
-  {                                        \
-    0                                      \
-  }
-#define cmd_OSD_DisableHeatOSD_init_default \
-  {                                         \
-    0                                       \
-  }
-#define cmd_OSD_EnableDayOSD_init_default \
-  {                                       \
-    0                                     \
-  }
-#define cmd_OSD_DisableDayOSD_init_default \
-  {                                        \
-    0                                      \
-  }
+#define cmd_OSD_ShowDefaultScreen_init_default { 0 }
+#define cmd_OSD_ShowLRFMeasureScreen_init_default { 0 }
+#define cmd_OSD_ShowLRFResultScreen_init_default { 0 }
+#define cmd_OSD_ShowLRFResultSimplifiedScreen_init_default { 0 }
+#define cmd_OSD_EnableHeatOSD_init_default { 0 }
+#define cmd_OSD_DisableHeatOSD_init_default { 0 }
+#define cmd_OSD_EnableDayOSD_init_default { 0 }
+#define cmd_OSD_DisableDayOSD_init_default { 0 }
 #define cmd_OSD_Root_init_zero            \
   {                                       \
     0,                                    \
@@ -119,38 +95,14 @@ extern "C"
       cmd_OSD_ShowDefaultScreen_init_zero \
     }                                     \
   }
-#define cmd_OSD_ShowDefaultScreen_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_OSD_ShowLRFMeasureScreen_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_OSD_ShowLRFResultScreen_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_OSD_ShowLRFResultSimplifiedScreen_init_zero \
-  {                                                     \
-    0                                                   \
-  }
-#define cmd_OSD_EnableHeatOSD_init_zero \
-  {                                     \
-    0                                   \
-  }
-#define cmd_OSD_DisableHeatOSD_init_zero \
-  {                                      \
-    0                                    \
-  }
-#define cmd_OSD_EnableDayOSD_init_zero \
-  {                                    \
-    0                                  \
-  }
-#define cmd_OSD_DisableDayOSD_init_zero \
-  {                                     \
-    0                                   \
-  }
+#define cmd_OSD_ShowDefaultScreen_init_zero { 0 }
+#define cmd_OSD_ShowLRFMeasureScreen_init_zero { 0 }
+#define cmd_OSD_ShowLRFResultScreen_init_zero { 0 }
+#define cmd_OSD_ShowLRFResultSimplifiedScreen_init_zero { 0 }
+#define cmd_OSD_EnableHeatOSD_init_zero { 0 }
+#define cmd_OSD_DisableHeatOSD_init_zero { 0 }
+#define cmd_OSD_EnableDayOSD_init_zero { 0 }
+#define cmd_OSD_DisableDayOSD_init_zero { 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_OSD_Root_show_default_screen_tag 1

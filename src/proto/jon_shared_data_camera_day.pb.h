@@ -36,14 +36,10 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataCameraDay_init_default                         \
-  {                                                                  \
-    0, 0, 0, 0, 0, 0, _ser_JonGuiDataFxModeDay_MIN, 0, 0, 0, 0, 0, 0 \
-  }
-#define ser_JonGuiDataCameraDay_init_zero                            \
-  {                                                                  \
-    0, 0, 0, 0, 0, 0, _ser_JonGuiDataFxModeDay_MIN, 0, 0, 0, 0, 0, 0 \
-  }
+#define ser_JonGuiDataCameraDay_init_default \
+  { 0, 0, 0, 0, 0, 0, _ser_JonGuiDataFxModeDay_MIN, 0, 0, 0, 0, 0, 0 }
+#define ser_JonGuiDataCameraDay_init_zero \
+  { 0, 0, 0, 0, 0, 0, _ser_JonGuiDataFxModeDay_MIN, 0, 0, 0, 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGuiDataCameraDay_focus_pos_tag 1

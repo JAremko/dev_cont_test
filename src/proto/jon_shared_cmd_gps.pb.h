@@ -64,26 +64,11 @@ extern "C"
       cmd_Gps_Start_init_default  \
     }                             \
   }
-#define cmd_Gps_Start_init_default \
-  {                                \
-    0                              \
-  }
-#define cmd_Gps_Stop_init_default \
-  {                               \
-    0                             \
-  }
-#define cmd_Gps_GetMeteo_init_default \
-  {                                   \
-    0                                 \
-  }
-#define cmd_Gps_SetUseManualPosition_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_Gps_SetManualPosition_init_default \
-  {                                            \
-    0, 0, 0                                    \
-  }
+#define cmd_Gps_Start_init_default { 0 }
+#define cmd_Gps_Stop_init_default { 0 }
+#define cmd_Gps_GetMeteo_init_default { 0 }
+#define cmd_Gps_SetUseManualPosition_init_default { 0 }
+#define cmd_Gps_SetManualPosition_init_default { 0, 0, 0 }
 #define cmd_Gps_Root_init_zero \
   {                            \
     0,                         \
@@ -91,26 +76,11 @@ extern "C"
       cmd_Gps_Start_init_zero  \
     }                          \
   }
-#define cmd_Gps_Start_init_zero \
-  {                             \
-    0                           \
-  }
-#define cmd_Gps_Stop_init_zero \
-  {                            \
-    0                          \
-  }
-#define cmd_Gps_GetMeteo_init_zero \
-  {                                \
-    0                              \
-  }
-#define cmd_Gps_SetUseManualPosition_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_Gps_SetManualPosition_init_zero \
-  {                                         \
-    0, 0, 0                                 \
-  }
+#define cmd_Gps_Start_init_zero { 0 }
+#define cmd_Gps_Stop_init_zero { 0 }
+#define cmd_Gps_GetMeteo_init_zero { 0 }
+#define cmd_Gps_SetUseManualPosition_init_zero { 0 }
+#define cmd_Gps_SetManualPosition_init_zero { 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_Gps_SetUseManualPosition_flag_tag 1

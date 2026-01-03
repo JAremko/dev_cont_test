@@ -284,6 +284,8 @@ ${BLUE}Commands:${NC}
   ${GREEN}wasm-all${NC}        Build all 8 WASM variants (4 × 2 modes)
   ${GREEN}package${NC}         Build + package all 4 variants (production)
   ${GREEN}package-dev${NC}     Build + package all 4 variants (debug)
+  ${GREEN}deploy${NC}          Build + package + deploy (dev builds)
+  ${GREEN}deploy-prod${NC}     Build + package + deploy (production builds)
   ${GREEN}proto${NC}           Update proto submodules (proto/c, proto/ts)
   ${GREEN}test-png${NC}        Generate PNG snapshots (all 4 variants)
   ${GREEN}test-video${NC}      Generate test videos (all 4 variants)
@@ -354,6 +356,24 @@ case "${1:-help}" in
         echo ""
         echo -e "${BLUE}Output packages (dev):${NC}"
         ls -lh "$PROJECT_ROOT/dist/"*-dev.tar 2>/dev/null || echo "  (No dev packages found)"
+        ;;
+
+    deploy)
+        echo -e "\n${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${BLUE}Building + deploying (dev builds)...${NC}"
+        echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        run_in_devcontainer "make deploy"
+        echo ""
+        echo -e "${GREEN}✓ Deploy complete (dev)${NC}"
+        ;;
+
+    deploy-prod)
+        echo -e "\n${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${BLUE}Building + deploying (production builds)...${NC}"
+        echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        run_in_devcontainer "make deploy-prod"
+        echo ""
+        echo -e "${GREEN}✓ Deploy complete (production)${NC}"
         ;;
 
     proto)

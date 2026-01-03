@@ -172,98 +172,30 @@ extern "C"
       cmd_System_StartALl_init_default \
     }                                  \
   }
-#define cmd_System_StartALl_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_System_StopALl_init_default \
-  {                                     \
-    0                                   \
-  }
-#define cmd_System_Reboot_init_default \
-  {                                    \
-    0                                  \
-  }
-#define cmd_System_PowerOff_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_System_ResetConfigs_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_System_SaveFactoryDefaults_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_System_WipeUserData_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_System_StartRec_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_System_StopRec_init_default \
-  {                                     \
-    0                                   \
-  }
-#define cmd_System_MarkRecImportant_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_System_UnmarkRecImportant_init_default \
-  {                                                \
-    0                                              \
-  }
-#define cmd_System_EnterTransport_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_System_EnableGeodesicMode_init_default \
-  {                                                \
-    0                                              \
-  }
-#define cmd_System_DisableGeodesicMode_init_default \
-  {                                                 \
-    0                                               \
-  }
+#define cmd_System_StartALl_init_default { 0 }
+#define cmd_System_StopALl_init_default { 0 }
+#define cmd_System_Reboot_init_default { 0 }
+#define cmd_System_PowerOff_init_default { 0 }
+#define cmd_System_ResetConfigs_init_default { 0 }
+#define cmd_System_SaveFactoryDefaults_init_default { 0 }
+#define cmd_System_WipeUserData_init_default { 0 }
+#define cmd_System_StartRec_init_default { 0 }
+#define cmd_System_StopRec_init_default { 0 }
+#define cmd_System_MarkRecImportant_init_default { 0 }
+#define cmd_System_UnmarkRecImportant_init_default { 0 }
+#define cmd_System_EnterTransport_init_default { 0 }
+#define cmd_System_EnableGeodesicMode_init_default { 0 }
+#define cmd_System_DisableGeodesicMode_init_default { 0 }
 #define cmd_System_SetLocalization_init_default \
-  {                                             \
-    _ser_JonGuiDataSystemLocalizations_MIN      \
-  }
-#define cmd_System_StepYear_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_System_StepMonth_init_default \
-  {                                       \
-    0                                     \
-  }
-#define cmd_System_StepDay_init_default \
-  {                                     \
-    0                                   \
-  }
-#define cmd_System_StepHour_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_System_StepMinute_init_default \
-  {                                        \
-    0                                      \
-  }
-#define cmd_System_StepSecond_init_default \
-  {                                        \
-    0                                      \
-  }
-#define cmd_System_EnableManualTime_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_System_DisableManualTime_init_default \
-  {                                               \
-    0                                             \
-  }
+  { _ser_JonGuiDataSystemLocalizations_MIN }
+#define cmd_System_StepYear_init_default { 0 }
+#define cmd_System_StepMonth_init_default { 0 }
+#define cmd_System_StepDay_init_default { 0 }
+#define cmd_System_StepHour_init_default { 0 }
+#define cmd_System_StepMinute_init_default { 0 }
+#define cmd_System_StepSecond_init_default { 0 }
+#define cmd_System_EnableManualTime_init_default { 0 }
+#define cmd_System_DisableManualTime_init_default { 0 }
 #define cmd_System_Root_init_zero   \
   {                                 \
     0,                              \
@@ -271,98 +203,30 @@ extern "C"
       cmd_System_StartALl_init_zero \
     }                               \
   }
-#define cmd_System_StartALl_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_System_StopALl_init_zero \
-  {                                  \
-    0                                \
-  }
-#define cmd_System_Reboot_init_zero \
-  {                                 \
-    0                               \
-  }
-#define cmd_System_PowerOff_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_System_ResetConfigs_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_System_SaveFactoryDefaults_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_System_WipeUserData_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_System_StartRec_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_System_StopRec_init_zero \
-  {                                  \
-    0                                \
-  }
-#define cmd_System_MarkRecImportant_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_System_UnmarkRecImportant_init_zero \
-  {                                             \
-    0                                           \
-  }
-#define cmd_System_EnterTransport_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_System_EnableGeodesicMode_init_zero \
-  {                                             \
-    0                                           \
-  }
-#define cmd_System_DisableGeodesicMode_init_zero \
-  {                                              \
-    0                                            \
-  }
+#define cmd_System_StartALl_init_zero { 0 }
+#define cmd_System_StopALl_init_zero { 0 }
+#define cmd_System_Reboot_init_zero { 0 }
+#define cmd_System_PowerOff_init_zero { 0 }
+#define cmd_System_ResetConfigs_init_zero { 0 }
+#define cmd_System_SaveFactoryDefaults_init_zero { 0 }
+#define cmd_System_WipeUserData_init_zero { 0 }
+#define cmd_System_StartRec_init_zero { 0 }
+#define cmd_System_StopRec_init_zero { 0 }
+#define cmd_System_MarkRecImportant_init_zero { 0 }
+#define cmd_System_UnmarkRecImportant_init_zero { 0 }
+#define cmd_System_EnterTransport_init_zero { 0 }
+#define cmd_System_EnableGeodesicMode_init_zero { 0 }
+#define cmd_System_DisableGeodesicMode_init_zero { 0 }
 #define cmd_System_SetLocalization_init_zero \
-  {                                          \
-    _ser_JonGuiDataSystemLocalizations_MIN   \
-  }
-#define cmd_System_StepYear_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_System_StepMonth_init_zero \
-  {                                    \
-    0                                  \
-  }
-#define cmd_System_StepDay_init_zero \
-  {                                  \
-    0                                \
-  }
-#define cmd_System_StepHour_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_System_StepMinute_init_zero \
-  {                                     \
-    0                                   \
-  }
-#define cmd_System_StepSecond_init_zero \
-  {                                     \
-    0                                   \
-  }
-#define cmd_System_EnableManualTime_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_System_DisableManualTime_init_zero \
-  {                                            \
-    0                                          \
-  }
+  { _ser_JonGuiDataSystemLocalizations_MIN }
+#define cmd_System_StepYear_init_zero { 0 }
+#define cmd_System_StepMonth_init_zero { 0 }
+#define cmd_System_StepDay_init_zero { 0 }
+#define cmd_System_StepHour_init_zero { 0 }
+#define cmd_System_StepMinute_init_zero { 0 }
+#define cmd_System_StepSecond_init_zero { 0 }
+#define cmd_System_EnableManualTime_init_zero { 0 }
+#define cmd_System_DisableManualTime_init_zero { 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_System_SetLocalization_loc_tag 1

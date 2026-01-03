@@ -307,90 +307,27 @@ extern "C"
       cmd_HeatCamera_Zoom_init_default   \
     }                                    \
   }
-#define cmd_HeatCamera_SetFxMode_init_default \
-  {                                           \
-    _ser_JonGuiDataFxModeHeat_MIN             \
-  }
-#define cmd_HeatCamera_SetClaheLevel_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_HeatCamera_ShiftClaheLevel_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_HeatCamera_NextFxMode_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_HeatCamera_PrevFxMode_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_HeatCamera_RefreshFxMode_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_HeatCamera_EnableDDE_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_HeatCamera_DisableDDE_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_HeatCamera_SetValue_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_HeatCamera_SetDDELevel_init_default \
-  {                                             \
-    0                                           \
-  }
-#define cmd_HeatCamera_SetDigitalZoomLevel_init_default \
-  {                                                     \
-    0                                                   \
-  }
-#define cmd_HeatCamera_ShiftDDE_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_HeatCamera_ZoomIn_init_default \
-  {                                        \
-    0                                      \
-  }
-#define cmd_HeatCamera_ZoomOut_init_default \
-  {                                         \
-    0                                       \
-  }
-#define cmd_HeatCamera_ZoomStop_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_HeatCamera_FocusIn_init_default \
-  {                                         \
-    0                                       \
-  }
-#define cmd_HeatCamera_FocusOut_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_HeatCamera_FocusStop_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_HeatCamera_FocusStepPlus_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_HeatCamera_FocusStepMinus_init_default \
-  {                                                \
-    0                                              \
-  }
-#define cmd_HeatCamera_Calibrate_init_default \
-  {                                           \
-    0                                         \
-  }
+#define cmd_HeatCamera_SetFxMode_init_default { _ser_JonGuiDataFxModeHeat_MIN }
+#define cmd_HeatCamera_SetClaheLevel_init_default { 0 }
+#define cmd_HeatCamera_ShiftClaheLevel_init_default { 0 }
+#define cmd_HeatCamera_NextFxMode_init_default { 0 }
+#define cmd_HeatCamera_PrevFxMode_init_default { 0 }
+#define cmd_HeatCamera_RefreshFxMode_init_default { 0 }
+#define cmd_HeatCamera_EnableDDE_init_default { 0 }
+#define cmd_HeatCamera_DisableDDE_init_default { 0 }
+#define cmd_HeatCamera_SetValue_init_default { 0 }
+#define cmd_HeatCamera_SetDDELevel_init_default { 0 }
+#define cmd_HeatCamera_SetDigitalZoomLevel_init_default { 0 }
+#define cmd_HeatCamera_ShiftDDE_init_default { 0 }
+#define cmd_HeatCamera_ZoomIn_init_default { 0 }
+#define cmd_HeatCamera_ZoomOut_init_default { 0 }
+#define cmd_HeatCamera_ZoomStop_init_default { 0 }
+#define cmd_HeatCamera_FocusIn_init_default { 0 }
+#define cmd_HeatCamera_FocusOut_init_default { 0 }
+#define cmd_HeatCamera_FocusStop_init_default { 0 }
+#define cmd_HeatCamera_FocusStepPlus_init_default { 0 }
+#define cmd_HeatCamera_FocusStepMinus_init_default { 0 }
+#define cmd_HeatCamera_Calibrate_init_default { 0 }
 #define cmd_HeatCamera_Zoom_init_default            \
   {                                                 \
     0,                                              \
@@ -398,78 +335,26 @@ extern "C"
       cmd_HeatCamera_SetZoomTableValue_init_default \
     }                                               \
   }
-#define cmd_HeatCamera_NextZoomTablePos_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_HeatCamera_PrevZoomTablePos_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_HeatCamera_SetCalibMode_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_HeatCamera_SetZoomTableValue_init_default \
-  {                                                   \
-    0                                                 \
-  }
-#define cmd_HeatCamera_SetAGC_init_default      \
-  {                                             \
-    _ser_JonGuiDataVideoChannelHeatAGCModes_MIN \
-  }
+#define cmd_HeatCamera_NextZoomTablePos_init_default { 0 }
+#define cmd_HeatCamera_PrevZoomTablePos_init_default { 0 }
+#define cmd_HeatCamera_SetCalibMode_init_default { 0 }
+#define cmd_HeatCamera_SetZoomTableValue_init_default { 0 }
+#define cmd_HeatCamera_SetAGC_init_default \
+  { _ser_JonGuiDataVideoChannelHeatAGCModes_MIN }
 #define cmd_HeatCamera_SetFilters_init_default \
-  {                                            \
-    _ser_JonGuiDataVideoChannelHeatFilters_MIN \
-  }
-#define cmd_HeatCamera_Start_init_default \
-  {                                       \
-    0                                     \
-  }
-#define cmd_HeatCamera_Stop_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_HeatCamera_Halt_init_default \
-  {                                      \
-    0                                    \
-  }
-#define cmd_HeatCamera_Photo_init_default \
-  {                                       \
-    0                                     \
-  }
-#define cmd_HeatCamera_GetMeteo_init_default \
-  {                                          \
-    0                                        \
-  }
-#define cmd_HeatCamera_SetAutoFocus_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_HeatCamera_ResetZoom_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_HeatCamera_SaveToTable_init_default \
-  {                                             \
-    0                                           \
-  }
-#define cmd_HeatCamera_FocusROI_init_default \
-  {                                          \
-    0, 0, 0, 0, 0, 0                         \
-  }
-#define cmd_HeatCamera_TrackROI_init_default \
-  {                                          \
-    0, 0, 0, 0, 0, 0                         \
-  }
-#define cmd_HeatCamera_ZoomROI_init_default \
-  {                                         \
-    0, 0, 0, 0, 0, 0                        \
-  }
-#define cmd_HeatCamera_FxROI_init_default \
-  {                                       \
-    0, 0, 0, 0, 0, 0                      \
-  }
+  { _ser_JonGuiDataVideoChannelHeatFilters_MIN }
+#define cmd_HeatCamera_Start_init_default { 0 }
+#define cmd_HeatCamera_Stop_init_default { 0 }
+#define cmd_HeatCamera_Halt_init_default { 0 }
+#define cmd_HeatCamera_Photo_init_default { 0 }
+#define cmd_HeatCamera_GetMeteo_init_default { 0 }
+#define cmd_HeatCamera_SetAutoFocus_init_default { 0 }
+#define cmd_HeatCamera_ResetZoom_init_default { 0 }
+#define cmd_HeatCamera_SaveToTable_init_default { 0 }
+#define cmd_HeatCamera_FocusROI_init_default { 0, 0, 0, 0, 0, 0 }
+#define cmd_HeatCamera_TrackROI_init_default { 0, 0, 0, 0, 0, 0 }
+#define cmd_HeatCamera_ZoomROI_init_default { 0, 0, 0, 0, 0, 0 }
+#define cmd_HeatCamera_FxROI_init_default { 0, 0, 0, 0, 0, 0 }
 #define cmd_HeatCamera_Root_init_zero \
   {                                   \
     0,                                \
@@ -477,90 +362,27 @@ extern "C"
       cmd_HeatCamera_Zoom_init_zero   \
     }                                 \
   }
-#define cmd_HeatCamera_SetFxMode_init_zero \
-  {                                        \
-    _ser_JonGuiDataFxModeHeat_MIN          \
-  }
-#define cmd_HeatCamera_SetClaheLevel_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_HeatCamera_ShiftClaheLevel_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_HeatCamera_NextFxMode_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_HeatCamera_PrevFxMode_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_HeatCamera_RefreshFxMode_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_HeatCamera_EnableDDE_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_HeatCamera_DisableDDE_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_HeatCamera_SetValue_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_HeatCamera_SetDDELevel_init_zero \
-  {                                          \
-    0                                        \
-  }
-#define cmd_HeatCamera_SetDigitalZoomLevel_init_zero \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_HeatCamera_ShiftDDE_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_HeatCamera_ZoomIn_init_zero \
-  {                                     \
-    0                                   \
-  }
-#define cmd_HeatCamera_ZoomOut_init_zero \
-  {                                      \
-    0                                    \
-  }
-#define cmd_HeatCamera_ZoomStop_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_HeatCamera_FocusIn_init_zero \
-  {                                      \
-    0                                    \
-  }
-#define cmd_HeatCamera_FocusOut_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_HeatCamera_FocusStop_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_HeatCamera_FocusStepPlus_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_HeatCamera_FocusStepMinus_init_zero \
-  {                                             \
-    0                                           \
-  }
-#define cmd_HeatCamera_Calibrate_init_zero \
-  {                                        \
-    0                                      \
-  }
+#define cmd_HeatCamera_SetFxMode_init_zero { _ser_JonGuiDataFxModeHeat_MIN }
+#define cmd_HeatCamera_SetClaheLevel_init_zero { 0 }
+#define cmd_HeatCamera_ShiftClaheLevel_init_zero { 0 }
+#define cmd_HeatCamera_NextFxMode_init_zero { 0 }
+#define cmd_HeatCamera_PrevFxMode_init_zero { 0 }
+#define cmd_HeatCamera_RefreshFxMode_init_zero { 0 }
+#define cmd_HeatCamera_EnableDDE_init_zero { 0 }
+#define cmd_HeatCamera_DisableDDE_init_zero { 0 }
+#define cmd_HeatCamera_SetValue_init_zero { 0 }
+#define cmd_HeatCamera_SetDDELevel_init_zero { 0 }
+#define cmd_HeatCamera_SetDigitalZoomLevel_init_zero { 0 }
+#define cmd_HeatCamera_ShiftDDE_init_zero { 0 }
+#define cmd_HeatCamera_ZoomIn_init_zero { 0 }
+#define cmd_HeatCamera_ZoomOut_init_zero { 0 }
+#define cmd_HeatCamera_ZoomStop_init_zero { 0 }
+#define cmd_HeatCamera_FocusIn_init_zero { 0 }
+#define cmd_HeatCamera_FocusOut_init_zero { 0 }
+#define cmd_HeatCamera_FocusStop_init_zero { 0 }
+#define cmd_HeatCamera_FocusStepPlus_init_zero { 0 }
+#define cmd_HeatCamera_FocusStepMinus_init_zero { 0 }
+#define cmd_HeatCamera_Calibrate_init_zero { 0 }
 #define cmd_HeatCamera_Zoom_init_zero            \
   {                                              \
     0,                                           \
@@ -568,78 +390,26 @@ extern "C"
       cmd_HeatCamera_SetZoomTableValue_init_zero \
     }                                            \
   }
-#define cmd_HeatCamera_NextZoomTablePos_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_HeatCamera_PrevZoomTablePos_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_HeatCamera_SetCalibMode_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_HeatCamera_SetZoomTableValue_init_zero \
-  {                                                \
-    0                                              \
-  }
-#define cmd_HeatCamera_SetAGC_init_zero         \
-  {                                             \
-    _ser_JonGuiDataVideoChannelHeatAGCModes_MIN \
-  }
-#define cmd_HeatCamera_SetFilters_init_zero    \
-  {                                            \
-    _ser_JonGuiDataVideoChannelHeatFilters_MIN \
-  }
-#define cmd_HeatCamera_Start_init_zero \
-  {                                    \
-    0                                  \
-  }
-#define cmd_HeatCamera_Stop_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_HeatCamera_Halt_init_zero \
-  {                                   \
-    0                                 \
-  }
-#define cmd_HeatCamera_Photo_init_zero \
-  {                                    \
-    0                                  \
-  }
-#define cmd_HeatCamera_GetMeteo_init_zero \
-  {                                       \
-    0                                     \
-  }
-#define cmd_HeatCamera_SetAutoFocus_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_HeatCamera_ResetZoom_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_HeatCamera_SaveToTable_init_zero \
-  {                                          \
-    0                                        \
-  }
-#define cmd_HeatCamera_FocusROI_init_zero \
-  {                                       \
-    0, 0, 0, 0, 0, 0                      \
-  }
-#define cmd_HeatCamera_TrackROI_init_zero \
-  {                                       \
-    0, 0, 0, 0, 0, 0                      \
-  }
-#define cmd_HeatCamera_ZoomROI_init_zero \
-  {                                      \
-    0, 0, 0, 0, 0, 0                     \
-  }
-#define cmd_HeatCamera_FxROI_init_zero \
-  {                                    \
-    0, 0, 0, 0, 0, 0                   \
-  }
+#define cmd_HeatCamera_NextZoomTablePos_init_zero { 0 }
+#define cmd_HeatCamera_PrevZoomTablePos_init_zero { 0 }
+#define cmd_HeatCamera_SetCalibMode_init_zero { 0 }
+#define cmd_HeatCamera_SetZoomTableValue_init_zero { 0 }
+#define cmd_HeatCamera_SetAGC_init_zero \
+  { _ser_JonGuiDataVideoChannelHeatAGCModes_MIN }
+#define cmd_HeatCamera_SetFilters_init_zero \
+  { _ser_JonGuiDataVideoChannelHeatFilters_MIN }
+#define cmd_HeatCamera_Start_init_zero { 0 }
+#define cmd_HeatCamera_Stop_init_zero { 0 }
+#define cmd_HeatCamera_Halt_init_zero { 0 }
+#define cmd_HeatCamera_Photo_init_zero { 0 }
+#define cmd_HeatCamera_GetMeteo_init_zero { 0 }
+#define cmd_HeatCamera_SetAutoFocus_init_zero { 0 }
+#define cmd_HeatCamera_ResetZoom_init_zero { 0 }
+#define cmd_HeatCamera_SaveToTable_init_zero { 0 }
+#define cmd_HeatCamera_FocusROI_init_zero { 0, 0, 0, 0, 0, 0 }
+#define cmd_HeatCamera_TrackROI_init_zero { 0, 0, 0, 0, 0, 0 }
+#define cmd_HeatCamera_ZoomROI_init_zero { 0, 0, 0, 0, 0, 0 }
+#define cmd_HeatCamera_FxROI_init_zero { 0, 0, 0, 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_HeatCamera_SetFxMode_mode_tag 1

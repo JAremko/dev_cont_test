@@ -36,18 +36,34 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataCameraHeat_init_default                    \
-  {                                                              \
-    0, _ser_JonGuiDataVideoChannelHeatAGCModes_MIN,              \
-      _ser_JonGuiDataVideoChannelHeatFilters_MIN, 0, 0, 0, 0, 0, \
-      _ser_JonGuiDataFxModeHeat_MIN, 0, 0, 0, 0                  \
-  }
-#define ser_JonGuiDataCameraHeat_init_zero                       \
-  {                                                              \
-    0, _ser_JonGuiDataVideoChannelHeatAGCModes_MIN,              \
-      _ser_JonGuiDataVideoChannelHeatFilters_MIN, 0, 0, 0, 0, 0, \
-      _ser_JonGuiDataFxModeHeat_MIN, 0, 0, 0, 0                  \
-  }
+#define ser_JonGuiDataCameraHeat_init_default    \
+  { 0,                                           \
+    _ser_JonGuiDataVideoChannelHeatAGCModes_MIN, \
+    _ser_JonGuiDataVideoChannelHeatFilters_MIN,  \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    _ser_JonGuiDataFxModeHeat_MIN,               \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    0 }
+#define ser_JonGuiDataCameraHeat_init_zero       \
+  { 0,                                           \
+    _ser_JonGuiDataVideoChannelHeatAGCModes_MIN, \
+    _ser_JonGuiDataVideoChannelHeatFilters_MIN,  \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    _ser_JonGuiDataFxModeHeat_MIN,               \
+    0,                                           \
+    0,                                           \
+    0,                                           \
+    0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGuiDataCameraHeat_zoom_pos_tag 1

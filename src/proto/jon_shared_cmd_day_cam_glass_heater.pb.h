@@ -62,26 +62,11 @@ extern "C"
       cmd_DayCamGlassHeater_Start_init_default  \
     }                                           \
   }
-#define cmd_DayCamGlassHeater_Start_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_DayCamGlassHeater_Stop_init_default \
-  {                                             \
-    0                                           \
-  }
-#define cmd_DayCamGlassHeater_TurnOn_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_DayCamGlassHeater_TurnOff_init_default \
-  {                                                \
-    0                                              \
-  }
-#define cmd_DayCamGlassHeater_GetMeteo_init_default \
-  {                                                 \
-    0                                               \
-  }
+#define cmd_DayCamGlassHeater_Start_init_default { 0 }
+#define cmd_DayCamGlassHeater_Stop_init_default { 0 }
+#define cmd_DayCamGlassHeater_TurnOn_init_default { 0 }
+#define cmd_DayCamGlassHeater_TurnOff_init_default { 0 }
+#define cmd_DayCamGlassHeater_GetMeteo_init_default { 0 }
 #define cmd_DayCamGlassHeater_Root_init_zero \
   {                                          \
     0,                                       \
@@ -89,26 +74,11 @@ extern "C"
       cmd_DayCamGlassHeater_Start_init_zero  \
     }                                        \
   }
-#define cmd_DayCamGlassHeater_Start_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_DayCamGlassHeater_Stop_init_zero \
-  {                                          \
-    0                                        \
-  }
-#define cmd_DayCamGlassHeater_TurnOn_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_DayCamGlassHeater_TurnOff_init_zero \
-  {                                             \
-    0                                           \
-  }
-#define cmd_DayCamGlassHeater_GetMeteo_init_zero \
-  {                                              \
-    0                                            \
-  }
+#define cmd_DayCamGlassHeater_Start_init_zero { 0 }
+#define cmd_DayCamGlassHeater_Stop_init_zero { 0 }
+#define cmd_DayCamGlassHeater_TurnOn_init_zero { 0 }
+#define cmd_DayCamGlassHeater_TurnOff_init_zero { 0 }
+#define cmd_DayCamGlassHeater_GetMeteo_init_zero { 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_DayCamGlassHeater_Root_start_tag 1

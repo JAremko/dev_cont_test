@@ -30,14 +30,10 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataRecOsd_init_default             \
-  {                                                   \
-    _ser_JonGuiDataRecOsdScreen_MIN, 0, 0, 0, 0, 0, 0 \
-  }
-#define ser_JonGuiDataRecOsd_init_zero                \
-  {                                                   \
-    _ser_JonGuiDataRecOsdScreen_MIN, 0, 0, 0, 0, 0, 0 \
-  }
+#define ser_JonGuiDataRecOsd_init_default \
+  { _ser_JonGuiDataRecOsdScreen_MIN, 0, 0, 0, 0, 0, 0 }
+#define ser_JonGuiDataRecOsd_init_zero \
+  { _ser_JonGuiDataRecOsdScreen_MIN, 0, 0, 0, 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGuiDataRecOsd_screen_tag 1

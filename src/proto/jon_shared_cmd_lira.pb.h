@@ -55,14 +55,10 @@ extern "C"
       cmd_Lira_Refine_target_init_default \
     }                                     \
   }
-#define cmd_Lira_Refine_target_init_default           \
-  {                                                   \
-    false, cmd_Lira_JonGuiDataLiraTarget_init_default \
-  }
+#define cmd_Lira_Refine_target_init_default \
+  { false, cmd_Lira_JonGuiDataLiraTarget_init_default }
 #define cmd_Lira_JonGuiDataLiraTarget_init_default \
-  {                                                \
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0                \
-  }
+  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 #define cmd_Lira_Root_init_zero        \
   {                                    \
     0,                                 \
@@ -70,14 +66,10 @@ extern "C"
       cmd_Lira_Refine_target_init_zero \
     }                                  \
   }
-#define cmd_Lira_Refine_target_init_zero           \
-  {                                                \
-    false, cmd_Lira_JonGuiDataLiraTarget_init_zero \
-  }
+#define cmd_Lira_Refine_target_init_zero \
+  { false, cmd_Lira_JonGuiDataLiraTarget_init_zero }
 #define cmd_Lira_JonGuiDataLiraTarget_init_zero \
-  {                                             \
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0             \
-  }
+  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_Lira_JonGuiDataLiraTarget_timestamp_tag 1

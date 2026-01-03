@@ -64,35 +64,36 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGUIState_init_default                                           \
-  {                                                                            \
-    0, 0, false, ser_JonGuiDataSystem_init_default, false,                     \
-      ser_JonGuiDataMeteo_init_default, false, ser_JonGuiDataLrf_init_default, \
-      false, ser_JonGuiDataTime_init_default, false,                           \
-      ser_JonGuiDataGps_init_default, false,                                   \
-      ser_JonGuiDataCompass_init_default, false,                               \
-      ser_JonGuiDataRotary_init_default, false,                                \
-      ser_JonGuiDataCameraDay_init_default, false,                             \
-      ser_JonGuiDataCameraHeat_init_default, false,                            \
-      ser_JonGuiDataCompassCalibration_init_default, false,                    \
-      ser_JonGuiDataRecOsd_init_default, false,                                \
-      ser_JonGuiDataDayCamGlassHeater_init_default, false,                     \
-      ser_JonGuiDataActualSpaceTime_init_default                               \
-  }
-#define ser_JonGUIState_init_zero                                              \
-  {                                                                            \
-    0, 0, false, ser_JonGuiDataSystem_init_zero, false,                        \
-      ser_JonGuiDataMeteo_init_zero, false, ser_JonGuiDataLrf_init_zero,       \
-      false, ser_JonGuiDataTime_init_zero, false, ser_JonGuiDataGps_init_zero, \
-      false, ser_JonGuiDataCompass_init_zero, false,                           \
-      ser_JonGuiDataRotary_init_zero, false,                                   \
-      ser_JonGuiDataCameraDay_init_zero, false,                                \
-      ser_JonGuiDataCameraHeat_init_zero, false,                               \
-      ser_JonGuiDataCompassCalibration_init_zero, false,                       \
-      ser_JonGuiDataRecOsd_init_zero, false,                                   \
-      ser_JonGuiDataDayCamGlassHeater_init_zero, false,                        \
-      ser_JonGuiDataActualSpaceTime_init_zero                                  \
-  }
+#define ser_JonGUIState_init_default                      \
+  { 0,     0,                                             \
+    false, ser_JonGuiDataSystem_init_default,             \
+    false, ser_JonGuiDataMeteo_init_default,              \
+    false, ser_JonGuiDataLrf_init_default,                \
+    false, ser_JonGuiDataTime_init_default,               \
+    false, ser_JonGuiDataGps_init_default,                \
+    false, ser_JonGuiDataCompass_init_default,            \
+    false, ser_JonGuiDataRotary_init_default,             \
+    false, ser_JonGuiDataCameraDay_init_default,          \
+    false, ser_JonGuiDataCameraHeat_init_default,         \
+    false, ser_JonGuiDataCompassCalibration_init_default, \
+    false, ser_JonGuiDataRecOsd_init_default,             \
+    false, ser_JonGuiDataDayCamGlassHeater_init_default,  \
+    false, ser_JonGuiDataActualSpaceTime_init_default }
+#define ser_JonGUIState_init_zero                      \
+  { 0,     0,                                          \
+    false, ser_JonGuiDataSystem_init_zero,             \
+    false, ser_JonGuiDataMeteo_init_zero,              \
+    false, ser_JonGuiDataLrf_init_zero,                \
+    false, ser_JonGuiDataTime_init_zero,               \
+    false, ser_JonGuiDataGps_init_zero,                \
+    false, ser_JonGuiDataCompass_init_zero,            \
+    false, ser_JonGuiDataRotary_init_zero,             \
+    false, ser_JonGuiDataCameraDay_init_zero,          \
+    false, ser_JonGuiDataCameraHeat_init_zero,         \
+    false, ser_JonGuiDataCompassCalibration_init_zero, \
+    false, ser_JonGuiDataRecOsd_init_zero,             \
+    false, ser_JonGuiDataDayCamGlassHeater_init_zero,  \
+    false, ser_JonGuiDataActualSpaceTime_init_zero }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGUIState_protocol_version_tag 1

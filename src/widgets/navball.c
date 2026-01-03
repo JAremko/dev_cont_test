@@ -56,7 +56,7 @@ typedef struct
  * @param deg Angle in degrees
  * @return Angle in radians (deg × π / 180)
  */
-#define DEG_TO_RAD(deg) ((deg)*M_PI / 180.0f)
+#define DEG_TO_RAD(deg) ((deg) * M_PI / 180.0f)
 
 // Vector operations
 static inline vec3_t
@@ -193,7 +193,7 @@ typedef int32_t fixed16_t;
 #define FIXED_HALF (FIXED_ONE >> 1)  // 0.5 in fixed-point (32768)
 
 // Conversion macros
-#define F2FX(f) ((fixed16_t)((f)*FIXED_ONE))      // float → fixed
+#define F2FX(f) ((fixed16_t)((f) * FIXED_ONE))    // float → fixed
 #define FX2F(i) ((float)(i) / (float)FIXED_ONE)   // fixed → float
 #define I2FX(i) ((fixed16_t)((i) << FIXED_SHIFT)) // int → fixed
 
@@ -723,8 +723,8 @@ navball_render(osd_context_t *ctx, osd_state_t *pb_state)
   // conversion) YXZ intrinsic order: pitch first (angles[0]), then roll
   // (angles[1]), then yaw (angles[2])
   vec3 angles = { pitch_rad, roll_rad, yaw_rad }; // cglm vec3 is float[3]
-  versor q;                      // cglm versor is float[4] (quaternion)
-  mat4 cglm_mat;                 // cglm mat4 is float[16]
+  versor q;      // cglm versor is float[4] (quaternion)
+  mat4 cglm_mat; // cglm mat4 is float[16]
 
   glm_euler_yxz_quat(angles, q); // Convert YXZ euler angles to quaternion
   glm_quat_mat4(q, cglm_mat);    // Convert quaternion to 4×4 matrix

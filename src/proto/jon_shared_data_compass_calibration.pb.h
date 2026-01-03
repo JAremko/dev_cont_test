@@ -29,14 +29,10 @@ extern "C"
 #endif
 
 /* Initializer values for message structs */
-#define ser_JonGuiDataCompassCalibration_init_default        \
-  {                                                          \
-    0, 0, 0, 0, 0, _ser_JonGuiDataCompassCalibrateStatus_MIN \
-  }
-#define ser_JonGuiDataCompassCalibration_init_zero           \
-  {                                                          \
-    0, 0, 0, 0, 0, _ser_JonGuiDataCompassCalibrateStatus_MIN \
-  }
+#define ser_JonGuiDataCompassCalibration_init_default \
+  { 0, 0, 0, 0, 0, _ser_JonGuiDataCompassCalibrateStatus_MIN }
+#define ser_JonGuiDataCompassCalibration_init_zero \
+  { 0, 0, 0, 0, 0, _ser_JonGuiDataCompassCalibrateStatus_MIN }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGuiDataCompassCalibration_stage_tag 1

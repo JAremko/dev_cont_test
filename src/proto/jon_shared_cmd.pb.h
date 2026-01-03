@@ -89,18 +89,9 @@ extern "C"
       cmd_DayCamera_Root_init_default                         \
     }                                                         \
   }
-#define cmd_Ping_init_default \
-  {                           \
-    0                         \
-  }
-#define cmd_Noop_init_default \
-  {                           \
-    0                         \
-  }
-#define cmd_Frozen_init_default \
-  {                             \
-    0                           \
-  }
+#define cmd_Ping_init_default { 0 }
+#define cmd_Noop_init_default { 0 }
+#define cmd_Frozen_init_default { 0 }
 #define cmd_Root_init_zero                                    \
   {                                                           \
     0, 0, 0, 0, _ser_JonGuiDataClientType_MIN, 0, 0, 0, 0, 0, \
@@ -108,18 +99,9 @@ extern "C"
       cmd_DayCamera_Root_init_zero                            \
     }                                                         \
   }
-#define cmd_Ping_init_zero \
-  {                        \
-    0                      \
-  }
-#define cmd_Noop_init_zero \
-  {                        \
-    0                      \
-  }
-#define cmd_Frozen_init_zero \
-  {                          \
-    0                        \
-  }
+#define cmd_Ping_init_zero { 0 }
+#define cmd_Noop_init_zero { 0 }
+#define cmd_Frozen_init_zero { 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_Root_protocol_version_tag 1

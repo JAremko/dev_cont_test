@@ -108,50 +108,18 @@ extern "C"
       cmd_CV_SetAutoFocus_init_default \
     }                                  \
   }
-#define cmd_CV_VampireModeEnable_init_default \
-  {                                           \
-    0                                         \
-  }
-#define cmd_CV_DumpStart_init_default \
-  {                                   \
-    0                                 \
-  }
-#define cmd_CV_DumpStop_init_default \
-  {                                  \
-    0                                \
-  }
-#define cmd_CV_VampireModeDisable_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_CV_StabilizationModeEnable_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_CV_StabilizationModeDisable_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_CV_RecognitionModeEnable_init_default \
-  {                                               \
-    0                                             \
-  }
-#define cmd_CV_RecognitionModeDisable_init_default \
-  {                                                \
-    0                                              \
-  }
-#define cmd_CV_SetAutoFocus_init_default \
-  {                                      \
-    _ser_JonGuiDataVideoChannel_MIN, 0   \
-  }
-#define cmd_CV_StartTrackNDC_init_default       \
-  {                                             \
-    _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 \
-  }
-#define cmd_CV_StopTrack_init_default \
-  {                                   \
-    0                                 \
-  }
+#define cmd_CV_VampireModeEnable_init_default { 0 }
+#define cmd_CV_DumpStart_init_default { 0 }
+#define cmd_CV_DumpStop_init_default { 0 }
+#define cmd_CV_VampireModeDisable_init_default { 0 }
+#define cmd_CV_StabilizationModeEnable_init_default { 0 }
+#define cmd_CV_StabilizationModeDisable_init_default { 0 }
+#define cmd_CV_RecognitionModeEnable_init_default { 0 }
+#define cmd_CV_RecognitionModeDisable_init_default { 0 }
+#define cmd_CV_SetAutoFocus_init_default { _ser_JonGuiDataVideoChannel_MIN, 0 }
+#define cmd_CV_StartTrackNDC_init_default \
+  { _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 }
+#define cmd_CV_StopTrack_init_default { 0 }
 #define cmd_CV_Root_init_zero       \
   {                                 \
     0,                              \
@@ -159,50 +127,18 @@ extern "C"
       cmd_CV_SetAutoFocus_init_zero \
     }                               \
   }
-#define cmd_CV_VampireModeEnable_init_zero \
-  {                                        \
-    0                                      \
-  }
-#define cmd_CV_DumpStart_init_zero \
-  {                                \
-    0                              \
-  }
-#define cmd_CV_DumpStop_init_zero \
-  {                               \
-    0                             \
-  }
-#define cmd_CV_VampireModeDisable_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_CV_StabilizationModeEnable_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_CV_StabilizationModeDisable_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_CV_RecognitionModeEnable_init_zero \
-  {                                            \
-    0                                          \
-  }
-#define cmd_CV_RecognitionModeDisable_init_zero \
-  {                                             \
-    0                                           \
-  }
-#define cmd_CV_SetAutoFocus_init_zero  \
-  {                                    \
-    _ser_JonGuiDataVideoChannel_MIN, 0 \
-  }
-#define cmd_CV_StartTrackNDC_init_zero          \
-  {                                             \
-    _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 \
-  }
-#define cmd_CV_StopTrack_init_zero \
-  {                                \
-    0                              \
-  }
+#define cmd_CV_VampireModeEnable_init_zero { 0 }
+#define cmd_CV_DumpStart_init_zero { 0 }
+#define cmd_CV_DumpStop_init_zero { 0 }
+#define cmd_CV_VampireModeDisable_init_zero { 0 }
+#define cmd_CV_StabilizationModeEnable_init_zero { 0 }
+#define cmd_CV_StabilizationModeDisable_init_zero { 0 }
+#define cmd_CV_RecognitionModeEnable_init_zero { 0 }
+#define cmd_CV_RecognitionModeDisable_init_zero { 0 }
+#define cmd_CV_SetAutoFocus_init_zero { _ser_JonGuiDataVideoChannel_MIN, 0 }
+#define cmd_CV_StartTrackNDC_init_zero \
+  { _ser_JonGuiDataVideoChannel_MIN, 0, 0, 0, 0 }
+#define cmd_CV_StopTrack_init_zero { 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_CV_SetAutoFocus_channel_tag 1

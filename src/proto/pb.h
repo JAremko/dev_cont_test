@@ -300,9 +300,9 @@ typedef uint_least8_t pb_byte_t;
 #define PB_ATYPE_CALLBACK 0x40U
 #define PB_ATYPE_MASK 0xC0U
 
-#define PB_ATYPE(x) ((x)&PB_ATYPE_MASK)
-#define PB_HTYPE(x) ((x)&PB_HTYPE_MASK)
-#define PB_LTYPE(x) ((x)&PB_LTYPE_MASK)
+#define PB_ATYPE(x) ((x) & PB_ATYPE_MASK)
+#define PB_HTYPE(x) ((x) & PB_HTYPE_MASK)
+#define PB_LTYPE(x) ((x) & PB_LTYPE_MASK)
 #define PB_LTYPE_IS_SUBMSG(x) \
   (PB_LTYPE(x) == PB_LTYPE_SUBMESSAGE || PB_LTYPE(x) == PB_LTYPE_SUBMSG_W_CB)
 
@@ -316,7 +316,7 @@ typedef uint_least8_t pb_byte_t;
 typedef uint_least16_t pb_size_t;
 typedef int_least16_t pb_ssize_t;
 #endif
-#define PB_SIZE_MAX ((pb_size_t)-1)
+#define PB_SIZE_MAX ((pb_size_t) - 1)
 
   /* Forward declaration of struct types */
   typedef struct pb_istream_s pb_istream_t;
@@ -348,21 +348,21 @@ typedef int_least16_t pb_ssize_t;
     const pb_msgdesc_t *descriptor; /* Pointer to message descriptor constant */
     void *message;                  /* Pointer to start of the structure */
 
-    pb_size_t index;                /* Index of the field */
-    pb_size_t field_info_index;     /* Index to descriptor->field_info array */
+    pb_size_t index;            /* Index of the field */
+    pb_size_t field_info_index; /* Index to descriptor->field_info array */
     pb_size_t
       required_field_index;     /* Index that counts only the required fields */
     pb_size_t submessage_index; /* Index that counts only submessages */
 
-    pb_size_t tag;              /* Tag of current field */
-    pb_size_t data_size;        /* sizeof() of a single item */
-    pb_size_t array_size;       /* Number of array entries */
-    pb_type_t type;             /* Type of current field */
+    pb_size_t tag;        /* Tag of current field */
+    pb_size_t data_size;  /* sizeof() of a single item */
+    pb_size_t array_size; /* Number of array entries */
+    pb_type_t type;       /* Type of current field */
 
-    void *pField;               /* Pointer to current field in struct */
-    void *pData; /* Pointer to current data contents. Different than pField for
-                    arrays and pointers. */
-    void *pSize; /* Pointer to count/has field */
+    void *pField; /* Pointer to current field in struct */
+    void *pData;  /* Pointer to current data contents. Different than pField for
+                     arrays and pointers. */
+    void *pSize;  /* Pointer to count/has field */
 
     const pb_msgdesc_t *submsg_desc; /* For submessage fields, pointer to field
                                         descriptor for the submessage. */
@@ -506,10 +506,7 @@ typedef int_least16_t pb_ssize_t;
     bool found;
   };
 
-#define pb_extension_init_zero \
-  {                            \
-    NULL, NULL, NULL, false    \
-  }
+#define pb_extension_init_zero { NULL, NULL, NULL, false }
 
 /* Memory allocation functions to use. You can define pb_realloc and
  * pb_free to custom functions if you want. */
@@ -875,22 +872,23 @@ typedef int_least16_t pb_ssize_t;
 #define PB_FIELDINFO_1(tag, type, data_offset, data_size, size_offset, \
                        array_size)                                     \
   (0 | (((tag) << 2) & 0xFF) | ((type) << 8)                           \
-   | (((uint32_t)(data_offset)&0xFF) << 16)                            \
-   | (((uint32_t)(size_offset)&0x0F) << 24)                            \
-   | (((uint32_t)(data_size)&0x0F) << 28)),
+   | (((uint32_t)(data_offset) & 0xFF) << 16)                          \
+   | (((uint32_t)(size_offset) & 0x0F) << 24)                          \
+   | (((uint32_t)(data_size) & 0x0F) << 28)),
 
-#define PB_FIELDINFO_2(tag, type, data_offset, data_size, size_offset,        \
-                       array_size)                                            \
-  (1 | (((tag) << 2) & 0xFF) | ((type) << 8)                                  \
-   | (((uint32_t)(array_size)&0xFFF) << 16)                                   \
-   | (((uint32_t)(size_offset)&0x0F) << 28)),                                 \
-    (((uint32_t)(data_offset)&0xFFFF) | (((uint32_t)(data_size)&0xFFF) << 16) \
-     | (((uint32_t)(tag)&0x3c0) << 22)),
+#define PB_FIELDINFO_2(tag, type, data_offset, data_size, size_offset, \
+                       array_size)                                     \
+  (1 | (((tag) << 2) & 0xFF) | ((type) << 8)                           \
+   | (((uint32_t)(array_size) & 0xFFF) << 16)                          \
+   | (((uint32_t)(size_offset) & 0x0F) << 28)),                        \
+    (((uint32_t)(data_offset) & 0xFFFF)                                \
+     | (((uint32_t)(data_size) & 0xFFF) << 16)                         \
+     | (((uint32_t)(tag) & 0x3c0) << 22)),
 
 #define PB_FIELDINFO_4(tag, type, data_offset, data_size, size_offset, \
                        array_size)                                     \
   (2 | (((tag) << 2) & 0xFF) | ((type) << 8)                           \
-   | (((uint32_t)(array_size)&0xFFFF) << 16)),                         \
+   | (((uint32_t)(array_size) & 0xFFFF) << 16)),                       \
     ((uint32_t)(int_least8_t)(size_offset)                             \
      | (((uint32_t)(tag) << 2) & 0xFFFFFF00)),                         \
     (data_offset), (data_size),
@@ -1053,13 +1051,13 @@ typedef int_least16_t pb_ssize_t;
 #ifdef __cplusplus
 #if __cplusplus >= 201103L
 #define PB_CONSTEXPR constexpr
-#else  // __cplusplus >= 201103L
+#else // __cplusplus >= 201103L
 #define PB_CONSTEXPR
 #endif // __cplusplus >= 201103L
 
 #if __cplusplus >= 201703L
 #define PB_INLINE_CONSTEXPR inline constexpr
-#else  // __cplusplus >= 201703L
+#else // __cplusplus >= 201703L
 #define PB_INLINE_CONSTEXPR PB_CONSTEXPR
 #endif // __cplusplus >= 201703L
 
@@ -1069,7 +1067,7 @@ extern "C++"
   {
   // Each type will be partially specialized by the generator.
   template <typename GenMessageT> struct MessageDescriptor;
-  }    // namespace nanopb
+  } // namespace nanopb
 }
 #endif /* __cplusplus */
 

@@ -124,66 +124,21 @@ extern "C"
       cmd_Lrf_Measure_init_default \
     }                              \
   }
-#define cmd_Lrf_GetMeteo_init_default \
-  {                                   \
-    0                                 \
-  }
-#define cmd_Lrf_Start_init_default \
-  {                                \
-    0                              \
-  }
-#define cmd_Lrf_Stop_init_default \
-  {                               \
-    0                             \
-  }
-#define cmd_Lrf_Measure_init_default \
-  {                                  \
-    0                                \
-  }
-#define cmd_Lrf_ScanOn_init_default \
-  {                                 \
-    0                               \
-  }
-#define cmd_Lrf_ScanOff_init_default \
-  {                                  \
-    0                                \
-  }
-#define cmd_Lrf_RefineOff_init_default \
-  {                                    \
-    0                                  \
-  }
-#define cmd_Lrf_RefineOn_init_default \
-  {                                   \
-    0                                 \
-  }
-#define cmd_Lrf_TargetDesignatorOff_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_Lrf_TargetDesignatorOnModeA_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_Lrf_TargetDesignatorOnModeB_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_Lrf_EnableFogMode_init_default \
-  {                                        \
-    0                                      \
-  }
-#define cmd_Lrf_DisableFogMode_init_default \
-  {                                         \
-    0                                       \
-  }
-#define cmd_Lrf_SetScanMode_init_default \
-  {                                      \
-    _ser_JonGuiDataLrfScanModes_MIN      \
-  }
-#define cmd_Lrf_NewSession_init_default \
-  {                                     \
-    0                                   \
-  }
+#define cmd_Lrf_GetMeteo_init_default { 0 }
+#define cmd_Lrf_Start_init_default { 0 }
+#define cmd_Lrf_Stop_init_default { 0 }
+#define cmd_Lrf_Measure_init_default { 0 }
+#define cmd_Lrf_ScanOn_init_default { 0 }
+#define cmd_Lrf_ScanOff_init_default { 0 }
+#define cmd_Lrf_RefineOff_init_default { 0 }
+#define cmd_Lrf_RefineOn_init_default { 0 }
+#define cmd_Lrf_TargetDesignatorOff_init_default { 0 }
+#define cmd_Lrf_TargetDesignatorOnModeA_init_default { 0 }
+#define cmd_Lrf_TargetDesignatorOnModeB_init_default { 0 }
+#define cmd_Lrf_EnableFogMode_init_default { 0 }
+#define cmd_Lrf_DisableFogMode_init_default { 0 }
+#define cmd_Lrf_SetScanMode_init_default { _ser_JonGuiDataLrfScanModes_MIN }
+#define cmd_Lrf_NewSession_init_default { 0 }
 #define cmd_Lrf_Root_init_zero  \
   {                             \
     0,                          \
@@ -191,66 +146,21 @@ extern "C"
       cmd_Lrf_Measure_init_zero \
     }                           \
   }
-#define cmd_Lrf_GetMeteo_init_zero \
-  {                                \
-    0                              \
-  }
-#define cmd_Lrf_Start_init_zero \
-  {                             \
-    0                           \
-  }
-#define cmd_Lrf_Stop_init_zero \
-  {                            \
-    0                          \
-  }
-#define cmd_Lrf_Measure_init_zero \
-  {                               \
-    0                             \
-  }
-#define cmd_Lrf_ScanOn_init_zero \
-  {                              \
-    0                            \
-  }
-#define cmd_Lrf_ScanOff_init_zero \
-  {                               \
-    0                             \
-  }
-#define cmd_Lrf_RefineOff_init_zero \
-  {                                 \
-    0                               \
-  }
-#define cmd_Lrf_RefineOn_init_zero \
-  {                                \
-    0                              \
-  }
-#define cmd_Lrf_TargetDesignatorOff_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_Lrf_TargetDesignatorOnModeA_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_Lrf_TargetDesignatorOnModeB_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_Lrf_EnableFogMode_init_zero \
-  {                                     \
-    0                                   \
-  }
-#define cmd_Lrf_DisableFogMode_init_zero \
-  {                                      \
-    0                                    \
-  }
-#define cmd_Lrf_SetScanMode_init_zero \
-  {                                   \
-    _ser_JonGuiDataLrfScanModes_MIN   \
-  }
-#define cmd_Lrf_NewSession_init_zero \
-  {                                  \
-    0                                \
-  }
+#define cmd_Lrf_GetMeteo_init_zero { 0 }
+#define cmd_Lrf_Start_init_zero { 0 }
+#define cmd_Lrf_Stop_init_zero { 0 }
+#define cmd_Lrf_Measure_init_zero { 0 }
+#define cmd_Lrf_ScanOn_init_zero { 0 }
+#define cmd_Lrf_ScanOff_init_zero { 0 }
+#define cmd_Lrf_RefineOff_init_zero { 0 }
+#define cmd_Lrf_RefineOn_init_zero { 0 }
+#define cmd_Lrf_TargetDesignatorOff_init_zero { 0 }
+#define cmd_Lrf_TargetDesignatorOnModeA_init_zero { 0 }
+#define cmd_Lrf_TargetDesignatorOnModeB_init_zero { 0 }
+#define cmd_Lrf_EnableFogMode_init_zero { 0 }
+#define cmd_Lrf_DisableFogMode_init_zero { 0 }
+#define cmd_Lrf_SetScanMode_init_zero { _ser_JonGuiDataLrfScanModes_MIN }
+#define cmd_Lrf_NewSession_init_zero { 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_Lrf_SetScanMode_mode_tag 1

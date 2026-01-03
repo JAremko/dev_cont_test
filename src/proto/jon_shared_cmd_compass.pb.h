@@ -103,54 +103,18 @@ extern "C"
       cmd_Compass_Start_init_default  \
     }                                 \
   }
-#define cmd_Compass_Start_init_default \
-  {                                    \
-    0                                  \
-  }
-#define cmd_Compass_Stop_init_default \
-  {                                   \
-    0                                 \
-  }
-#define cmd_Compass_Next_init_default \
-  {                                   \
-    0                                 \
-  }
-#define cmd_Compass_CalibrateStartLong_init_default \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_Compass_CalibrateStartShort_init_default \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_Compass_CalibrateNext_init_default \
-  {                                            \
-    0                                          \
-  }
-#define cmd_Compass_CalibrateCencel_init_default \
-  {                                              \
-    0                                            \
-  }
-#define cmd_Compass_GetMeteo_init_default \
-  {                                       \
-    0                                     \
-  }
-#define cmd_Compass_SetMagneticDeclination_init_default \
-  {                                                     \
-    0                                                   \
-  }
-#define cmd_Compass_SetOffsetAngleAzimuth_init_default \
-  {                                                    \
-    0                                                  \
-  }
-#define cmd_Compass_SetOffsetAngleElevation_init_default \
-  {                                                      \
-    0                                                    \
-  }
-#define cmd_Compass_SetUseRotaryPosition_init_default \
-  {                                                   \
-    0                                                 \
-  }
+#define cmd_Compass_Start_init_default { 0 }
+#define cmd_Compass_Stop_init_default { 0 }
+#define cmd_Compass_Next_init_default { 0 }
+#define cmd_Compass_CalibrateStartLong_init_default { 0 }
+#define cmd_Compass_CalibrateStartShort_init_default { 0 }
+#define cmd_Compass_CalibrateNext_init_default { 0 }
+#define cmd_Compass_CalibrateCencel_init_default { 0 }
+#define cmd_Compass_GetMeteo_init_default { 0 }
+#define cmd_Compass_SetMagneticDeclination_init_default { 0 }
+#define cmd_Compass_SetOffsetAngleAzimuth_init_default { 0 }
+#define cmd_Compass_SetOffsetAngleElevation_init_default { 0 }
+#define cmd_Compass_SetUseRotaryPosition_init_default { 0 }
 #define cmd_Compass_Root_init_zero \
   {                                \
     0,                             \
@@ -158,54 +122,18 @@ extern "C"
       cmd_Compass_Start_init_zero  \
     }                              \
   }
-#define cmd_Compass_Start_init_zero \
-  {                                 \
-    0                               \
-  }
-#define cmd_Compass_Stop_init_zero \
-  {                                \
-    0                              \
-  }
-#define cmd_Compass_Next_init_zero \
-  {                                \
-    0                              \
-  }
-#define cmd_Compass_CalibrateStartLong_init_zero \
-  {                                              \
-    0                                            \
-  }
-#define cmd_Compass_CalibrateStartShort_init_zero \
-  {                                               \
-    0                                             \
-  }
-#define cmd_Compass_CalibrateNext_init_zero \
-  {                                         \
-    0                                       \
-  }
-#define cmd_Compass_CalibrateCencel_init_zero \
-  {                                           \
-    0                                         \
-  }
-#define cmd_Compass_GetMeteo_init_zero \
-  {                                    \
-    0                                  \
-  }
-#define cmd_Compass_SetMagneticDeclination_init_zero \
-  {                                                  \
-    0                                                \
-  }
-#define cmd_Compass_SetOffsetAngleAzimuth_init_zero \
-  {                                                 \
-    0                                               \
-  }
-#define cmd_Compass_SetOffsetAngleElevation_init_zero \
-  {                                                   \
-    0                                                 \
-  }
-#define cmd_Compass_SetUseRotaryPosition_init_zero \
-  {                                                \
-    0                                              \
-  }
+#define cmd_Compass_Start_init_zero { 0 }
+#define cmd_Compass_Stop_init_zero { 0 }
+#define cmd_Compass_Next_init_zero { 0 }
+#define cmd_Compass_CalibrateStartLong_init_zero { 0 }
+#define cmd_Compass_CalibrateStartShort_init_zero { 0 }
+#define cmd_Compass_CalibrateNext_init_zero { 0 }
+#define cmd_Compass_CalibrateCencel_init_zero { 0 }
+#define cmd_Compass_GetMeteo_init_zero { 0 }
+#define cmd_Compass_SetMagneticDeclination_init_zero { 0 }
+#define cmd_Compass_SetOffsetAngleAzimuth_init_zero { 0 }
+#define cmd_Compass_SetOffsetAngleElevation_init_zero { 0 }
+#define cmd_Compass_SetUseRotaryPosition_init_zero { 0 }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_Compass_SetMagneticDeclination_value_tag 1
