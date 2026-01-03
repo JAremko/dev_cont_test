@@ -23,9 +23,8 @@ fi
 DEPLOY_HOST="${DEPLOY_HOST:-sych.local}"
 DEPLOY_USER="${DEPLOY_USER:-archer}"
 
-# Remote paths on sych.local (where nginx serves from)
-REMOTE_FRONTEND_PATH="/home/archer/web/www/osd/packages"
-REMOTE_GALLERY_PATH="/home/archer/web/www/mp4-sei/osd"
+# Centralized OSD path on sych.local (nginx serves /osd/ from here)
+REMOTE_OSD_PATH="/home/archer/web/osd"
 
 # ============================================================================
 # Helper Functions
@@ -44,20 +43,22 @@ usage() {
     cat <<EOF
 Usage: $0 <build_mode> [target]
 
-Deploy OSD packages to sych.local where nginx serves them.
+Deploy OSD packages to sych.local centralized OSD directory.
+All packages served from /osd/ by nginx.
 
 Arguments:
   build_mode  - Required: 'dev' or 'production'
-  target      - Optional: 'frontend', 'gallery', or omit for both
+  target      - Optional: 'frontend', 'gallery', or omit for all
 
 Targets:
-  frontend  - Deploy live_day.tar and live_thermal.tar to www/osd/packages/
-  gallery   - Deploy recording_day as default.tar to www/mp4-sei/osd/
+  frontend  - Deploy live_day.tar and live_thermal.tar
+  gallery   - Deploy recording_day as default.tar
+  all       - Deploy all variants (default)
 
 Examples:
-  $0 dev                     # Deploy dev builds to both targets
-  $0 production frontend     # Deploy production builds to frontend only
-  $0 dev gallery             # Deploy dev builds to gallery only
+  $0 dev                     # Deploy dev builds (all variants)
+  $0 production frontend     # Deploy production builds (frontend only)
+  $0 dev gallery             # Deploy dev builds (gallery only)
 
 EOF
     exit 1
@@ -122,10 +123,10 @@ check_ssh() {
 deploy_to_frontend() {
     local build_mode="$1"
 
-    log "Deploying to frontend: $DEPLOY_USER@$DEPLOY_HOST:$REMOTE_FRONTEND_PATH"
+    log "Deploying frontend packages to: $DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH"
 
     # Ensure remote directory exists
-    ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p $REMOTE_FRONTEND_PATH"
+    ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p $REMOTE_OSD_PATH"
 
     # Deploy live variants
     for variant in live_day live_thermal; do
@@ -138,14 +139,14 @@ deploy_to_frontend() {
         fi
 
         # Rsync to server
-        rsync -z "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_FRONTEND_PATH/${variant}.tar"
+        rsync -z "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/${variant}.tar"
         log "  Deployed: $package_name -> ${variant}.tar"
     done
 
     # Deploy pip_override.json (config overrides for PiP views)
     local pip_override="$PROJECT_ROOT/resources/pip_override.json"
     if [[ -f "$pip_override" ]]; then
-        rsync -z "$pip_override" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_FRONTEND_PATH/pip_override.json"
+        rsync -z "$pip_override" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/pip_override.json"
         log "  Deployed: pip_override.json"
     fi
 
@@ -157,10 +158,10 @@ deploy_to_frontend() {
 deploy_to_gallery() {
     local build_mode="$1"
 
-    log "Deploying to gallery: $DEPLOY_USER@$DEPLOY_HOST:$REMOTE_GALLERY_PATH"
+    log "Deploying gallery package to: $DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH"
 
     # Ensure remote directory exists
-    ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p $REMOTE_GALLERY_PATH"
+    ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p $REMOTE_OSD_PATH"
 
     # Deploy recording_day as default.tar
     local package_name
@@ -171,8 +172,8 @@ deploy_to_gallery() {
         error "Package not found: $source_path"
     fi
 
-    # Rsync to server (no -a to avoid preserving timestamps)
-    rsync -z "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_GALLERY_PATH/default.tar"
+    # Rsync to server
+    rsync -z "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/default.tar"
     log "  Deployed: $package_name -> default.tar"
 
     log "Gallery deploy complete"
