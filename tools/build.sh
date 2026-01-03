@@ -167,6 +167,21 @@ fi
 echo "Using WASI SDK: $WASI_SDK_PATH"
 echo ""
 
+# Build metadata (for variant_info display)
+GIT_COMMIT=$(git rev-parse --short=8 HEAD 2>/dev/null || echo "unknown")
+BUILD_DATE=$(date -u '+%Y-%m-%d')
+BUILD_TIME=$(date -u '+%H:%M:%S')
+VERSION="1.0.0"  # Could read from VERSION file if needed
+
+echo "Build Metadata:"
+echo "  Version: $VERSION"
+echo "  Commit: $GIT_COMMIT"
+echo "  Date: $BUILD_DATE $BUILD_TIME UTC"
+echo ""
+
+# Version defines for variant_info
+VERSION_DEFINES="-DOSD_VERSION=\"$VERSION\" -DOSD_GIT_COMMIT=\"$GIT_COMMIT\" -DOSD_BUILD_DATE=\"$BUILD_DATE\" -DOSD_BUILD_TIME=\"$BUILD_TIME\""
+
 # Find all .c files in src/ (excluding proto/ and utils.c which is not used)
 C_FILES=$(find src -name "*.c" -not -path "*/proto/*" -not -name "utils.c" 2>/dev/null || true)
 # Include all proto files (both *.pb.c and pb*.c for nanopb library)
@@ -200,6 +215,7 @@ for c_file in $C_FILES; do
     $DEAD_CODE_FLAGS \
     -DWASI_BUILD \
     $VARIANT_DEFINES \
+    $VERSION_DEFINES \
     -c "$c_file" \
     -o "$obj_file"
 
@@ -224,6 +240,7 @@ for c_file in $PROTO_FILES; do
     $DEAD_CODE_FLAGS \
     -DWASI_BUILD \
     $VARIANT_DEFINES \
+    $VERSION_DEFINES \
     -c "$c_file" \
     -o "$obj_file"
 

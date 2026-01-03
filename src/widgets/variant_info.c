@@ -18,6 +18,20 @@
 #define VARIANT_INFO_LINE_SPACING 4      // Vertical spacing between lines
 #define VARIANT_INFO_OUTLINE_THICKNESS 1 // Outline thickness for text
 
+// Build info defaults (set by build.sh via -D defines)
+#ifndef OSD_VERSION
+#define OSD_VERSION "unknown"
+#endif
+#ifndef OSD_GIT_COMMIT
+#define OSD_GIT_COMMIT "unknown"
+#endif
+#ifndef OSD_BUILD_DATE
+#define OSD_BUILD_DATE "unknown"
+#endif
+#ifndef OSD_BUILD_TIME
+#define OSD_BUILD_TIME "unknown"
+#endif
+
 // Determine variant name from compile-time defines
 static const char *
 get_variant_name(void)
@@ -126,7 +140,7 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   {
     const char *key;
     char value[128];
-  } items[13];
+  } items[16];
 
   // Draw counter (increments each state update/render cycle)
   snprintf(items[0].value, sizeof(items[0].value), "%u", ctx->frame_count);
@@ -187,6 +201,17 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   snprintf(items[12].value, sizeof(items[12].value), "%.3f (%.1f deg)",
            el_speed, el_speed * 35.0);
   items[12].key = "El Speed";
+
+  // Build info (compile-time constants)
+  snprintf(items[13].value, sizeof(items[13].value), "%s", OSD_VERSION);
+  items[13].key = "Version";
+
+  snprintf(items[14].value, sizeof(items[14].value), "%s", OSD_GIT_COMMIT);
+  items[14].key = "Commit";
+
+  snprintf(items[15].value, sizeof(items[15].value), "%s %s", OSD_BUILD_DATE,
+           OSD_BUILD_TIME);
+  items[15].key = "Built";
 
   // Render each config item
   for (size_t i = 0; i < sizeof(items) / sizeof(items[0]); i++)
