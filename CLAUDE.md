@@ -120,7 +120,8 @@ Note: `variant_info_render()` uses `const osd_state_t *state` since it doesn't m
 - Center offset from protobuf (`rec_osd.day_crosshair_offset_*` or `rec_osd.heat_crosshair_offset_*`)
 - Speed indicators with configurable display:
   - Shows only when `rotary.is_moving == true` AND normalized speed > threshold
-  - Threshold filtering: `normalized_speed = |speed| / max_speed`, show if > threshold (default 0.05)
+  - Threshold filtering: proto speeds are already normalized (-1.0 to 1.0), show if `|speed| > threshold` (default 0.05)
+  - Display conversion: `degrees = normalized_speed * max_speed` (e.g., 0.5 * 35 = 17.5°)
   - Radial positioning: 110px horizontal, 90px vertical from center
   - Format: 3 decimal places with 1px black outline
   - Config: `speed_indicators.threshold` (0.0-1.0), `max_speed_azimuth/elevation` (default 35.0)
@@ -348,12 +349,38 @@ Or via devcontainer wrapper:
 ```
 live_day.tar              # For jettison_frontend live streams
 live_thermal.tar
+pip_override.json         # PiP view config overrides
 ```
 
 **To sych.local:/home/archer/web/www/mp4-sei/osd/ (gallery):**
 ```
 default.tar               # Gallery loads this on startup (recording_day)
 ```
+
+### PiP Override Configuration
+
+The `resources/pip_override.json` file contains config overrides for Picture-in-Picture views. PiP views should show minimal OSD - only the crosshair is visible.
+
+**Location:** `resources/pip_override.json`
+
+**Current overrides:**
+```json
+{
+  "variant_info": { "enabled": false },
+  "speed_indicators": { "enabled": false },
+  "timestamp": { "enabled": false },
+  "navball": { "enabled": false },
+  "celestial_indicators": { "enabled": false }
+}
+```
+
+**How it works:**
+1. Deploy script rsyncs `pip_override.json` to `/osd/packages/` on sych.local
+2. OSD worker detects `viewType === 'pip'` from worker config
+3. Worker fetches `/osd/packages/pip_override.json` and merges it on top of base config
+4. Result: PiP views only show crosshair, main views show all enabled widgets
+
+**Editing:** Modify `resources/pip_override.json` and run `make deploy` to apply changes.
 
 ### Hot-Reload
 

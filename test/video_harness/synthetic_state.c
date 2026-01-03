@@ -15,10 +15,9 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-// Max speed values must match config (resources/*.json)
-// Speed indicators normalize: displayed = raw_speed / max_speed
-#define MAX_SPEED_AZIMUTH 35.0f
-#define MAX_SPEED_ELEVATION 35.0f
+// Speed values are normalized (-1.0 to 1.0)
+// Display conversion: degrees = normalized * max_speed (from config)
+// Example: 0.5 normalized * 35.0 max_speed = 17.5 degrees displayed
 
 synthetic_state_t *
 synthetic_state_create (animation_type_t type,
@@ -127,7 +126,7 @@ synthetic_state_next_frame (synthetic_state_t *gen)
       gen->state->actual_space_time.azimuth = gen->phase * 360.0;
       gen->state->actual_space_time.elevation = 0.0;
       gen->state->actual_space_time.bank = 0.0;
-      gen->state->rotary.azimuth_speed = 0.5 * MAX_SPEED_AZIMUTH; // 50% of max
+      gen->state->rotary.azimuth_speed = 0.5; // 50% of max (displays as 17.5°)
       gen->state->rotary.elevation_speed = 0.0;
       gen->state->rotary.is_moving = true;
       break;
@@ -144,7 +143,7 @@ synthetic_state_next_frame (synthetic_state_t *gen)
         gen->state->actual_space_time.bank = 0.0;
         gen->state->rotary.azimuth_speed = 0.0;
         gen->state->rotary.elevation_speed
-          = cosf (gen->phase * 2.0 * M_PI) * 0.8 * MAX_SPEED_ELEVATION; // ±80%
+            = cosf (gen->phase * 2.0 * M_PI) * 0.8; // ±80% (displays as ±28°)
         gen->state->rotary.is_moving = true;
       }
       break;
@@ -178,9 +177,9 @@ synthetic_state_next_frame (synthetic_state_t *gen)
         gen->state->actual_space_time.azimuth = az;
         gen->state->actual_space_time.elevation = elev;
         gen->state->actual_space_time.bank = roll;
-        gen->state->rotary.azimuth_speed = 0.5 * MAX_SPEED_AZIMUTH;    // 50%
+        gen->state->rotary.azimuth_speed = 0.5;            // 50% (displays as 17.5°)
         gen->state->rotary.elevation_speed
-          = cosf (angle) * 0.6 * MAX_SPEED_ELEVATION; // ±60%
+            = cosf (angle) * 0.6; // ±60% (displays as ±21°)
         gen->state->rotary.is_moving = true;
       }
       break;
@@ -195,10 +194,8 @@ synthetic_state_next_frame (synthetic_state_t *gen)
         gen->state->actual_space_time.azimuth = 0.0;
         gen->state->actual_space_time.elevation = 0.0;
         gen->state->actual_space_time.bank = 0.0;
-        gen->state->rotary.azimuth_speed
-          = pulse * 0.9 * MAX_SPEED_AZIMUTH; // ±90%
-        gen->state->rotary.elevation_speed
-          = pulse * 0.7 * MAX_SPEED_ELEVATION; // ±70%
+        gen->state->rotary.azimuth_speed = pulse * 0.9;   // ±90% (displays as ±31.5°)
+        gen->state->rotary.elevation_speed = pulse * 0.7; // ±70% (displays as ±24.5°)
         gen->state->rotary.is_moving = (fabs (pulse) > 0.1);
       }
       break;

@@ -115,13 +115,18 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   // Separator line
   y += VARIANT_INFO_LINE_SPACING;
 
+  // Get speed data from state (always, for debug display)
+  double az_speed = 0.0, el_speed = 0.0;
+  bool is_moving = false;
+  osd_state_get_speeds(state, &az_speed, &el_speed, &is_moving);
+
   // Render config values
   // Create items array and fill in values
   struct
   {
     const char *key;
     char value[128];
-  } items[10];
+  } items[13];
 
   // Draw counter (increments each state update/render cycle)
   snprintf(items[0].value, sizeof(items[0].value), "%u", ctx->frame_count);
@@ -167,6 +172,21 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   snprintf(items[9].value, sizeof(items[9].value), "%dpx",
            ctx->config.navball.size);
   items[9].key = "Navball Size";
+
+  // Speed debug info (always shown)
+  // Speeds from proto are normalized (-1.0 to 1.0)
+  // Display both normalized and degrees (normalized * 35.0)
+  snprintf(items[10].value, sizeof(items[10].value), "%s",
+           is_moving ? "YES" : "NO");
+  items[10].key = "Is Moving";
+
+  snprintf(items[11].value, sizeof(items[11].value), "%.3f (%.1f deg)",
+           az_speed, az_speed * 35.0);
+  items[11].key = "Az Speed";
+
+  snprintf(items[12].value, sizeof(items[12].value), "%.3f (%.1f deg)",
+           el_speed, el_speed * 35.0);
+  items[12].key = "El Speed";
 
   // Render each config item
   for (size_t i = 0; i < sizeof(items) / sizeof(items[0]); i++)

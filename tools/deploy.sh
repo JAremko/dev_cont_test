@@ -107,8 +107,15 @@ deploy_to_frontend() {
         log "  Deployed: $package_name -> ${variant}.tar"
     done
 
+    # Deploy pip_override.json (config overrides for PiP views)
+    local pip_override="$PROJECT_ROOT/resources/pip_override.json"
+    if [[ -f "$pip_override" ]]; then
+        rsync -z "$pip_override" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_FRONTEND_PATH/pip_override.json"
+        log "  Deployed: pip_override.json"
+    fi
+
     # Touch all files to ensure new mtime (triggers hot-reload via ETag change)
-    ssh "$DEPLOY_USER@$DEPLOY_HOST" "touch $REMOTE_FRONTEND_PATH/live_day.tar $REMOTE_FRONTEND_PATH/live_thermal.tar"
+    ssh "$DEPLOY_USER@$DEPLOY_HOST" "touch $REMOTE_FRONTEND_PATH/live_day.tar $REMOTE_FRONTEND_PATH/live_thermal.tar $REMOTE_FRONTEND_PATH/pip_override.json 2>/dev/null || true"
     log "Frontend deploy complete (files touched for hot-reload)"
 }
 

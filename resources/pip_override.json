@@ -1,0 +1,19 @@
+{
+  "$schema": "./schemas/pip_override.schema.json",
+  "$comment": "Config overrides for PiP (Picture-in-Picture) views. Applied on top of base variant config. Only crosshair visible - other widgets disabled for minimal overlay.",
+  "variant_info": {
+    "enabled": false
+  },
+  "speed_indicators": {
+    "enabled": false
+  },
+  "timestamp": {
+    "enabled": false
+  },
+  "navball": {
+    "enabled": false
+  },
+  "celestial_indicators": {
+    "enabled": false
+  }
+}

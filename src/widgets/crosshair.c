@@ -222,21 +222,23 @@ render_speed_indicators(osd_context_t *ctx,
 
   framebuffer_t fb = ctx_to_framebuffer(ctx);
 
-  // Get rotary speeds from proto
-  double az_speed = pb_state->rotary.azimuth_speed;
-  double el_speed = pb_state->rotary.elevation_speed;
-  bool is_moving  = pb_state->rotary.is_moving;
+  // Get rotary speeds from proto (already normalized: -1.0 to 1.0)
+  double az_speed_normalized = pb_state->rotary.azimuth_speed;
+  double el_speed_normalized = pb_state->rotary.elevation_speed;
+  bool is_moving             = pb_state->rotary.is_moving;
 
-  // Normalize speeds and apply threshold filtering
-  float threshold     = ctx->config.speed_indicators.threshold;
-  float max_az        = ctx->config.speed_indicators.max_speed_azimuth;
-  float max_el        = ctx->config.speed_indicators.max_speed_elevation;
-  float normalized_az = (max_az > 0.0f) ? (float)fabs(az_speed) / max_az : 0.0f;
-  float normalized_el = (max_el > 0.0f) ? (float)fabs(el_speed) / max_el : 0.0f;
+  // Config values
+  float threshold = ctx->config.speed_indicators.threshold;
+  float max_az    = ctx->config.speed_indicators.max_speed_azimuth;
+  float max_el    = ctx->config.speed_indicators.max_speed_elevation;
 
-  // Show only if normalized speed exceeds threshold
-  bool show_az = normalized_az > threshold;
-  bool show_el = normalized_el > threshold;
+  // Threshold check uses normalized value directly (already 0.0 to 1.0)
+  bool show_az = fabs(az_speed_normalized) > threshold;
+  bool show_el = fabs(el_speed_normalized) > threshold;
+
+  // Convert to degrees for display: normalized * max_speed
+  double az_speed_degrees = az_speed_normalized * max_az;
+  double el_speed_degrees = el_speed_normalized * max_el;
 
   // If not moving, clear all positions and return
   if (!is_moving || (!show_az && !show_el))
@@ -246,17 +248,18 @@ render_speed_indicators(osd_context_t *ctx,
       return;
     }
 
-  // Render speed indicators (only when moving)
+  // Render speed indicators (only when moving) - display in degrees
   if (show_az)
     {
-      render_azimuth_speed(&fb, &ctx->font_speed_indicators, cx, cy, az_speed,
-                           ctx->config.speed_indicators.color,
+      render_azimuth_speed(&fb, &ctx->font_speed_indicators, cx, cy,
+                           az_speed_degrees, ctx->config.speed_indicators.color,
                            ctx->config.speed_indicators.font_size);
     }
 
   if (show_el)
     {
-      render_elevation_speed(&fb, &ctx->font_speed_indicators, cx, cy, el_speed,
+      render_elevation_speed(&fb, &ctx->font_speed_indicators, cx, cy,
+                             el_speed_degrees,
                              ctx->config.speed_indicators.color,
                              ctx->config.speed_indicators.font_size);
     }
