@@ -128,3 +128,16 @@ osd_state_get_gps(const osd_state_t *state, osd_gps_position_t *pos)
 
   return true;
 }
+
+// ════════════════════════════════════════════════════════════
+// STATE TIMING DATA
+// ════════════════════════════════════════════════════════════
+
+uint64_t
+osd_state_get_monotonic_time_us(const osd_state_t *state)
+{
+  if (!state)
+    return 0;
+
+  return state->system_monotonic_time_us;
+}

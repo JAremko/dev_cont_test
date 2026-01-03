@@ -6,9 +6,11 @@
 #include "widgets/variant_info.h"
 
 #include "core/framebuffer.h"
+#include "osd_state.h"
 #include "rendering/text.h"
 #include "utils/logging.h"
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -68,11 +70,21 @@ variant_info_init(osd_context_t *ctx)
   LOG_INFO("Variant info widget initialized");
 }
 
+/**
+ * Render variant info widget
+ *
+ * NOTE: When enabled, this widget ALWAYS returns true because it displays
+ * the draw counter (frame_count) which changes on every state update.
+ * This forces a texture re-upload every frame when variant_info is visible,
+ * which is intentional for debugging purposes.
+ *
+ * @param ctx OSD context
+ * @param state Proto state (used for monotonic time)
+ * @return true if rendered (always when enabled), false if disabled
+ */
 bool
 variant_info_render(osd_context_t *ctx, const osd_state_t *state)
 {
-  (void)state; // Unused
-
   if (!ctx->config.variant_info.enabled)
     {
       return false;
@@ -90,9 +102,9 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   // Buffer for text rendering
   char buffer[256];
 
-  // Render variant name header
+  // Render variant name header with redraw warning
   const char *variant_name = get_variant_name();
-  snprintf(buffer, sizeof(buffer), "Variant: %s", variant_name);
+  snprintf(buffer, sizeof(buffer), "Variant: %s [FORCES REDRAW]", variant_name);
   text_render_with_outline(&fb, &ctx->font_variant_info, buffer, x, y, color,
                            0xFF000000, // Black outline
                            font_size,  //
@@ -109,42 +121,52 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   {
     const char *key;
     char value[128];
-  } items[8];
+  } items[10];
 
-  snprintf(items[0].value, sizeof(items[0].value), "%ux%u", ctx->width,
+  // Draw counter (increments each state update/render cycle)
+  snprintf(items[0].value, sizeof(items[0].value), "%u", ctx->frame_count);
+  items[0].key = "Draw Count";
+
+  // State timing info
+  uint64_t monotonic_us = osd_state_get_monotonic_time_us(state);
+  snprintf(items[1].value, sizeof(items[1].value), "%" PRIu64 " us",
+           monotonic_us);
+  items[1].key = "State Time";
+
+  snprintf(items[2].value, sizeof(items[2].value), "%ux%u", ctx->width,
            ctx->height);
-  items[0].key = "Resolution";
+  items[2].key = "Resolution";
 
 #ifdef OSD_MODE_LIVE
-  snprintf(items[1].value, sizeof(items[1].value), "Live");
+  snprintf(items[3].value, sizeof(items[3].value), "Live");
 #else
-  snprintf(items[1].value, sizeof(items[1].value), "Recording");
+  snprintf(items[3].value, sizeof(items[3].value), "Recording");
 #endif
-  items[1].key = "Mode";
-
-  snprintf(items[2].value, sizeof(items[2].value), "%s",
-           ctx->config.crosshair.enabled ? "Enabled" : "Disabled");
-  items[2].key = "Crosshair";
-
-  snprintf(items[3].value, sizeof(items[3].value), "%s",
-           ctx->config.timestamp.enabled ? "Enabled" : "Disabled");
-  items[3].key = "Timestamp";
+  items[3].key = "Mode";
 
   snprintf(items[4].value, sizeof(items[4].value), "%s",
-           ctx->config.speed_indicators.enabled ? "Enabled" : "Disabled");
-  items[4].key = "Speed Indicators";
+           ctx->config.crosshair.enabled ? "Enabled" : "Disabled");
+  items[4].key = "Crosshair";
 
   snprintf(items[5].value, sizeof(items[5].value), "%s",
+           ctx->config.timestamp.enabled ? "Enabled" : "Disabled");
+  items[5].key = "Timestamp";
+
+  snprintf(items[6].value, sizeof(items[6].value), "%s",
+           ctx->config.speed_indicators.enabled ? "Enabled" : "Disabled");
+  items[6].key = "Speed Indicators";
+
+  snprintf(items[7].value, sizeof(items[7].value), "%s",
            ctx->config.navball.enabled ? "Enabled" : "Disabled");
-  items[5].key = "Navball";
+  items[7].key = "Navball";
 
-  snprintf(items[6].value, sizeof(items[6].value), "%d, %d",
+  snprintf(items[8].value, sizeof(items[8].value), "%d, %d",
            ctx->config.navball.position_x, ctx->config.navball.position_y);
-  items[6].key = "Navball Pos";
+  items[8].key = "Navball Pos";
 
-  snprintf(items[7].value, sizeof(items[7].value), "%dpx",
+  snprintf(items[9].value, sizeof(items[9].value), "%dpx",
            ctx->config.navball.size);
-  items[7].key = "Navball Size";
+  items[9].key = "Navball Size";
 
   // Render each config item
   for (size_t i = 0; i < sizeof(items) / sizeof(items[0]); i++)

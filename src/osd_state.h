@@ -81,4 +81,12 @@ typedef struct
 // Returns true if position data is valid
 bool osd_state_get_gps(const osd_state_t *state, osd_gps_position_t *pos);
 
+// ════════════════════════════════════════════════════════════
+// STATE TIMING DATA (for debug overlay)
+// ════════════════════════════════════════════════════════════
+
+// Get system monotonic time from state
+// Returns: monotonic time in microseconds, or 0 if invalid
+uint64_t osd_state_get_monotonic_time_us(const osd_state_t *state);
+
 #endif // OSD_STATE_H

@@ -353,8 +353,8 @@ render_widgets(ser_JonGUIState *proto_state)
       changed |= navball_render(&g_osd_ctx, proto_state);
     }
 
-  // Variant info (doesn't need proto data - shows compile-time + config info)
-  changed |= variant_info_render(&g_osd_ctx, NULL);
+  // Variant info (needs proto for state time display)
+  changed |= variant_info_render(&g_osd_ctx, proto_state);
 
   return changed;
 }

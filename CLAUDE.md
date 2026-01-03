@@ -151,8 +151,10 @@ Note: `variant_info_render()` uses `const osd_state_t *state` since it doesn't m
 
 ### Variant Info (`src/widgets/variant_info.c`)
 - Debug overlay showing variant name and config values
-- Displays: variant, resolution, mode, and widget enable states
+- Displays: draw count, state time, resolution, mode, and widget enable states
 - Multi-line text with 1px outline, 4px line spacing
+- **Draw Count**: Increments each state update, useful for verifying render pipeline
+- **Always returns true**: When enabled, forces texture re-upload every frame (draw count changes each render)
 
 ## Protobuf Integration
 
