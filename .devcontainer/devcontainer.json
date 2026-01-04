@@ -16,6 +16,15 @@
     "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
   ],
   "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+  "postStartCommand": "bash .devcontainer/scripts/post-start.sh",
   "remoteUser": "vscode",
-  "overrideCommand": true
+  "overrideCommand": true,
+  "customizations": {
+    "jetbrains": {
+      "backend": "CLion",
+      "plugins": [
+        "name.kropp.intellij.makefile"
+      ]
+    }
+  }
 }

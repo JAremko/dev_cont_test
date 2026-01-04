@@ -268,6 +268,24 @@ jettison-osd-recording_day-1.0.0.tar
 └── recording_day.tar.gz      # WASM + config + resources
 ```
 
+### Inner Archive Contents
+
+The inner `.tar.gz` contains these files with **exact names**:
+
+| File | Required | Description |
+|------|----------|-------------|
+| `{variant}.wasm` | Yes | Compiled WASM binary (e.g., `recording_day.wasm`) |
+| `config.json` | Yes | Runtime configuration values |
+| `config.schema.json` | Yes | JSON Schema for config validation and form generation |
+| `resources/` | Yes | Fonts, navball skins, SVG indicators |
+
+**⚠️ CRITICAL - File Naming**:
+- Schema file MUST be named `config.schema.json` (NOT `schema.json`)
+- Config file MUST be named `config.json`
+- These names are used by frontend, gallery, and OSD config editor
+
+**Schema source**: `resources/schemas/osd_config.schema.json` → copied as `config.schema.json`
+
 **Manifest contains**: Version, git SHA, SHA256 checksums, system requirements.
 
 **Keys**: `keys/example-{private,public}.pem` (demo only - generate unique keys for production)
