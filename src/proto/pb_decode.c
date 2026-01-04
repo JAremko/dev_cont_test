@@ -170,8 +170,8 @@ pb_readbyte(pb_istream_t *stream, pb_byte_t *buf)
   if (!stream->callback(stream, buf, 1))
     PB_RETURN_ERROR(stream, "io error");
 #else
-  *buf          = *(const pb_byte_t *)stream->state;
-  stream->state = (pb_byte_t *)stream->state + 1;
+  *buf            = *(const pb_byte_t *)stream->state;
+  stream->state   = (pb_byte_t *)stream->state + 1;
 #endif
 
   stream->bytes_left--;
@@ -768,7 +768,7 @@ decode_pointer_field(pb_istream_t *stream,
 #ifndef PB_NO_ERRMSG
                   stream->errmsg = "too many array entries";
 #endif
-                  status = false;
+                  status         = false;
                   break;
                 }
 

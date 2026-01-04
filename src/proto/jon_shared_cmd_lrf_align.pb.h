@@ -75,10 +75,22 @@ extern "C"
       cmd_Lrf_calib_SetOffsets_init_default \
     }                                       \
   }
-#define cmd_Lrf_calib_SetOffsets_init_default { 0, 0 }
-#define cmd_Lrf_calib_ShiftOffsetsBy_init_default { 0, 0 }
-#define cmd_Lrf_calib_ResetOffsets_init_default { 0 }
-#define cmd_Lrf_calib_SaveOffsets_init_default { 0 }
+#define cmd_Lrf_calib_SetOffsets_init_default \
+  {                                           \
+    0, 0                                      \
+  }
+#define cmd_Lrf_calib_ShiftOffsetsBy_init_default \
+  {                                               \
+    0, 0                                          \
+  }
+#define cmd_Lrf_calib_ResetOffsets_init_default \
+  {                                             \
+    0                                           \
+  }
+#define cmd_Lrf_calib_SaveOffsets_init_default \
+  {                                            \
+    0                                          \
+  }
 #define cmd_Lrf_calib_Root_init_zero  \
   {                                   \
     0,                                \
@@ -93,10 +105,22 @@ extern "C"
       cmd_Lrf_calib_SetOffsets_init_zero \
     }                                    \
   }
-#define cmd_Lrf_calib_SetOffsets_init_zero { 0, 0 }
-#define cmd_Lrf_calib_ShiftOffsetsBy_init_zero { 0, 0 }
-#define cmd_Lrf_calib_ResetOffsets_init_zero { 0 }
-#define cmd_Lrf_calib_SaveOffsets_init_zero { 0 }
+#define cmd_Lrf_calib_SetOffsets_init_zero \
+  {                                        \
+    0, 0                                   \
+  }
+#define cmd_Lrf_calib_ShiftOffsetsBy_init_zero \
+  {                                            \
+    0, 0                                       \
+  }
+#define cmd_Lrf_calib_ResetOffsets_init_zero \
+  {                                          \
+    0                                        \
+  }
+#define cmd_Lrf_calib_SaveOffsets_init_zero \
+  {                                         \
+    0                                       \
+  }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define cmd_Lrf_calib_SetOffsets_x_tag 1

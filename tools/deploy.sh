@@ -100,7 +100,7 @@ check_ssh() {
         echo "Possible causes:"
         echo "  1. SSH key requires passphrase but ssh-agent not running"
         echo "  2. SSH key not added to agent"
-        echo "  3. Host unreachable or wrong IP"
+        echo "  3. Host unreachable (check /etc/hosts or network)"
         echo "  4. SSH key not authorized on remote host"
         echo ""
         echo "To fix passphrase-protected SSH keys:"
