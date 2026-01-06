@@ -281,13 +281,15 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
       int sample_count;
       if (delta_history_stats(monotonic_us, &avg_ms, &std_ms, &sample_count))
         {
+          // Fixed-width format: xxxx.xx for stable display
           snprintf(items[2].value, sizeof(items[2].value),
-                   "%.1f (avg %.1f std %.1f n=%d)", delta_ms, avg_ms, std_ms,
-                   sample_count);
+                   "%7.2f (avg %7.2f std %6.2f n=%3d)", delta_ms, avg_ms,
+                   std_ms, sample_count);
         }
       else
         {
-          snprintf(items[2].value, sizeof(items[2].value), "%.2f ms", delta_ms);
+          snprintf(items[2].value, sizeof(items[2].value), "%7.2f ms",
+                   delta_ms);
         }
     }
   else
