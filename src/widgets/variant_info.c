@@ -46,11 +46,29 @@ static struct
 #endif
 
 /**
- * Add a delta sample to the history buffer
+ * Add a delta sample to the history buffer.
+ * Auto-resets if there's been a gap (worker was inactive).
  */
 static void
 delta_history_add(double delta_ms, uint64_t timestamp_us)
 {
+  // Detect gap: if newest sample is older than our window, reset history
+  // This handles worker reactivation after being disabled
+  if (delta_history.count > 0)
+    {
+      // Find the most recent sample (one before write_idx)
+      int last_idx = (delta_history.write_idx - 1 + DELTA_HISTORY_SIZE)
+                     % DELTA_HISTORY_SIZE;
+      uint64_t last_ts = delta_history.timestamp_us[last_idx];
+
+      // If last sample is older than window, reset (worker was inactive)
+      if (timestamp_us > last_ts + DELTA_WINDOW_US)
+        {
+          delta_history.count     = 0;
+          delta_history.write_idx = 0;
+        }
+    }
+
   delta_history.delta_ms[delta_history.write_idx]     = delta_ms;
   delta_history.timestamp_us[delta_history.write_idx] = timestamp_us;
   delta_history.write_idx = (delta_history.write_idx + 1) % DELTA_HISTORY_SIZE;
