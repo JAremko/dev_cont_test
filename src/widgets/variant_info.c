@@ -14,6 +14,9 @@
 #include <stdio.h>
 #include <string.h>
 
+// Math function declarations for WASI SDK compatibility
+#include "utils/math_decl.h"
+
 // Variant info layout constants
 #define VARIANT_INFO_LINE_SPACING 4      // Vertical spacing between lines
 #define VARIANT_INFO_OUTLINE_THICKNESS 1 // Outline thickness for text
@@ -79,24 +82,30 @@ delta_history_add(double delta_ms, uint64_t timestamp_us)
 }
 
 /**
- * Calculate average delta over the last 5 seconds
+ * Calculate average and standard deviation of delta over the last 5 seconds
  * @param current_us Current monotonic time in microseconds
- * @param out_avg Output: average delta in ms (only valid if return is true)
- * @return true if average is available, false if no samples in window
+ * @param out_avg Output: average delta in ms
+ * @param out_std Output: standard deviation in ms
+ * @param out_count Output: number of samples in window
+ * @return true if stats are available, false if no samples in window
  */
 static bool
-delta_history_average(uint64_t current_us, double *out_avg)
+delta_history_stats(uint64_t current_us,
+                    double *out_avg,
+                    double *out_std,
+                    int *out_count)
 {
   if (delta_history.count == 0)
     {
       return false;
     }
 
-  double sum      = 0.0;
-  int valid_count = 0;
   uint64_t cutoff
     = (current_us > DELTA_WINDOW_US) ? (current_us - DELTA_WINDOW_US) : 0;
 
+  // First pass: calculate mean
+  double sum      = 0.0;
+  int valid_count = 0;
   for (int i = 0; i < delta_history.count; i++)
     {
       if (delta_history.timestamp_us[i] >= cutoff)
@@ -111,7 +120,22 @@ delta_history_average(uint64_t current_us, double *out_avg)
       return false;
     }
 
-  *out_avg = sum / (double)valid_count;
+  double mean = sum / (double)valid_count;
+
+  // Second pass: calculate variance
+  double variance_sum = 0.0;
+  for (int i = 0; i < delta_history.count; i++)
+    {
+      if (delta_history.timestamp_us[i] >= cutoff)
+        {
+          double diff = delta_history.delta_ms[i] - mean;
+          variance_sum += diff * diff;
+        }
+    }
+
+  *out_avg   = mean;
+  *out_std   = sqrt(variance_sum / (double)valid_count);
+  *out_count = valid_count;
   return true;
 }
 
@@ -249,15 +273,17 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
       int64_t delta_us = (int64_t)monotonic_us - (int64_t)frame_us;
       double delta_ms  = (double)delta_us / 1000.0;
 
-      // Add to history for averaging
+      // Add to history for stats
       delta_history_add(delta_ms, monotonic_us);
 
-      // Get average over last 5 seconds
-      double avg_ms;
-      if (delta_history_average(monotonic_us, &avg_ms))
+      // Get stats over last 5 seconds
+      double avg_ms, std_ms;
+      int sample_count;
+      if (delta_history_stats(monotonic_us, &avg_ms, &std_ms, &sample_count))
         {
           snprintf(items[2].value, sizeof(items[2].value),
-                   "%.1f ms (avg %.1f ms)", delta_ms, avg_ms);
+                   "%.1f (avg %.1f std %.1f n=%d)", delta_ms, avg_ms, std_ms,
+                   sample_count);
         }
       else
         {
