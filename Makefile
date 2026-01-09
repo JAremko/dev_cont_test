@@ -209,13 +209,15 @@ package-all-dev: all-dev
 export
 
 # Deploy dev builds (live variants to frontend, recording_day to gallery)
-deploy: package-all-dev
+# Always clean-builds to ensure no stale artifacts
+deploy: clean-artifacts package-all-dev
 	@echo "=== Deploying dev packages ==="
 	@./tools/deploy.sh dev 2>&1 | tee $(LOGS_DIR)/deploy_dev.log
 	@echo "=== Deploy complete ==="
 
 # Deploy production builds
-deploy-prod: package-all
+# Always clean-builds to ensure no stale artifacts
+deploy-prod: clean-artifacts package-all
 	@echo "=== Deploying production packages ==="
 	@./tools/deploy.sh production 2>&1 | tee $(LOGS_DIR)/deploy_prod.log
 	@echo "=== Deploy complete ==="
