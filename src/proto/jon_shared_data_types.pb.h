@@ -227,6 +227,20 @@ typedef enum _ser_JonGuiDataStateSource
   ser_JonGuiDataStateSource_JON_GUI_DATA_STATE_SOURCE_SYSTEM        = 3
 } ser_JonGuiDataStateSource;
 
+/* Tracking state */
+typedef enum _ser_JonGuiDataTrackedObject_TrackingState
+{
+  ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_UNSPECIFIED = 0,
+  ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_ACQUIRING
+  = 1, /* Initial lock attempt */
+  ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_TRACKING
+  = 2, /* Actively tracking */
+  ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_PREDICTED
+  = 3, /* Temporarily lost, using prediction */
+  ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_LOST
+  = 4  /* Lost track */
+} ser_JonGuiDataTrackedObject_TrackingState;
+
 /* Struct definitions */
 typedef struct _ser_JonGuiDataMeteo
 {
@@ -258,6 +272,76 @@ typedef struct _ser_JonOpaquePayload
   /* Opaque binary payload */
   pb_callback_t payload;
 } ser_JonOpaquePayload;
+
+/* Region of Interest for camera operations (focus, track, zoom, fx).
+ Coordinates are normalized: -1.0 (left/top) to 1.0 (right/bottom).
+ Center is (0, 0). */
+typedef struct _ser_JonGuiDataROI
+{
+  double x1;
+  double y1;
+  double x2;
+  double y2;
+} ser_JonGuiDataROI;
+
+/* Image sharpness metrics with temporal derivatives.
+ All values normalized 0.0-1.0 where 1.0 is maximum sharpness. */
+typedef struct _ser_JonGuiDataSharpness
+{
+  double value;
+  double derivative_1; /* First derivative (rate of change) */
+  double derivative_2; /* Second derivative (acceleration) */
+} ser_JonGuiDataSharpness;
+
+/* 3D vector (position or velocity) */
+typedef struct _ser_JonGuiDataVector3
+{
+  double x;
+  double y;
+  double z;
+} ser_JonGuiDataVector3;
+
+/* Unit quaternion for 3D rotation (w + xi + yj + zk)
+ Must be normalized: w² + x² + y² + z² = 1 */
+typedef struct _ser_JonGuiDataQuaternion
+{
+  double w; /* scalar (cos(θ/2)) */
+  double x; /* vector i */
+  double y; /* vector j */
+  double z; /* vector k */
+} ser_JonGuiDataQuaternion;
+
+/* 3D rigid body transform with velocity.
+ When present, all fields are required. */
+typedef struct _ser_JonGuiDataTransform3D
+{
+  bool has_position;
+  ser_JonGuiDataVector3 position;         /* meters */
+  bool has_orientation;
+  ser_JonGuiDataQuaternion orientation;   /* unit quaternion */
+  bool has_linear_velocity;
+  ser_JonGuiDataVector3 linear_velocity;  /* m/s */
+  bool has_angular_velocity;
+  ser_JonGuiDataVector3 angular_velocity; /* rad/s */
+} ser_JonGuiDataTransform3D;
+
+/* Tracked object - all fields required.
+ If object is in the list, we have complete tracking data for it.
+ UUID allows joining with external data sources (labels, classifications, etc.)
+ */
+typedef struct _ser_JonGuiDataTrackedObject
+{
+  /* UUIDv7 identifier - stable across frames for the same object */
+  pb_callback_t uuid;
+  /* 3D pose (position, orientation, velocities) */
+  bool has_transform;
+  ser_JonGuiDataTransform3D transform;
+  /* 2D bounding box in image space (NDC coords -1 to 1) */
+  bool has_bounding_box;
+  ser_JonGuiDataROI bounding_box;
+  /* Current tracking state */
+  ser_JonGuiDataTrackedObject_TrackingState state;
+} ser_JonGuiDataTrackedObject;
 
 
 #ifdef __cplusplus
@@ -434,6 +518,18 @@ extern "C"
   ((ser_JonGuiDataStateSource)(ser_JonGuiDataStateSource_JON_GUI_DATA_STATE_SOURCE_SYSTEM \
                                + 1))
 
+#define _ser_JonGuiDataTrackedObject_TrackingState_MIN \
+  ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_UNSPECIFIED
+#define _ser_JonGuiDataTrackedObject_TrackingState_MAX \
+  ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_LOST
+#define _ser_JonGuiDataTrackedObject_TrackingState_ARRAYSIZE                                                 \
+  ((ser_JonGuiDataTrackedObject_TrackingState)(ser_JonGuiDataTrackedObject_TrackingState_TRACKING_STATE_LOST \
+                                               + 1))
+
+
+#define ser_JonGuiDataTrackedObject_state_ENUMTYPE \
+  ser_JonGuiDataTrackedObject_TrackingState
+
 
 /* Initializer values for message structs */
 #define ser_JonGuiDataMeteo_init_default \
@@ -451,6 +547,35 @@ extern "C"
       { NULL }, NULL                                                     \
     }                                                                    \
   }
+#define ser_JonGuiDataROI_init_default \
+  {                                    \
+    0, 0, 0, 0                         \
+  }
+#define ser_JonGuiDataSharpness_init_default \
+  {                                          \
+    0, 0, 0                                  \
+  }
+#define ser_JonGuiDataVector3_init_default \
+  {                                        \
+    0, 0, 0                                \
+  }
+#define ser_JonGuiDataQuaternion_init_default \
+  {                                           \
+    0, 0, 0, 0                                \
+  }
+#define ser_JonGuiDataTransform3D_init_default        \
+  {                                                   \
+    false, ser_JonGuiDataVector3_init_default, false, \
+      ser_JonGuiDataQuaternion_init_default, false,   \
+      ser_JonGuiDataVector3_init_default, false,      \
+      ser_JonGuiDataVector3_init_default              \
+  }
+#define ser_JonGuiDataTrackedObject_init_default                              \
+  {                                                                           \
+    { { NULL }, NULL }, false, ser_JonGuiDataTransform3D_init_default, false, \
+      ser_JonGuiDataROI_init_default,                                         \
+      _ser_JonGuiDataTrackedObject_TrackingState_MIN                          \
+  }
 #define ser_JonGuiDataMeteo_init_zero \
   {                                   \
     0, 0, 0                           \
@@ -466,6 +591,34 @@ extern "C"
       { NULL }, NULL                                                  \
     }                                                                 \
   }
+#define ser_JonGuiDataROI_init_zero \
+  {                                 \
+    0, 0, 0, 0                      \
+  }
+#define ser_JonGuiDataSharpness_init_zero \
+  {                                       \
+    0, 0, 0                               \
+  }
+#define ser_JonGuiDataVector3_init_zero \
+  {                                     \
+    0, 0, 0                             \
+  }
+#define ser_JonGuiDataQuaternion_init_zero \
+  {                                        \
+    0, 0, 0, 0                             \
+  }
+#define ser_JonGuiDataTransform3D_init_zero                                   \
+  {                                                                           \
+    false, ser_JonGuiDataVector3_init_zero, false,                            \
+      ser_JonGuiDataQuaternion_init_zero, false,                              \
+      ser_JonGuiDataVector3_init_zero, false, ser_JonGuiDataVector3_init_zero \
+  }
+#define ser_JonGuiDataTrackedObject_init_zero                              \
+  {                                                                        \
+    { { NULL }, NULL }, false, ser_JonGuiDataTransform3D_init_zero, false, \
+      ser_JonGuiDataROI_init_zero,                                         \
+      _ser_JonGuiDataTrackedObject_TrackingState_MIN                       \
+  }
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_JonGuiDataMeteo_temperature_tag 1
@@ -477,6 +630,28 @@ extern "C"
 #define ser_JonOpaquePayload_type_uuid_tag 1
 #define ser_JonOpaquePayload_version_tag 2
 #define ser_JonOpaquePayload_payload_tag 3
+#define ser_JonGuiDataROI_x1_tag 1
+#define ser_JonGuiDataROI_y1_tag 2
+#define ser_JonGuiDataROI_x2_tag 3
+#define ser_JonGuiDataROI_y2_tag 4
+#define ser_JonGuiDataSharpness_value_tag 1
+#define ser_JonGuiDataSharpness_derivative_1_tag 2
+#define ser_JonGuiDataSharpness_derivative_2_tag 3
+#define ser_JonGuiDataVector3_x_tag 1
+#define ser_JonGuiDataVector3_y_tag 2
+#define ser_JonGuiDataVector3_z_tag 3
+#define ser_JonGuiDataQuaternion_w_tag 1
+#define ser_JonGuiDataQuaternion_x_tag 2
+#define ser_JonGuiDataQuaternion_y_tag 3
+#define ser_JonGuiDataQuaternion_z_tag 4
+#define ser_JonGuiDataTransform3D_position_tag 1
+#define ser_JonGuiDataTransform3D_orientation_tag 2
+#define ser_JonGuiDataTransform3D_linear_velocity_tag 3
+#define ser_JonGuiDataTransform3D_angular_velocity_tag 4
+#define ser_JonGuiDataTrackedObject_uuid_tag 1
+#define ser_JonGuiDataTrackedObject_transform_tag 2
+#define ser_JonGuiDataTrackedObject_bounding_box_tag 3
+#define ser_JonGuiDataTrackedObject_state_tag 4
 
 /* Struct field encoding specification for nanopb */
 #define ser_JonGuiDataMeteo_FIELDLIST(X, a)      \
@@ -501,19 +676,89 @@ extern "C"
 #define ser_JonOpaquePayload_DEFAULT NULL
 #define ser_JonOpaquePayload_version_MSGTYPE ser_JonOpaquePayloadVersion
 
+#define ser_JonGuiDataROI_FIELDLIST(X, a) \
+  X(a, STATIC, SINGULAR, DOUBLE, x1, 1)   \
+  X(a, STATIC, SINGULAR, DOUBLE, y1, 2)   \
+  X(a, STATIC, SINGULAR, DOUBLE, x2, 3)   \
+  X(a, STATIC, SINGULAR, DOUBLE, y2, 4)
+#define ser_JonGuiDataROI_CALLBACK NULL
+#define ser_JonGuiDataROI_DEFAULT NULL
+
+#define ser_JonGuiDataSharpness_FIELDLIST(X, a)   \
+  X(a, STATIC, SINGULAR, DOUBLE, value, 1)        \
+  X(a, STATIC, SINGULAR, DOUBLE, derivative_1, 2) \
+  X(a, STATIC, SINGULAR, DOUBLE, derivative_2, 3)
+#define ser_JonGuiDataSharpness_CALLBACK NULL
+#define ser_JonGuiDataSharpness_DEFAULT NULL
+
+#define ser_JonGuiDataVector3_FIELDLIST(X, a) \
+  X(a, STATIC, SINGULAR, DOUBLE, x, 1)        \
+  X(a, STATIC, SINGULAR, DOUBLE, y, 2)        \
+  X(a, STATIC, SINGULAR, DOUBLE, z, 3)
+#define ser_JonGuiDataVector3_CALLBACK NULL
+#define ser_JonGuiDataVector3_DEFAULT NULL
+
+#define ser_JonGuiDataQuaternion_FIELDLIST(X, a) \
+  X(a, STATIC, SINGULAR, DOUBLE, w, 1)           \
+  X(a, STATIC, SINGULAR, DOUBLE, x, 2)           \
+  X(a, STATIC, SINGULAR, DOUBLE, y, 3)           \
+  X(a, STATIC, SINGULAR, DOUBLE, z, 4)
+#define ser_JonGuiDataQuaternion_CALLBACK NULL
+#define ser_JonGuiDataQuaternion_DEFAULT NULL
+
+#define ser_JonGuiDataTransform3D_FIELDLIST(X, a)     \
+  X(a, STATIC, OPTIONAL, MESSAGE, position, 1)        \
+  X(a, STATIC, OPTIONAL, MESSAGE, orientation, 2)     \
+  X(a, STATIC, OPTIONAL, MESSAGE, linear_velocity, 3) \
+  X(a, STATIC, OPTIONAL, MESSAGE, angular_velocity, 4)
+#define ser_JonGuiDataTransform3D_CALLBACK NULL
+#define ser_JonGuiDataTransform3D_DEFAULT NULL
+#define ser_JonGuiDataTransform3D_position_MSGTYPE ser_JonGuiDataVector3
+#define ser_JonGuiDataTransform3D_orientation_MSGTYPE ser_JonGuiDataQuaternion
+#define ser_JonGuiDataTransform3D_linear_velocity_MSGTYPE ser_JonGuiDataVector3
+#define ser_JonGuiDataTransform3D_angular_velocity_MSGTYPE ser_JonGuiDataVector3
+
+#define ser_JonGuiDataTrackedObject_FIELDLIST(X, a) \
+  X(a, CALLBACK, SINGULAR, STRING, uuid, 1)         \
+  X(a, STATIC, OPTIONAL, MESSAGE, transform, 2)     \
+  X(a, STATIC, OPTIONAL, MESSAGE, bounding_box, 3)  \
+  X(a, STATIC, SINGULAR, UENUM, state, 4)
+#define ser_JonGuiDataTrackedObject_CALLBACK pb_default_field_callback
+#define ser_JonGuiDataTrackedObject_DEFAULT NULL
+#define ser_JonGuiDataTrackedObject_transform_MSGTYPE ser_JonGuiDataTransform3D
+#define ser_JonGuiDataTrackedObject_bounding_box_MSGTYPE ser_JonGuiDataROI
+
   extern const pb_msgdesc_t ser_JonGuiDataMeteo_msg;
   extern const pb_msgdesc_t ser_JonOpaquePayloadVersion_msg;
   extern const pb_msgdesc_t ser_JonOpaquePayload_msg;
+  extern const pb_msgdesc_t ser_JonGuiDataROI_msg;
+  extern const pb_msgdesc_t ser_JonGuiDataSharpness_msg;
+  extern const pb_msgdesc_t ser_JonGuiDataVector3_msg;
+  extern const pb_msgdesc_t ser_JonGuiDataQuaternion_msg;
+  extern const pb_msgdesc_t ser_JonGuiDataTransform3D_msg;
+  extern const pb_msgdesc_t ser_JonGuiDataTrackedObject_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define ser_JonGuiDataMeteo_fields &ser_JonGuiDataMeteo_msg
 #define ser_JonOpaquePayloadVersion_fields &ser_JonOpaquePayloadVersion_msg
 #define ser_JonOpaquePayload_fields &ser_JonOpaquePayload_msg
+#define ser_JonGuiDataROI_fields &ser_JonGuiDataROI_msg
+#define ser_JonGuiDataSharpness_fields &ser_JonGuiDataSharpness_msg
+#define ser_JonGuiDataVector3_fields &ser_JonGuiDataVector3_msg
+#define ser_JonGuiDataQuaternion_fields &ser_JonGuiDataQuaternion_msg
+#define ser_JonGuiDataTransform3D_fields &ser_JonGuiDataTransform3D_msg
+#define ser_JonGuiDataTrackedObject_fields &ser_JonGuiDataTrackedObject_msg
 
 /* Maximum encoded size of messages (where known) */
 /* ser_JonOpaquePayload_size depends on runtime parameters */
-#define SER_JON_SHARED_DATA_TYPES_PB_H_MAX_SIZE ser_JonGuiDataMeteo_size
+/* ser_JonGuiDataTrackedObject_size depends on runtime parameters */
+#define SER_JON_SHARED_DATA_TYPES_PB_H_MAX_SIZE ser_JonGuiDataTransform3D_size
 #define ser_JonGuiDataMeteo_size 27
+#define ser_JonGuiDataQuaternion_size 36
+#define ser_JonGuiDataROI_size 36
+#define ser_JonGuiDataSharpness_size 27
+#define ser_JonGuiDataTransform3D_size 125
+#define ser_JonGuiDataVector3_size 27
 #define ser_JonOpaquePayloadVersion_size 23
 
 #ifdef __cplusplus

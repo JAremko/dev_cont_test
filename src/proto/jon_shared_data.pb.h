@@ -11,7 +11,9 @@
 #include "jon_shared_data_cv.pb.h"
 #include "jon_shared_data_day_cam_glass_heater.pb.h"
 #include "jon_shared_data_gps.pb.h"
+#include "jon_shared_data_heater.pb.h"
 #include "jon_shared_data_lrf.pb.h"
+#include "jon_shared_data_pmu.pb.h"
 #include "jon_shared_data_power.pb.h"
 #include "jon_shared_data_rec_osd.pb.h"
 #include "jon_shared_data_rotary.pb.h"
@@ -72,6 +74,10 @@ typedef struct _ser_JonGUIState
   ser_JonGuiDataPower power;
   bool has_cv;
   ser_JonGuiDataCV cv;
+  bool has_pmu;
+  ser_JonGuiDataPMU pmu;
+  bool has_heater;
+  ser_JonGuiDataHeater heater;
 } ser_JonGUIState;
 
 
@@ -96,7 +102,9 @@ extern "C"
       ser_JonGuiDataRecOsd_init_default, false,                                \
       ser_JonGuiDataDayCamGlassHeater_init_default, false,                     \
       ser_JonGuiDataActualSpaceTime_init_default, false,                       \
-      ser_JonGuiDataPower_init_default, false, ser_JonGuiDataCV_init_default   \
+      ser_JonGuiDataPower_init_default, false, ser_JonGuiDataCV_init_default,  \
+      false, ser_JonGuiDataPMU_init_default, false,                            \
+      ser_JonGuiDataHeater_init_default                                        \
   }
 #define ser_JonGUIState_init_zero                                              \
   {                                                                            \
@@ -112,7 +120,8 @@ extern "C"
       ser_JonGuiDataRecOsd_init_zero, false,                                   \
       ser_JonGuiDataDayCamGlassHeater_init_zero, false,                        \
       ser_JonGuiDataActualSpaceTime_init_zero, false,                          \
-      ser_JonGuiDataPower_init_zero, false, ser_JonGuiDataCV_init_zero         \
+      ser_JonGuiDataPower_init_zero, false, ser_JonGuiDataCV_init_zero, false, \
+      ser_JonGuiDataPMU_init_zero, false, ser_JonGuiDataHeater_init_zero       \
   }
 
 /* Field tags (for use in manual encoding/decoding) */
@@ -139,6 +148,8 @@ extern "C"
 #define ser_JonGUIState_actual_space_time_tag 25
 #define ser_JonGUIState_power_tag 26
 #define ser_JonGUIState_cv_tag 27
+#define ser_JonGUIState_pmu_tag 28
+#define ser_JonGUIState_heater_tag 29
 
 /* Struct field encoding specification for nanopb */
 #define ser_JonGUIState_FIELDLIST(X, a)                       \
@@ -164,7 +175,9 @@ extern "C"
   X(a, STATIC, OPTIONAL, MESSAGE, day_cam_glass_heater, 24)   \
   X(a, STATIC, OPTIONAL, MESSAGE, actual_space_time, 25)      \
   X(a, STATIC, OPTIONAL, MESSAGE, power, 26)                  \
-  X(a, STATIC, OPTIONAL, MESSAGE, cv, 27)
+  X(a, STATIC, OPTIONAL, MESSAGE, cv, 27)                     \
+  X(a, STATIC, OPTIONAL, MESSAGE, pmu, 28)                    \
+  X(a, STATIC, OPTIONAL, MESSAGE, heater, 29)
 #define ser_JonGUIState_CALLBACK pb_default_field_callback
 #define ser_JonGUIState_DEFAULT NULL
 #define ser_JonGUIState_opaque_payloads_MSGTYPE ser_JonOpaquePayload
@@ -185,6 +198,8 @@ extern "C"
 #define ser_JonGUIState_actual_space_time_MSGTYPE ser_JonGuiDataActualSpaceTime
 #define ser_JonGUIState_power_MSGTYPE ser_JonGuiDataPower
 #define ser_JonGUIState_cv_MSGTYPE ser_JonGuiDataCV
+#define ser_JonGUIState_pmu_MSGTYPE ser_JonGuiDataPMU
+#define ser_JonGUIState_heater_MSGTYPE ser_JonGuiDataHeater
 
   extern const pb_msgdesc_t ser_JonGUIState_msg;
 

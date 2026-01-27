@@ -15,6 +15,24 @@ PB_BIND(ser_JonOpaquePayloadVersion, ser_JonOpaquePayloadVersion, AUTO)
 PB_BIND(ser_JonOpaquePayload, ser_JonOpaquePayload, AUTO)
 
 
+PB_BIND(ser_JonGuiDataROI, ser_JonGuiDataROI, AUTO)
+
+
+PB_BIND(ser_JonGuiDataSharpness, ser_JonGuiDataSharpness, AUTO)
+
+
+PB_BIND(ser_JonGuiDataVector3, ser_JonGuiDataVector3, AUTO)
+
+
+PB_BIND(ser_JonGuiDataQuaternion, ser_JonGuiDataQuaternion, AUTO)
+
+
+PB_BIND(ser_JonGuiDataTransform3D, ser_JonGuiDataTransform3D, AUTO)
+
+
+PB_BIND(ser_JonGuiDataTrackedObject, ser_JonGuiDataTrackedObject, AUTO)
+
+
 #ifndef PB_CONVERT_DOUBLE_FLOAT
 /* On some platforms (such as AVR), double is really float.
  * To be able to encode/decode double on these platforms, you need.

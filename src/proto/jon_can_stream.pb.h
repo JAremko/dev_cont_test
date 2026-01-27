@@ -14,11 +14,13 @@
 typedef struct _jon_can_CANFrame
 {
   uint64_t timestamp_us; /* Timestamp in microseconds */
-  uint32_t can_id;       /* Raw CAN ID */
-  bool is_rx;            /* true=received from device, false=sent to device */
-  bool is_fd;            /* true=CAN-FD, false=classic CAN */
-  pb_callback_t
-    data; /* Frame data (up to 8 bytes for CAN, up to 64 for CAN-FD) */
+  /* Standard 11-bit CAN ID (0x000-0x7FF) */
+  uint32_t can_id;
+  bool is_rx; /* true=received from device, false=sent to device */
+  bool is_fd; /* true=CAN-FD, false=classic CAN */
+  /* Frame payload: max 64 bytes (CAN-FD). All frames in this system are CAN-FD.
+   */
+  pb_callback_t data;
 } jon_can_CANFrame;
 
 /* Batch of CAN frames for efficient streaming */
