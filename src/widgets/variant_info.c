@@ -247,7 +247,7 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   {
     const char *key;
     char value[128];
-  } items[17];
+  } items[20];
 
   // Draw counter (increments each state update/render cycle)
   snprintf(items[0].value, sizeof(items[0].value), "%u", ctx->frame_count);
@@ -359,6 +359,34 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   snprintf(items[16].value, sizeof(items[16].value), "%s %s UTC",
            OSD_BUILD_DATE, OSD_BUILD_TIME);
   items[16].key = "Built";
+
+  // Client metadata (canvas info from frontend via opaque payload)
+  osd_client_metadata_t client_meta;
+  if (osd_state_get_client_metadata(ctx, &client_meta) && client_meta.valid)
+    {
+      snprintf(items[17].value, sizeof(items[17].value), "%ux%u",
+               client_meta.canvas_width_px, client_meta.canvas_height_px);
+      items[17].key = "Canvas";
+
+      snprintf(items[18].value, sizeof(items[18].value), "%.2f",
+               client_meta.device_pixel_ratio);
+      items[18].key = "DPR";
+
+      snprintf(items[19].value, sizeof(items[19].value), "%ux%u",
+               client_meta.osd_buffer_width, client_meta.osd_buffer_height);
+      items[19].key = "OSD Buffer";
+    }
+  else
+    {
+      snprintf(items[17].value, sizeof(items[17].value), "N/A");
+      items[17].key = "Canvas";
+
+      snprintf(items[18].value, sizeof(items[18].value), "N/A");
+      items[18].key = "DPR";
+
+      snprintf(items[19].value, sizeof(items[19].value), "N/A");
+      items[19].key = "OSD Buffer";
+    }
 
   // Render each config item
   for (size_t i = 0; i < sizeof(items) / sizeof(items[0]); i++)

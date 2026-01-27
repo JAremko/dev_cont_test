@@ -370,6 +370,9 @@ proto:
 	git submodule update --remote --merge proto/c proto/ts
 	@echo "=== Syncing proto/c to src/proto ==="
 	@cp proto/c/*.pb.h proto/c/*.pb.c src/proto/
+	@echo "=== Syncing proto/c/opaque to src/proto/opaque ==="
+	@mkdir -p src/proto/opaque
+	@cp proto/c/opaque/*.pb.h proto/c/opaque/*.pb.c src/proto/opaque/ 2>/dev/null || true
 	@echo "✅ Proto files updated from submodules"
 else
 proto:

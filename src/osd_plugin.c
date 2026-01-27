@@ -59,7 +59,15 @@
 
 // Protocol buffer support
 #include "jon_shared_data.pb.h"
+#include "jon_shared_data_types.pb.h"
 #include "pb_decode.h"
+
+// Opaque payload protos
+// Note: First sync with `make proto` if this include fails
+#include "opaque/osd_client_metadata.pb.h"
+
+// UUID for OsdClientMetadata opaque payload
+#define OSD_CLIENT_METADATA_UUID "01941b00-0000-7000-8000-000000000001"
 
 // Mini XML parser (will include if available)
 // #include <mxml.h>
@@ -107,6 +115,142 @@ load_config_xml(osd_context_t *ctx, const char *path)
 // resources/svg.c) See font_load() and svg_load() for implementation
 
 // ════════════════════════════════════════════════════════════
+// OPAQUE PAYLOAD PARSING
+// ════════════════════════════════════════════════════════════
+
+// Struct to hold callback context for opaque payload parsing
+typedef struct
+{
+  osd_context_t *ctx;
+  char uuid_buffer[64];
+  uint8_t payload_buffer[128];
+  size_t payload_size;
+  bool uuid_matched;
+} opaque_payload_ctx_t;
+
+// Callback for type_uuid string field in JonOpaquePayload
+static bool
+opaque_uuid_decode_callback(pb_istream_t *stream,
+                            const pb_field_t *field,
+                            void **arg)
+{
+  opaque_payload_ctx_t *cb_ctx = (opaque_payload_ctx_t *)*arg;
+  (void)field; // unused
+
+  size_t len = stream->bytes_left;
+  if (len >= sizeof(cb_ctx->uuid_buffer))
+    {
+      len = sizeof(cb_ctx->uuid_buffer) - 1;
+    }
+
+  if (!pb_read(stream, (pb_byte_t *)cb_ctx->uuid_buffer, len))
+    {
+      return false;
+    }
+
+  cb_ctx->uuid_buffer[len] = '\0';
+
+  // Check if this UUID matches our OsdClientMetadata UUID
+  cb_ctx->uuid_matched
+    = (strcmp(cb_ctx->uuid_buffer, OSD_CLIENT_METADATA_UUID) == 0);
+
+  return true;
+}
+
+// Callback for payload bytes field in JonOpaquePayload
+static bool
+opaque_payload_decode_callback(pb_istream_t *stream,
+                               const pb_field_t *field,
+                               void **arg)
+{
+  opaque_payload_ctx_t *cb_ctx = (opaque_payload_ctx_t *)*arg;
+  (void)field; // unused
+
+  cb_ctx->payload_size = stream->bytes_left;
+  if (cb_ctx->payload_size > sizeof(cb_ctx->payload_buffer))
+    {
+      // Payload too large, skip
+      cb_ctx->payload_size = 0;
+      return pb_read(stream, NULL, stream->bytes_left);
+    }
+
+  if (!pb_read(stream, cb_ctx->payload_buffer, cb_ctx->payload_size))
+    {
+      return false;
+    }
+
+  return true;
+}
+
+// Callback for opaque_payloads repeated field in JonGUIState
+static bool
+opaque_payloads_decode_callback(pb_istream_t *stream,
+                                const pb_field_t *field,
+                                void **arg)
+{
+  osd_context_t *ctx = (osd_context_t *)*arg;
+  (void)field; // unused
+
+  // Set up context for nested callbacks
+  opaque_payload_ctx_t cb_ctx = { 0 };
+  cb_ctx.ctx                  = ctx;
+  cb_ctx.uuid_matched         = false;
+
+  // Set up JonOpaquePayload with callbacks for its fields
+  ser_JonOpaquePayload opaque_payload   = ser_JonOpaquePayload_init_zero;
+  opaque_payload.type_uuid.funcs.decode = opaque_uuid_decode_callback;
+  opaque_payload.type_uuid.arg          = &cb_ctx;
+  opaque_payload.payload.funcs.decode   = opaque_payload_decode_callback;
+  opaque_payload.payload.arg            = &cb_ctx;
+
+  // Decode the JonOpaquePayload submessage
+  if (!pb_decode(stream, ser_JonOpaquePayload_fields, &opaque_payload))
+    {
+      LOG_WARN("Failed to decode opaque payload");
+      return false;
+    }
+
+  // If UUID matched, decode the payload as OsdClientMetadata
+  if (cb_ctx.uuid_matched && cb_ctx.payload_size > 0)
+    {
+      ser_OsdClientMetadata client_metadata = ser_OsdClientMetadata_init_zero;
+      pb_istream_t payload_stream
+        = pb_istream_from_buffer(cb_ctx.payload_buffer, cb_ctx.payload_size);
+
+      if (pb_decode(&payload_stream, ser_OsdClientMetadata_fields,
+                    &client_metadata))
+        {
+          // Store in context for variant_info to read
+          ctx->client_metadata.canvas_width_px
+            = client_metadata.canvas_width_px;
+          ctx->client_metadata.canvas_height_px
+            = client_metadata.canvas_height_px;
+          ctx->client_metadata.device_pixel_ratio
+            = client_metadata.device_pixel_ratio;
+          ctx->client_metadata.osd_buffer_width
+            = client_metadata.osd_buffer_width;
+          ctx->client_metadata.osd_buffer_height
+            = client_metadata.osd_buffer_height;
+          ctx->client_metadata.valid = true;
+
+          LOG_DEBUG("Parsed OsdClientMetadata: canvas=%ux%u, dpr=%.2f, "
+                    "buffer=%ux%u",
+                    client_metadata.canvas_width_px,
+                    client_metadata.canvas_height_px,
+                    client_metadata.device_pixel_ratio,
+                    client_metadata.osd_buffer_width,
+                    client_metadata.osd_buffer_height);
+        }
+      else
+        {
+          LOG_WARN("Failed to decode OsdClientMetadata payload");
+        }
+    }
+
+  return true;
+}
+
+// ════════════════════════════════════════════════════════════
 // PROTOCOL BUFFER DECODING
 // ════════════════════════════════════════════════════════════
 
@@ -117,6 +261,10 @@ decode_proto_state(osd_context_t *ctx, ser_JonGUIState *pb_state)
     {
       return false;
     }
+
+  // Wire up callback for opaque_payloads to extract OsdClientMetadata
+  pb_state->opaque_payloads.funcs.decode = opaque_payloads_decode_callback;
+  pb_state->opaque_payloads.arg          = ctx;
 
   pb_istream_t stream
     = pb_istream_from_buffer(ctx->proto_buffer, ctx->proto_size);

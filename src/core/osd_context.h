@@ -29,7 +29,7 @@
 // Widgets should NOT modify context fields directly except through
 // the provided helper functions.
 
-typedef struct
+typedef struct osd_context
 {
   // ──────────────────────────────────────────────────────────
   // FRAMEBUFFER (render target)
@@ -62,6 +62,17 @@ typedef struct
   uint8_t proto_buffer[4096];
   size_t proto_size;
   bool proto_valid;
+
+  // Client metadata from opaque payload (canvas info from frontend)
+  struct
+  {
+    uint32_t canvas_width_px;
+    uint32_t canvas_height_px;
+    float device_pixel_ratio;
+    uint32_t osd_buffer_width;
+    uint32_t osd_buffer_height;
+    bool valid;
+  } client_metadata;
 
   // Nav ball state
   bool navball_enabled;

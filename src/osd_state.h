@@ -82,6 +82,28 @@ typedef struct
 bool osd_state_get_gps(const osd_state_t *state, osd_gps_position_t *pos);
 
 // ════════════════════════════════════════════════════════════
+// CLIENT METADATA (canvas info from frontend, for debug overlay)
+// ════════════════════════════════════════════════════════════
+
+// Client-side canvas metadata
+typedef struct
+{
+  uint32_t canvas_width_px;   // Physical canvas width (CSS width × DPR)
+  uint32_t canvas_height_px;  // Physical canvas height (CSS height × DPR)
+  float device_pixel_ratio;   // window.devicePixelRatio
+  uint32_t osd_buffer_width;  // OSD framebuffer width (1920 or 900)
+  uint32_t osd_buffer_height; // OSD framebuffer height (1080 or 720)
+  bool valid;
+} osd_client_metadata_t;
+
+// Get client metadata from opaque payload (if present)
+// Returns true if metadata was found and parsed
+// Note: This reads from context, not from state protobuf directly
+typedef struct osd_context osd_context_t;
+bool osd_state_get_client_metadata(const osd_context_t *ctx,
+                                   osd_client_metadata_t *metadata);
+
+// ════════════════════════════════════════════════════════════
 // STATE TIMING DATA (for debug overlay)
 // ════════════════════════════════════════════════════════════
 

@@ -3,6 +3,7 @@
 
 #include "osd_state.h"
 
+#include "core/osd_context.h"
 #include "proto/jon_shared_data.pb.h"
 
 // ════════════════════════════════════════════════════════════
@@ -158,4 +159,36 @@ osd_state_get_frame_monotonic_heat_us(const osd_state_t *state)
     return 0;
 
   return state->frame_monotonic_heat_us;
+}
+
+// ════════════════════════════════════════════════════════════
+// CLIENT METADATA
+// ════════════════════════════════════════════════════════════
+
+bool
+osd_state_get_client_metadata(const osd_context_t *ctx,
+                              osd_client_metadata_t *metadata)
+{
+  if (!metadata)
+    return false;
+
+  // Initialize to invalid
+  metadata->valid              = false;
+  metadata->canvas_width_px    = 0;
+  metadata->canvas_height_px   = 0;
+  metadata->device_pixel_ratio = 0.0f;
+  metadata->osd_buffer_width   = 0;
+  metadata->osd_buffer_height  = 0;
+
+  if (!ctx || !ctx->client_metadata.valid)
+    return false;
+
+  metadata->canvas_width_px    = ctx->client_metadata.canvas_width_px;
+  metadata->canvas_height_px   = ctx->client_metadata.canvas_height_px;
+  metadata->device_pixel_ratio = ctx->client_metadata.device_pixel_ratio;
+  metadata->osd_buffer_width   = ctx->client_metadata.osd_buffer_width;
+  metadata->osd_buffer_height  = ctx->client_metadata.osd_buffer_height;
+  metadata->valid              = true;
+
+  return true;
 }
