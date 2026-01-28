@@ -88,11 +88,28 @@ bool osd_state_get_gps(const osd_state_t *state, osd_gps_position_t *pos);
 // Client-side canvas metadata
 typedef struct
 {
+  // Canvas info
   uint32_t canvas_width_px;   // Physical canvas width (CSS width × DPR)
   uint32_t canvas_height_px;  // Physical canvas height (CSS height × DPR)
   float device_pixel_ratio;   // window.devicePixelRatio
   uint32_t osd_buffer_width;  // OSD framebuffer width (1920 or 900)
   uint32_t osd_buffer_height; // OSD framebuffer height (1080 or 720)
+
+  // Video proxy bounds (NDC -1.0 to 1.0)
+  float video_proxy_ndc_x;      // Quad X position
+  float video_proxy_ndc_y;      // Quad Y position
+  float video_proxy_ndc_width;  // Quad width
+  float video_proxy_ndc_height; // Quad height
+
+  // Scale factor (OSD buffer / proxy physical pixels)
+  float scale_factor;
+
+  // Theme info
+  bool is_sharp_mode;    // true = high contrast, false = OKLCH
+  float theme_hue;       // 0-360 degrees
+  float theme_chroma;    // 0-1.0 saturation
+  float theme_lightness; // 0-200 with HDR
+
   bool valid;
 } osd_client_metadata_t;
 

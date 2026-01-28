@@ -23,8 +23,14 @@ fi
 DEPLOY_HOST="${DEPLOY_HOST:-sych.local}"
 DEPLOY_USER="${DEPLOY_USER:-archer}"
 
-# Centralized OSD path on sych.local (nginx serves /osd/ from here)
+# Centralized OSD path on sych.local (nginx proxies to dev_notifications, files also on disk)
 REMOTE_OSD_PATH="/home/archer/web/osd"
+
+# Redis configuration (same as dev_notifications service)
+REDIS_HOST="127.0.0.1"
+REDIS_PORT="8085"
+REDIS_PASSWORD="VFDGOZlbwfSXk5p"
+REDIS_CLI="redis-cli -h $REDIS_HOST -p $REDIS_PORT -a '$REDIS_PASSWORD' --no-auth-warning"
 
 # ============================================================================
 # Helper Functions
@@ -138,20 +144,16 @@ deploy_to_frontend() {
             error "Package not found: $source_path"
         fi
 
-        # Rsync to server (--chmod ensures files are world-readable for nginx)
+        # Rsync to disk (for backup/debugging)
         rsync -z --chmod=F644 "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/${variant}.tar"
-        log "  Deployed: $package_name -> ${variant}.tar"
+        log "  Deployed to disk: $package_name -> ${variant}.tar"
+
+        # Push to Redis for atomic serving
+        ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:${variant}.tar < $REMOTE_OSD_PATH/${variant}.tar" >/dev/null
+        log "  Pushed to Redis: osd:package:${variant}.tar"
     done
 
-    # Deploy pip_override.json (config overrides for PiP views)
-    local pip_override="$PROJECT_ROOT/resources/pip_override.json"
-    if [[ -f "$pip_override" ]]; then
-        rsync -z --chmod=F644 "$pip_override" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/pip_override.json"
-        log "  Deployed: pip_override.json"
-    fi
-
-    # Note: Hot-reload is now handled via SSE (dev_notifications service watches file changes)
-    # rsync already updates mtime when file content changes
+    # Note: pip_override.json is now bundled inside packages
     log "Frontend deploy complete"
 }
 
@@ -172,11 +174,22 @@ deploy_to_gallery() {
         error "Package not found: $source_path"
     fi
 
-    # Rsync to server (--chmod ensures files are world-readable for nginx)
+    # Rsync to disk (for backup/debugging)
     rsync -z --chmod=F644 "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/default.tar"
-    log "  Deployed: $package_name -> default.tar"
+    log "  Deployed to disk: $package_name -> default.tar"
+
+    # Push to Redis for atomic serving
+    ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:default.tar < $REMOTE_OSD_PATH/default.tar" >/dev/null
+    log "  Pushed to Redis: osd:package:default.tar"
 
     log "Gallery deploy complete"
+}
+
+# Notify dev_notifications service to reload packages from Redis
+notify_reload() {
+    log "Notifying dev_notifications service to reload packages..."
+    ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI PUBLISH osd:reload all" >/dev/null
+    log "✓ Reload notification sent"
 }
 
 # ============================================================================
@@ -217,14 +230,17 @@ main() {
     case "$target" in
         frontend)
             deploy_to_frontend "$build_mode"
+            notify_reload
             ;;
         gallery)
             deploy_to_gallery "$build_mode"
+            notify_reload
             ;;
         all)
             deploy_to_frontend "$build_mode"
             echo ""
             deploy_to_gallery "$build_mode"
+            notify_reload
             ;;
         *)
             error "Invalid target: $target (must be 'frontend', 'gallery', or omit for both)"

@@ -14,37 +14,50 @@
  Injected by frontend into JonGUIState.opaque_payloads.
 
  UUID: 01941b00-0000-7000-8000-000000000001 */
-typedef struct _ser_OsdClientMetadata
-{
-  /* Physical canvas width in pixels (CSS width × devicePixelRatio)
-Valid range: 1-40960 (supports up to 8K × 5) */
-  uint32_t canvas_width_px;
-  /* Physical canvas height in pixels (CSS height × devicePixelRatio) */
-  uint32_t canvas_height_px;
-  /* Device pixel ratio (window.devicePixelRatio)
-Typical values: 1.0 (standard), 1.5, 2.0 (Retina), 3.0 (mobile) */
-  float device_pixel_ratio;
-  /* OSD framebuffer width (1920 for day, 900 for heat) */
-  uint32_t osd_buffer_width;
-  /* OSD framebuffer height (1080 for day, 720 for heat) */
-  uint32_t osd_buffer_height;
+typedef struct _ser_OsdClientMetadata {
+    /* Physical canvas width in pixels (CSS width × devicePixelRatio)
+ Valid range: 1-40960 (supports up to 8K × 5) */
+    uint32_t canvas_width_px;
+    /* Physical canvas height in pixels (CSS height × devicePixelRatio) */
+    uint32_t canvas_height_px;
+    /* Device pixel ratio (window.devicePixelRatio)
+ Typical values: 1.0 (standard), 1.5, 2.0 (Retina), 3.0 (mobile) */
+    float device_pixel_ratio;
+    /* OSD framebuffer width (1920 for day, 900 for heat) */
+    uint32_t osd_buffer_width;
+    /* OSD framebuffer height (1080 for day, 720 for heat) */
+    uint32_t osd_buffer_height;
+    /* === Video Proxy Bounds (NDC -1.0 to 1.0) ===
+ Frontend: actual quad where video renders on canvas
+ Gallery: hardcode (0,0,1,1) for full canvas */
+    float video_proxy_ndc_x;
+    float video_proxy_ndc_y;
+    float video_proxy_ndc_width;
+    float video_proxy_ndc_height;
+    /* === Scale Factor ===
+ Ratio: osd_buffer_pixels / proxy_physical_pixels */
+    float scale_factor;
+    /* === Theme Info ===
+ From ThemeManager singleton (window.themeManager)
+ true = high contrast "sharp" mode, false = smooth OKLCH "default" mode */
+    bool is_sharp_mode;
+    /* OKLCH base colors (only meaningful when !is_sharp_mode)
+ Hue: 0-360 degrees (default: 120 green) */
+    float theme_hue;
+    /* Chroma: 0-1.0 saturation (default: 0.1, picker allows up to 0.8) */
+    float theme_chroma;
+    /* Lightness: 0-200 with HDR support (default: 50) */
+    float theme_lightness;
 } ser_OsdClientMetadata;
 
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define ser_OsdClientMetadata_init_default \
-  {                                        \
-    0, 0, 0, 0, 0                          \
-  }
-#define ser_OsdClientMetadata_init_zero \
-  {                                     \
-    0, 0, 0, 0, 0                       \
-  }
+#define ser_OsdClientMetadata_init_default       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+#define ser_OsdClientMetadata_init_zero          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ser_OsdClientMetadata_canvas_width_px_tag 1
@@ -52,25 +65,43 @@ extern "C"
 #define ser_OsdClientMetadata_device_pixel_ratio_tag 3
 #define ser_OsdClientMetadata_osd_buffer_width_tag 4
 #define ser_OsdClientMetadata_osd_buffer_height_tag 5
+#define ser_OsdClientMetadata_video_proxy_ndc_x_tag 6
+#define ser_OsdClientMetadata_video_proxy_ndc_y_tag 7
+#define ser_OsdClientMetadata_video_proxy_ndc_width_tag 8
+#define ser_OsdClientMetadata_video_proxy_ndc_height_tag 9
+#define ser_OsdClientMetadata_scale_factor_tag   10
+#define ser_OsdClientMetadata_is_sharp_mode_tag  11
+#define ser_OsdClientMetadata_theme_hue_tag      12
+#define ser_OsdClientMetadata_theme_chroma_tag   13
+#define ser_OsdClientMetadata_theme_lightness_tag 14
 
 /* Struct field encoding specification for nanopb */
-#define ser_OsdClientMetadata_FIELDLIST(X, a)          \
-  X(a, STATIC, SINGULAR, UINT32, canvas_width_px, 1)   \
-  X(a, STATIC, SINGULAR, UINT32, canvas_height_px, 2)  \
-  X(a, STATIC, SINGULAR, FLOAT, device_pixel_ratio, 3) \
-  X(a, STATIC, SINGULAR, UINT32, osd_buffer_width, 4)  \
-  X(a, STATIC, SINGULAR, UINT32, osd_buffer_height, 5)
+#define ser_OsdClientMetadata_FIELDLIST(X, a) \
+X(a, STATIC,   SINGULAR, UINT32,   canvas_width_px,   1) \
+X(a, STATIC,   SINGULAR, UINT32,   canvas_height_px,   2) \
+X(a, STATIC,   SINGULAR, FLOAT,    device_pixel_ratio,   3) \
+X(a, STATIC,   SINGULAR, UINT32,   osd_buffer_width,   4) \
+X(a, STATIC,   SINGULAR, UINT32,   osd_buffer_height,   5) \
+X(a, STATIC,   SINGULAR, FLOAT,    video_proxy_ndc_x,   6) \
+X(a, STATIC,   SINGULAR, FLOAT,    video_proxy_ndc_y,   7) \
+X(a, STATIC,   SINGULAR, FLOAT,    video_proxy_ndc_width,   8) \
+X(a, STATIC,   SINGULAR, FLOAT,    video_proxy_ndc_height,   9) \
+X(a, STATIC,   SINGULAR, FLOAT,    scale_factor,     10) \
+X(a, STATIC,   SINGULAR, BOOL,     is_sharp_mode,    11) \
+X(a, STATIC,   SINGULAR, FLOAT,    theme_hue,        12) \
+X(a, STATIC,   SINGULAR, FLOAT,    theme_chroma,     13) \
+X(a, STATIC,   SINGULAR, FLOAT,    theme_lightness,  14)
 #define ser_OsdClientMetadata_CALLBACK NULL
 #define ser_OsdClientMetadata_DEFAULT NULL
 
-  extern const pb_msgdesc_t ser_OsdClientMetadata_msg;
+extern const pb_msgdesc_t ser_OsdClientMetadata_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define ser_OsdClientMetadata_fields &ser_OsdClientMetadata_msg
 
 /* Maximum encoded size of messages (where known) */
 #define SER_OPAQUE_OSD_CLIENT_METADATA_PB_H_MAX_SIZE ser_OsdClientMetadata_size
-#define ser_OsdClientMetadata_size 29
+#define ser_OsdClientMetadata_size               71
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -7,3 +7,6 @@
 #endif
 
 PB_BIND(ser_OsdClientMetadata, ser_OsdClientMetadata, AUTO)
+
+
+

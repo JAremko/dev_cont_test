@@ -250,15 +250,45 @@ opaque_payloads_decode_callback(pb_istream_t *stream,
             = client_metadata.osd_buffer_width;
           ctx->client_metadata.osd_buffer_height
             = client_metadata.osd_buffer_height;
+
+          // Video proxy bounds (NDC)
+          ctx->client_metadata.video_proxy_ndc_x
+            = client_metadata.video_proxy_ndc_x;
+          ctx->client_metadata.video_proxy_ndc_y
+            = client_metadata.video_proxy_ndc_y;
+          ctx->client_metadata.video_proxy_ndc_width
+            = client_metadata.video_proxy_ndc_width;
+          ctx->client_metadata.video_proxy_ndc_height
+            = client_metadata.video_proxy_ndc_height;
+
+          // Scale factor
+          ctx->client_metadata.scale_factor = client_metadata.scale_factor;
+
+          // Theme info
+          ctx->client_metadata.is_sharp_mode = client_metadata.is_sharp_mode;
+          ctx->client_metadata.theme_hue     = client_metadata.theme_hue;
+          ctx->client_metadata.theme_chroma  = client_metadata.theme_chroma;
+          ctx->client_metadata.theme_lightness
+            = client_metadata.theme_lightness;
+
           ctx->client_metadata.valid = true;
 
-          LOG_DEBUG("Parsed OsdClientMetadata: canvas=%ux%u, dpr=%.2f, "
-                    "buffer=%ux%u",
+          LOG_DEBUG("Parsed OsdClientMetadata: canvas=%ux%u @%.2fx -> %ux%u, "
+                    "proxy=(%.2f,%.2f,%.2f,%.2f) s:%.2f, "
+                    "theme=%s H:%.0f C:%.2f L:%.0f",
                     client_metadata.canvas_width_px,
                     client_metadata.canvas_height_px,
                     client_metadata.device_pixel_ratio,
                     client_metadata.osd_buffer_width,
-                    client_metadata.osd_buffer_height);
+                    client_metadata.osd_buffer_height,
+                    client_metadata.video_proxy_ndc_x,
+                    client_metadata.video_proxy_ndc_y,
+                    client_metadata.video_proxy_ndc_width,
+                    client_metadata.video_proxy_ndc_height,
+                    client_metadata.scale_factor,
+                    client_metadata.is_sharp_mode ? "Sharp" : "Default",
+                    client_metadata.theme_hue, client_metadata.theme_chroma,
+                    client_metadata.theme_lightness);
         }
       else
         {

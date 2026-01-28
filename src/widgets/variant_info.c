@@ -361,20 +361,32 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
   items[16].key = "Built";
 
   // Client metadata (canvas info from frontend via opaque payload)
+  // Compact display with fixed-width padding to prevent value jitter
   osd_client_metadata_t client_meta;
   if (osd_state_get_client_metadata(ctx, &client_meta) && client_meta.valid)
     {
-      snprintf(items[17].value, sizeof(items[17].value), "%ux%u",
-               client_meta.canvas_width_px, client_meta.canvas_height_px);
+      // Canvas: 1920x1080 @2.00x -> 1920x1080
+      snprintf(items[17].value, sizeof(items[17].value),
+               "%04ux%04u @%04.2fx -> %04ux%04u", client_meta.canvas_width_px,
+               client_meta.canvas_height_px, client_meta.device_pixel_ratio,
+               client_meta.osd_buffer_width, client_meta.osd_buffer_height);
       items[17].key = "Canvas";
 
-      snprintf(items[18].value, sizeof(items[18].value), "%.2f",
-               client_meta.device_pixel_ratio);
-      items[18].key = "DPR";
+      // Proxy: (+0.00,+0.00) 1.00x1.00 s:01.00
+      snprintf(items[18].value, sizeof(items[18].value),
+               "(%+05.2f,%+05.2f) %04.2fx%04.2f s:%05.2f",
+               client_meta.video_proxy_ndc_x, client_meta.video_proxy_ndc_y,
+               client_meta.video_proxy_ndc_width,
+               client_meta.video_proxy_ndc_height, client_meta.scale_factor);
+      items[18].key = "Proxy";
 
-      snprintf(items[19].value, sizeof(items[19].value), "%ux%u",
-               client_meta.osd_buffer_width, client_meta.osd_buffer_height);
-      items[19].key = "OSD Buffer";
+      // Theme: Default H:120 C:0.10 L:050
+      snprintf(items[19].value, sizeof(items[19].value),
+               "%-7s H:%03.0f C:%04.2f L:%03.0f",
+               client_meta.is_sharp_mode ? "Sharp" : "Default",
+               client_meta.theme_hue, client_meta.theme_chroma,
+               client_meta.theme_lightness);
+      items[19].key = "Theme";
     }
   else
     {
@@ -382,10 +394,10 @@ variant_info_render(osd_context_t *ctx, const osd_state_t *state)
       items[17].key = "Canvas";
 
       snprintf(items[18].value, sizeof(items[18].value), "N/A");
-      items[18].key = "DPR";
+      items[18].key = "Proxy";
 
       snprintf(items[19].value, sizeof(items[19].value), "N/A");
-      items[19].key = "OSD Buffer";
+      items[19].key = "Theme";
     }
 
   // Render each config item

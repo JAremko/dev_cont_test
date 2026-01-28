@@ -307,6 +307,10 @@ collect_resources() {
     log "  Copying manifest schema..."
     cp "$SCHEMAS_DIR/manifest.schema.json" \
        "$staging_dir/resources/schemas/manifest.schema.json"
+
+    # Copy pip_override.json (config overrides for PiP views, bundled in all packages)
+    log "  Copying pip_override.json..."
+    cp "$RESOURCES_DIR/pip_override.json" "$staging_dir/pip_override.json"
 }
 
 # ============================================================================
@@ -439,6 +443,22 @@ EOF
       "sha256": "$schema_sha256",
       "size_bytes": $schema_size,
       "type": "schema"
+    }
+EOF
+    )
+
+    # Also include pip_override.json (config overrides for PiP views)
+    local pip_sha256=$(compute_sha256 "$staging_dir/pip_override.json")
+    local pip_size=$(compute_file_size "$staging_dir/pip_override.json")
+
+    resources_json+=","
+    resources_json+=$(cat <<EOF
+
+    {
+      "path": "pip_override.json",
+      "sha256": "$pip_sha256",
+      "size_bytes": $pip_size,
+      "type": "config"
     }
 EOF
     )
