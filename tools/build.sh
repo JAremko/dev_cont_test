@@ -131,7 +131,23 @@ echo "Using WASI SDK: $WASI_SDK_PATH"
 echo ""
 
 # Build metadata (for variant_info display)
-GIT_COMMIT=$(git rev-parse --short=8 HEAD 2>/dev/null || echo "unknown")
+# In devcontainer, submodule's .git points to parent which isn't mounted,
+# but we mount the git dir to /workspaces/.git_modules
+if [ -d "/workspaces/.git_modules" ]; then
+    # Read HEAD directly - worktree relative path doesn't work in container
+    HEAD_CONTENT=$(cat /workspaces/.git_modules/HEAD 2>/dev/null)
+    if [[ "$HEAD_CONTENT" == ref:* ]]; then
+        # HEAD points to a ref, resolve it
+        REF_PATH="${HEAD_CONTENT#ref: }"
+        GIT_COMMIT=$(cat "/workspaces/.git_modules/$REF_PATH" 2>/dev/null | cut -c1-8)
+    else
+        # Detached HEAD - content is the commit hash
+        GIT_COMMIT=$(echo "$HEAD_CONTENT" | cut -c1-8)
+    fi
+    [ -z "$GIT_COMMIT" ] && GIT_COMMIT="unknown"
+else
+    GIT_COMMIT=$(git rev-parse --short=8 HEAD 2>/dev/null || echo "unknown")
+fi
 BUILD_DATE=$(date -u '+%Y-%m-%d')
 BUILD_TIME=$(date -u '+%H:%M:%S')
 VERSION="1.0.0"  # Could read from VERSION file if needed
