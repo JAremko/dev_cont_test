@@ -126,6 +126,9 @@ check_ssh() {
 # Deploy Functions
 # ============================================================================
 
+# Global associative array to collect deployed package hashes
+declare -A DEPLOYED_HASHES
+
 deploy_to_frontend() {
     local build_mode="$1"
 
@@ -144,6 +147,10 @@ deploy_to_frontend() {
             error "Package not found: $source_path"
         fi
 
+        # Compute sha256 hash locally before deploying
+        local hash
+        hash="sha256:$(sha256sum "$source_path" | cut -d' ' -f1)"
+
         # Rsync to disk (for backup/debugging)
         rsync -z --chmod=F644 "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/${variant}.tar"
         log "  Deployed to disk: $package_name -> ${variant}.tar"
@@ -151,6 +158,9 @@ deploy_to_frontend() {
         # Push to Redis for atomic serving
         ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:${variant}.tar < $REMOTE_OSD_PATH/${variant}.tar" >/dev/null
         log "  Pushed to Redis: osd:package:${variant}.tar"
+
+        # Store hash for notification
+        DEPLOYED_HASHES["${variant}.tar"]="$hash"
     done
 
     # Note: pip_override.json is now bundled inside packages
@@ -174,6 +184,10 @@ deploy_to_gallery() {
         error "Package not found: $source_path"
     fi
 
+    # Compute sha256 hash locally before deploying
+    local hash
+    hash="sha256:$(sha256sum "$source_path" | cut -d' ' -f1)"
+
     # Rsync to disk (for backup/debugging)
     rsync -z --chmod=F644 "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/default.tar"
     log "  Deployed to disk: $package_name -> default.tar"
@@ -182,14 +196,33 @@ deploy_to_gallery() {
     ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:default.tar < $REMOTE_OSD_PATH/default.tar" >/dev/null
     log "  Pushed to Redis: osd:package:default.tar"
 
+    # Store hash for notification
+    DEPLOYED_HASHES["default.tar"]="$hash"
+
     log "Gallery deploy complete"
 }
 
 # Notify dev_notifications service to reload packages from Redis
+# Includes hashes in message for atomic notification (avoids race condition)
+# Format: "file1:hash1,file2:hash2,..."
 notify_reload() {
     log "Notifying dev_notifications service to reload packages..."
-    ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI PUBLISH osd:reload all" >/dev/null
-    log "✓ Reload notification sent"
+
+    # Build hash payload from deployed packages
+    local payload=""
+    for file in "${!DEPLOYED_HASHES[@]}"; do
+        if [[ -n "$payload" ]]; then
+            payload+=","
+        fi
+        payload+="${file}:${DEPLOYED_HASHES[$file]}"
+    done
+
+    if [[ -z "$payload" ]]; then
+        payload="all"
+    fi
+
+    ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI PUBLISH osd:reload '$payload'" >/dev/null
+    log "✓ Reload notification sent with hashes"
 }
 
 # ============================================================================
