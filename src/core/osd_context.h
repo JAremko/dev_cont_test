@@ -71,6 +71,18 @@ typedef struct osd_context
     float device_pixel_ratio;
     uint32_t osd_buffer_width;
     uint32_t osd_buffer_height;
+    // Video proxy bounds (NDC -1.0 to 1.0)
+    float video_proxy_ndc_x;
+    float video_proxy_ndc_y;
+    float video_proxy_ndc_width;
+    float video_proxy_ndc_height;
+    // Scale factor: osd_buffer_pixels / proxy_physical_pixels
+    float scale_factor;
+    // Theme info
+    bool is_sharp_mode;
+    float theme_hue;
+    float theme_chroma;
+    float theme_lightness;
     bool valid;
   } client_metadata;
 
