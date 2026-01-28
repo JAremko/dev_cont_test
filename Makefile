@@ -16,7 +16,7 @@
 #   - Devcontainer: Runs commands directly (CLion/IDE workflow)
 
 .PHONY: all default build clean clean-wasm clean-packages clean-artifacts help \
-        index \
+        index check-submodule-config \
         format lint quality \
         recording_day recording_thermal live_day live_thermal \
         _recording_day _recording_thermal _live_day _live_thermal \
@@ -104,6 +104,26 @@ index:
 	@echo "CLion: File → Reload Compilation Database (or it auto-detects)"
 
 #==============================================================================
+# Preflight Check: Submodule Config
+#==============================================================================
+
+check-submodule-config:
+	@RECURSE=$$(git config --global submodule.recurse 2>/dev/null); \
+	if [ "$$RECURSE" != "true" ]; then \
+		echo ""; \
+		echo "┌──────────────────────────────────────────────────────────────────────────────┐"; \
+		echo "│  ERROR: Git submodule auto-update is not enabled                             │"; \
+		echo "│                                                                              │"; \
+		echo "│  Submodules won't auto-update when you pull. Run this once to fix:          │"; \
+		echo "│                                                                              │"; \
+		echo "│    git config --global submodule.recurse true                                │"; \
+		echo "│                                                                              │"; \
+		echo "└──────────────────────────────────────────────────────────────────────────────┘"; \
+		echo ""; \
+		exit 1; \
+	fi
+
+#==============================================================================
 # Quality Targets (run automatically before builds)
 #==============================================================================
 
@@ -117,7 +137,7 @@ lint:
 	@./tools/lint.sh 2>&1 | tee $(LOGS_DIR)/lint.log
 	@echo ""
 
-quality: format lint
+quality: check-submodule-config format lint
 
 #==============================================================================
 # Build Targets
