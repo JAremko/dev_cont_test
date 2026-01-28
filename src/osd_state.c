@@ -173,7 +173,7 @@ osd_state_get_client_metadata(const osd_context_t *ctx,
   if (!metadata || !ctx)
     return false;
 
-  // Initialize to invalid
+  // Initialize to invalid/zero
   metadata->valid              = false;
   metadata->canvas_width_px    = 0;
   metadata->canvas_height_px   = 0;
@@ -181,15 +181,48 @@ osd_state_get_client_metadata(const osd_context_t *ctx,
   metadata->osd_buffer_width   = 0;
   metadata->osd_buffer_height  = 0;
 
+  // Proxy bounds
+  metadata->video_proxy_ndc_x      = 0.0f;
+  metadata->video_proxy_ndc_y      = 0.0f;
+  metadata->video_proxy_ndc_width  = 0.0f;
+  metadata->video_proxy_ndc_height = 0.0f;
+
+  // Scale factor
+  metadata->scale_factor = 0.0f;
+
+  // Theme info
+  metadata->is_sharp_mode   = false;
+  metadata->theme_hue       = 0.0f;
+  metadata->theme_chroma    = 0.0f;
+  metadata->theme_lightness = 0.0f;
+
   if (!ctx->client_metadata.valid)
     return false;
 
+  // Canvas info
   metadata->canvas_width_px    = ctx->client_metadata.canvas_width_px;
   metadata->canvas_height_px   = ctx->client_metadata.canvas_height_px;
   metadata->device_pixel_ratio = ctx->client_metadata.device_pixel_ratio;
   metadata->osd_buffer_width   = ctx->client_metadata.osd_buffer_width;
   metadata->osd_buffer_height  = ctx->client_metadata.osd_buffer_height;
-  metadata->valid              = true;
+
+  // Proxy bounds
+  metadata->video_proxy_ndc_x     = ctx->client_metadata.video_proxy_ndc_x;
+  metadata->video_proxy_ndc_y     = ctx->client_metadata.video_proxy_ndc_y;
+  metadata->video_proxy_ndc_width = ctx->client_metadata.video_proxy_ndc_width;
+  metadata->video_proxy_ndc_height
+    = ctx->client_metadata.video_proxy_ndc_height;
+
+  // Scale factor
+  metadata->scale_factor = ctx->client_metadata.scale_factor;
+
+  // Theme info
+  metadata->is_sharp_mode   = ctx->client_metadata.is_sharp_mode;
+  metadata->theme_hue       = ctx->client_metadata.theme_hue;
+  metadata->theme_chroma    = ctx->client_metadata.theme_chroma;
+  metadata->theme_lightness = ctx->client_metadata.theme_lightness;
+
+  metadata->valid = true;
 
   return true;
 }
