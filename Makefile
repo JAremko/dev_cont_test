@@ -111,15 +111,13 @@ check-submodule-config:
 	if [ "$$RECURSE" != "true" ]; then \
 		echo ""; \
 		echo "┌──────────────────────────────────────────────────────────────────────────────┐"; \
-		echo "│  ERROR: Git submodule auto-update is not enabled                             │"; \
-		echo "│                                                                              │"; \
-		echo "│  Submodules won't auto-update when you pull. Run this once to fix:          │"; \
-		echo "│                                                                              │"; \
-		echo "│    git config --global submodule.recurse true                                │"; \
-		echo "│                                                                              │"; \
+		echo "│  Git submodule auto-update is not enabled                                    │"; \
+		echo "│  Configuring: git config --global submodule.recurse true                     │"; \
 		echo "└──────────────────────────────────────────────────────────────────────────────┘"; \
 		echo ""; \
-		exit 1; \
+		git config --global submodule.recurse true; \
+		echo "✅ Submodule auto-update enabled"; \
+		echo ""; \
 	fi
 
 #==============================================================================

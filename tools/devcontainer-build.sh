@@ -169,8 +169,41 @@ run_in_devcontainer() {
     echo ""
 
     cd "$PROJECT_ROOT"
-    # Ensure container is running (up is idempotent - won't rebuild if already running)
-    devcontainer up --workspace-folder . > /dev/null 2>&1 || true
+
+    # Try to start the container, capturing output to detect stale mount issues
+    local up_output
+    local up_exit_code
+    up_output=$(devcontainer up --workspace-folder . 2>&1) || up_exit_code=$?
+
+    # Check for stale bind mount error (e.g., SSH agent socket that no longer exists)
+    if [ "${up_exit_code:-0}" -ne 0 ] && echo "$up_output" | grep -q "bind source path does not exist"; then
+        echo -e "${YELLOW}⚠${NC} Detected stale container with invalid bind mounts"
+
+        # Extract container ID from the error output
+        local container_id
+        container_id=$(echo "$up_output" | grep -oE '[a-f0-9]{12,64}' | head -1)
+
+        if [ -n "$container_id" ]; then
+            echo -e "${BLUE}Removing stale container:${NC} ${container_id:0:12}..."
+            docker rm "$container_id" > /dev/null 2>&1 || true
+
+            echo -e "${BLUE}Creating fresh container...${NC}"
+            if ! devcontainer up --workspace-folder . 2>&1; then
+                echo -e "${RED}ERROR:${NC} Failed to start dev container after cleanup"
+                exit 1
+            fi
+        else
+            echo -e "${RED}ERROR:${NC} Could not identify stale container"
+            echo "$up_output"
+            exit 1
+        fi
+    elif [ "${up_exit_code:-0}" -ne 0 ]; then
+        # Some other error occurred
+        echo -e "${RED}ERROR:${NC} Failed to start dev container"
+        echo "$up_output"
+        exit 1
+    fi
+
     devcontainer exec --workspace-folder . bash -c "$cmd"
 }
 
