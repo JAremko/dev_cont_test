@@ -1,6 +1,7 @@
 #!/bin/bash
 # Jettison OSD WASM Deploy Script
-# Deploys signed packages directly to sych.local where nginx serves them
+# Pushes signed packages to Redis on sych.local
+# dev_notifications serves packages via HTTP and computes hashes (race-proof)
 
 set -e  # Exit on error
 set -u  # Exit on undefined variable
@@ -23,14 +24,35 @@ fi
 DEPLOY_HOST="${DEPLOY_HOST:-sych.local}"
 DEPLOY_USER="${DEPLOY_USER:-archer}"
 
-# Centralized OSD path on sych.local (nginx proxies to dev_notifications, files also on disk)
-REMOTE_OSD_PATH="/home/archer/web/osd"
+# Redis configuration (from .env - required for hot-reload notifications)
+# All packages served from Redis via dev_notifications (no disk storage)
+REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
+REDIS_PORT="${REDIS_PORT:-8085}"
+REDIS_PASSWORD="${REDIS_PASSWORD:-}"
 
-# Redis configuration (same as dev_notifications service)
-REDIS_HOST="127.0.0.1"
-REDIS_PORT="8085"
-REDIS_PASSWORD="VFDGOZlbwfSXk5p"
-REDIS_CLI="redis-cli -h $REDIS_HOST -p $REDIS_PORT -a '$REDIS_PASSWORD' --no-auth-warning"
+# Validate Redis credentials
+if [[ -z "$REDIS_PASSWORD" ]]; then
+    echo ""
+    echo "=============================================="
+    echo "  REDIS CREDENTIALS MISSING"
+    echo "=============================================="
+    echo ""
+    echo "REDIS_PASSWORD is not set in .env"
+    echo ""
+    echo "Hot-reload notifications require Redis credentials."
+    echo "Add the following to your .env file:"
+    echo ""
+    echo "  REDIS_HOST=127.0.0.1"
+    echo "  REDIS_PORT=8085"
+    echo "  REDIS_PASSWORD=<password>"
+    echo ""
+    echo "See CLAUDE.md for Redis port/password reference."
+    echo ""
+    exit 1
+fi
+
+# Use database 1 (Config database) to match dev_notifications service
+REDIS_CLI="redis-cli -h $REDIS_HOST -p $REDIS_PORT -a '$REDIS_PASSWORD' -n 1 --no-auth-warning"
 
 # ============================================================================
 # Helper Functions
@@ -49,8 +71,8 @@ usage() {
     cat <<EOF
 Usage: $0 <build_mode> [target]
 
-Deploy OSD packages to sych.local centralized OSD directory.
-All packages served from /osd/ by nginx.
+Deploy OSD packages to Redis on sych.local.
+dev_notifications serves packages via /osd/ and handles hot-reload.
 
 Arguments:
   build_mode  - Required: 'dev' or 'production'
@@ -126,18 +148,16 @@ check_ssh() {
 # Deploy Functions
 # ============================================================================
 
-# Global associative array to collect deployed package hashes
-declare -A DEPLOYED_HASHES
+# Global array to collect deployed package filenames
+# Hash is computed by dev_notifications from Redis data (race-proof)
+declare -a DEPLOYED_FILES=()
 
 deploy_to_frontend() {
     local build_mode="$1"
 
-    log "Deploying frontend packages to: $DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH"
+    log "Deploying frontend packages to Redis..."
 
-    # Ensure remote directory exists
-    ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p $REMOTE_OSD_PATH"
-
-    # Deploy live variants
+    # Deploy live variants directly to Redis (no disk storage)
     for variant in live_day live_thermal; do
         local package_name
         package_name=$(get_package_name "$variant" "$build_mode")
@@ -147,35 +167,24 @@ deploy_to_frontend() {
             error "Package not found: $source_path"
         fi
 
-        # Compute sha256 hash locally before deploying
-        local hash
-        hash="sha256:$(sha256sum "$source_path" | cut -d' ' -f1)"
+        # Stream package directly to Redis (dev_notifications computes hash)
+        cat "$source_path" | ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:${variant}.tar" >/dev/null
+        log "  Pushed to Redis: osd:package:${variant}.tar ($(stat -c%s "$source_path") bytes)"
 
-        # Rsync to disk (for backup/debugging)
-        rsync -z --chmod=F644 "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/${variant}.tar"
-        log "  Deployed to disk: $package_name -> ${variant}.tar"
-
-        # Push to Redis for atomic serving
-        ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:${variant}.tar < $REMOTE_OSD_PATH/${variant}.tar" >/dev/null
-        log "  Pushed to Redis: osd:package:${variant}.tar"
-
-        # Store hash for notification
-        DEPLOYED_HASHES["${variant}.tar"]="$hash"
+        # Track deployed filename for notification
+        DEPLOYED_FILES+=("${variant}.tar")
     done
 
-    # Note: pip_override.json is now bundled inside packages
+    # Note: pip_override.json is bundled inside packages
     log "Frontend deploy complete"
 }
 
 deploy_to_gallery() {
     local build_mode="$1"
 
-    log "Deploying gallery package to: $DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH"
+    log "Deploying gallery package to Redis..."
 
-    # Ensure remote directory exists
-    ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p $REMOTE_OSD_PATH"
-
-    # Deploy recording_day as default.tar
+    # Deploy recording_day as default.tar directly to Redis
     local package_name
     package_name=$(get_package_name "recording_day" "$build_mode")
     local source_path="$DIST_DIR/$package_name"
@@ -184,37 +193,29 @@ deploy_to_gallery() {
         error "Package not found: $source_path"
     fi
 
-    # Compute sha256 hash locally before deploying
-    local hash
-    hash="sha256:$(sha256sum "$source_path" | cut -d' ' -f1)"
+    # Stream package directly to Redis (dev_notifications computes hash)
+    cat "$source_path" | ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:default.tar" >/dev/null
+    log "  Pushed to Redis: osd:package:default.tar ($(stat -c%s "$source_path") bytes)"
 
-    # Rsync to disk (for backup/debugging)
-    rsync -z --chmod=F644 "$source_path" "$DEPLOY_USER@$DEPLOY_HOST:$REMOTE_OSD_PATH/default.tar"
-    log "  Deployed to disk: $package_name -> default.tar"
-
-    # Push to Redis for atomic serving
-    ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI -x SET osd:package:default.tar < $REMOTE_OSD_PATH/default.tar" >/dev/null
-    log "  Pushed to Redis: osd:package:default.tar"
-
-    # Store hash for notification
-    DEPLOYED_HASHES["default.tar"]="$hash"
+    # Track deployed filename for notification
+    DEPLOYED_FILES+=("default.tar")
 
     log "Gallery deploy complete"
 }
 
 # Notify dev_notifications service to reload packages from Redis
-# Includes hashes in message for atomic notification (avoids race condition)
-# Format: "file1:hash1,file2:hash2,..."
+# dev_notifications loads packages and computes hashes (race-proof)
+# Format: "file1,file2,..." (just filenames, no hashes)
 notify_reload() {
     log "Notifying dev_notifications service to reload packages..."
 
-    # Build hash payload from deployed packages
+    # Build payload from deployed filenames (comma-separated)
     local payload=""
-    for file in "${!DEPLOYED_HASHES[@]}"; do
+    for file in "${DEPLOYED_FILES[@]}"; do
         if [[ -n "$payload" ]]; then
             payload+=","
         fi
-        payload+="${file}:${DEPLOYED_HASHES[$file]}"
+        payload+="$file"
     done
 
     if [[ -z "$payload" ]]; then
@@ -222,7 +223,7 @@ notify_reload() {
     fi
 
     ssh "$DEPLOY_USER@$DEPLOY_HOST" "$REDIS_CLI PUBLISH osd:reload '$payload'" >/dev/null
-    log "✓ Reload notification sent with hashes"
+    log "✓ Reload notification sent: $payload"
 }
 
 # ============================================================================
