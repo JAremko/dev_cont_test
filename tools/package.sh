@@ -271,9 +271,13 @@ collect_resources() {
     log "  Copying WASM binary..."
     cp "$BUILD_DIR/${variant}${WASM_SUFFIX}.wasm" "$staging_dir/${variant}.wasm"
 
-    # Copy variant config
+    # Copy variant config (disable variant_info in production builds)
     log "  Copying variant config..."
-    cp "$RESOURCES_DIR/${variant}.json" "$staging_dir/config.json"
+    if [[ "$BUILD_MODE" == "production" ]]; then
+        jq '.variant_info.enabled = false' "$RESOURCES_DIR/${variant}.json" > "$staging_dir/config.json"
+    else
+        cp "$RESOURCES_DIR/${variant}.json" "$staging_dir/config.json"
+    fi
 
     # Copy config schema
     log "  Copying config schema..."
